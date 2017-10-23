@@ -1,10 +1,6 @@
 The MIT License (MIT)
 GiteaVS
 	Copyright (c) 2017 MaikeBing
-NGitea
- Franklin89/NGitea
-	 Xarlot/NGitea
-		MaikeBing/NGitea
 
 CodeCloud.VisualStudio	
 	Copyright (C) 2017 OSChina.NET.
