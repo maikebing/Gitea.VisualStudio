@@ -1,0 +1,4 @@
+
+[submodule "GiteaApi"]
+	path = GiteaApi
+	url = https://github.com/maikebing/gitea.net.git

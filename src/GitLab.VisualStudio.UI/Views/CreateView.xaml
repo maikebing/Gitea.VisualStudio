@@ -1,0 +1,136 @@
+﻿<shared:Dialog x:Class="Gitea.VisualStudio.UI.Views.CreateView"
+               xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+               xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+               xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+               xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+               xmlns:shared="clr-namespace:Gitea.VisualStudio.Shared;assembly=Gitea.VisualStudio.Shared"
+               xmlns:local="clr-namespace:Gitea.VisualStudio.UI.Views"
+               xmlns:controls="clr-namespace:Gitea.VisualStudio.Shared.Controls;assembly=Gitea.VisualStudio.Shared"
+               xmlns:vms="clr-namespace:Gitea.VisualStudio.UI.ViewModels"
+               d:DataContext="{d:DesignInstance Type=vms:CreateViewModel, IsDesignTimeCreatable=False}"
+               mc:Ignorable="d"
+               Width="426">
+    <controls:BusyIndicator IsBusy="{Binding IsBusy}"
+                            BusyContent="{Binding BusyContent}">
+        <Grid Margin="15">
+            <Grid.Resources>
+                <Style TargetType="Label">
+                    <Setter Property="HorizontalAlignment"
+                            Value="Right" />
+                </Style>
+            </Grid.Resources>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="17*" />
+                <ColumnDefinition Width="82*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40" />
+                <RowDefinition Height="15" />
+                <RowDefinition Height="100" />
+                <RowDefinition Height="30" />
+                <RowDefinition Height="30" />
+                <RowDefinition Height="30" />
+                <RowDefinition Height="30" />
+                <RowDefinition Height="55" />
+            </Grid.RowDefinitions>
+
+            <Label Content="{x:Static shared:Strings.Common_Name}"
+                   VerticalAlignment="Center" Height="24" Margin="0,8" Width="34" />
+            <controls:IconedTextBox Grid.Column="1"
+                                    Height="40"
+                                    VerticalAlignment="Top"
+                                    Wartermark="{x:Static shared:Strings.Common_Name}"
+                                    Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" Margin="138,0,0,0" />
+
+            <Label Content="{x:Static shared:Strings.Common_Description}"
+                   Grid.Row="2" Width="34" />
+            <controls:IconedTextBox Grid.Row="2"
+                                    Grid.Column="1"
+                                    VerticalContentAlignment="Top"
+                                    Wartermark="{x:Static shared:Strings.CreateView_ThisIsACoollProject}"
+                                    Text="{Binding Description}"
+                                    TextWrapping="Wrap"
+                                    AcceptsReturn="True"
+                                    VerticalScrollBarVisibility="Auto" />
+
+            <Label Content="{x:Static shared:Strings.Common_GitIgnore}"
+                   Grid.Row="3" Width="67" />
+            <ComboBox x:Name="GitIgnoresComboBox"
+                      Grid.Row="3"
+                      Grid.Column="1"
+                      VerticalAlignment="Center"
+                      ItemsSource="{Binding GitIgnores}"
+                      DisplayMemberPath="Value"
+                      SelectedValuePath="Key"
+                      SelectedValue="{Binding SelectedGitIgnore}" Height="25" Margin="0,5,0,0" />
+
+            <Label Content="{x:Static shared:Strings.Common_License}"
+                   Grid.Row="4" Width="34" />
+            <ComboBox x:Name="LicensesComboBox"
+                      Grid.Row="4"
+                      Grid.Column="1"
+                      VerticalAlignment="Center"
+                      ItemsSource="{Binding Licenses}"
+                      DisplayMemberPath="Value"
+                      SelectedValuePath="Key"
+                      SelectedValue="{Binding SelectedLicense}" Height="27" Margin="0,5,0,28" Grid.RowSpan="2" />
+
+            <Label Content="{x:Static shared:Strings.Common_Property}"
+                   Grid.Row="5"
+                   VerticalAlignment="Center" Height="24" Margin="0,3" Width="34" />
+            <CheckBox Grid.Row="5"
+                      VerticalAlignment="Center"
+                      IsChecked="{Binding IsPrivate}"
+                      Grid.Column="1" Height="16" Margin="0,7">
+                <TextBlock>
+                    <Run Text="{x:Static shared:Strings.Common_Private}" /><Run Text="?" />
+                </TextBlock>
+            </CheckBox>
+
+            <Label Content="{x:Static shared:Strings.Common_Path}"
+                   Grid.Row="6"
+                   VerticalAlignment="Center" Height="24" Margin="0,3" Width="34" />
+            <DockPanel Grid.Row="6"
+                       Grid.Column="1">
+                <Button Content="{x:Static shared:Strings.Common_Browse}"
+                        Width="82"
+                          Background="#3b83c0"
+                    Foreground="#ffffff"
+                    FontWeight="Bold"
+                    FontSize="14"
+                        DockPanel.Dock="Right"
+                        Command="{Binding BrowseCommand}" />
+                <controls:IconedTextBox IsReadOnly="True"
+                                        Text="{Binding Path}"
+                                        VerticalContentAlignment="Center" Width="241" />
+            </DockPanel>
+
+            <StackPanel Grid.Row="7"
+                        Grid.Column="1"
+                        Orientation="Horizontal"
+                        VerticalAlignment="Center"
+                        Margin="0,17,0,10" Height="28">
+                <Button Width="117"
+                          Background="#3b83c0"
+                    Foreground="#ffffff"
+                    FontWeight="Bold"
+                    FontSize="14"
+                        Content="{x:Static shared:Strings.Common_New}"
+                        Command="{Binding NewCommand}" Margin="0,-8,0,1" />
+                <Frame x:Name="frame" Content="" Width="13"/>
+                <Button Width="117"
+                          Background="#3b83c0"
+                    Foreground="#ffffff"
+                    FontWeight="Bold"
+                    FontSize="14"
+                        Content="{x:Static shared:Strings.Common_Cancel}"
+                        Margin="10,-8,0,1"
+                        Click="OnCancel" />
+            </StackPanel>
+            <ComboBox x:Name="cbxNamespaces"   ItemsSource="{Binding  Namespaces}"
+                      DisplayMemberPath="Value"
+                      SelectedValuePath="Key"
+                      SelectedValue="{Binding SelectedNamespaces}"  Grid.Column="1" HorizontalAlignment="Left" Margin="8,3,0,0" VerticalAlignment="Top" Width="128" Height="32"/>
+        </Grid>
+    </controls:BusyIndicator>
+</shared:Dialog>
