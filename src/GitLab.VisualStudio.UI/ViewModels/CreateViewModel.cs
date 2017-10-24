@@ -190,7 +190,7 @@ namespace Gitea.VisualStudio.UI.ViewModels
                     }
                     else
                     {
-                       // result = _web.CreateProjectAsync(Name, Description, IsPrivate,SelectedNamespaces);
+                        result = await _web.CreateProjectAsync(Name, Description, IsPrivate,SelectedNamespaces);
                         if (result.Project != null)
                         {
                             clonePath = System.IO.Path.Combine(Path, result.Project.Name);

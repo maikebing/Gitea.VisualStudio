@@ -193,7 +193,7 @@
     <value>这是一个很酷的项目(可选)</value>
   </data>
   <data name="Description" xml:space="preserve">
-    <value>Gitea  unlimited free repositories and collaborators. Sign Up. Free public &amp; private repositories and unlimited collaborators.</value>
+    <value>Git with a cup of tea!</value>
   </data>
   <data name="Invitation_Connect" xml:space="preserve">
     <value>连接</value>
@@ -201,20 +201,8 @@
   <data name="Invitation_SignUp" xml:space="preserve">
     <value>注册</value>
   </data>
-  <data name="Items_builds" xml:space="preserve">
-    <value>作业</value>
-  </data>
-  <data name="Items_Graph" xml:space="preserve">
-    <value>图表</value>
-  </data>
   <data name="Items_Issues" xml:space="preserve">
     <value>Issues</value>
-  </data>
-  <data name="Items_Pipeline" xml:space="preserve">
-    <value>流水线</value>
-  </data>
-  <data name="Items_Snippets" xml:space="preserve">
-    <value>代码片段</value>
   </data>
   <data name="Items_Wiki" xml:space="preserve">
     <value>Wiki</value>
@@ -239,7 +227,7 @@
     <value>忘记密码？</value>
   </data>
   <data name="Login_Host" xml:space="preserve">
-    <value>Gitea(https://gitclub.cn)</value>
+    <value>Gitea(https://try.gitea.io)</value>
   </data>
   <data name="Login_Login" xml:space="preserve">
     <value>登录</value>
@@ -306,7 +294,7 @@
     <value>双重认证</value>
   </data>
   <data name="DefaultHost" xml:space="preserve">
-    <value>https://gitclub.cn</value>
+    <value>https://try.gitea.io</value>
   </data>
   <data name="WebService_CreateProject_NotLoginYet" xml:space="preserve">
     <value>还没登录</value>

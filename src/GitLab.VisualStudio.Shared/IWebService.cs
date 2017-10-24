@@ -10,7 +10,7 @@ namespace Gitea.VisualStudio.Shared
 {
     public class User
     {
-        
+
         public static implicit operator User(Gitea.API.v1.Users.User session)
         {
             if (session != null)
@@ -21,7 +21,7 @@ namespace Gitea.VisualStudio.Shared
                     Email = session.Email,
                     Id = (int)session.ID,
                     Name = session.Username,
-                    TwoFactorEnabled =  false,
+                    TwoFactorEnabled = false,
                     Username = session.Username
                 };
             }
@@ -38,7 +38,7 @@ namespace Gitea.VisualStudio.Shared
         public string PrivateToken { get; set; }
         public string Host { get; set; }
         public bool TwoFactorEnabled { get; set; }
- 
+
     }
 
     public class Project
@@ -47,7 +47,7 @@ namespace Gitea.VisualStudio.Shared
         {
             if (p != null)
             {
-                 
+
                 return new Project()
                 {
                     BuildsEnabled = false,
@@ -61,7 +61,7 @@ namespace Gitea.VisualStudio.Shared
                     SshUrl = p.SSHUrl,
                     WikiEnabled = true,
                     Id = (int)p.ID,
-                    WebUrl = p.Website
+                    WebUrl = p.HtmlUrl
                 };
 
             }
@@ -73,7 +73,7 @@ namespace Gitea.VisualStudio.Shared
 
         public int Id { get; set; }
 
-    
+
         public string Name { get; set; }
 
         public string Path { get; set; }
@@ -99,10 +99,10 @@ namespace Gitea.VisualStudio.Shared
             get { return HttpUrl; }
         }
 
-     
+
         public string LocalPath { get; set; }
 
- 
+
         public Octicon Icon
         {
             get
@@ -114,24 +114,24 @@ namespace Gitea.VisualStudio.Shared
             }
         }
     }
-   
-    public class CreateProjectResult 
+
+    public class CreateProjectResult
     {
         public string Message { get; set; }
         public Project Project { get; set; }
     }
     public class NamespacesPath
     {
-        
-        
+
+
         public int id { get; set; }
         public string name { get; set; }
         public string path { get; set; }
         public string kind { get; set; }
         public string full_path { get; set; }
-   
+
     }
-   
+
     public enum ProjectListType
     {
         Accessible,
@@ -142,10 +142,9 @@ namespace Gitea.VisualStudio.Shared
     }
     public interface IWebService
     {
-          Task<User> LoginAsync(bool enable2fa, string host,string email, string password);
-            Task<IReadOnlyList<Project>> GetProjects();
-         CreateProjectResult CreateProject(string name, string description, bool isPrivate);
-      
+        Task<User> LoginAsync(bool enable2fa, string host, string email, string password);
+        Task<IReadOnlyList<Project>> GetProjects();
+        Task<CreateProjectResult> CreateProjectAsync(string name, string description, bool isPrivate, string namespaceid);
         IReadOnlyList<NamespacesPath> GetNamespacesPathList();
     }
 }

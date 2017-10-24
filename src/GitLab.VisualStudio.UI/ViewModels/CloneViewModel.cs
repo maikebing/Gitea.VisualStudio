@@ -129,17 +129,17 @@ namespace Gitea.VisualStudio.UI.ViewModels
             IEnumerable<Project> loaded = null;
 
             IsBusy = true;
-            Task.Run((Action)(async () =>
+            Task.Run(async () =>
             {
                 try
                 {
-                    loaded = await _web.GetProjects();
+                    loaded =  await _web.GetProjects();
                 }
                 catch (Exception)
                 {
                     error = Strings.CloneView_FailedToLoadProjects;
                 }
-            })).ContinueWith(task =>
+            }).ContinueWith(task =>
             {
                 IsBusy = false;
                 _repositories.Clear();

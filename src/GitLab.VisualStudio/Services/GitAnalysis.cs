@@ -78,7 +78,7 @@ namespace Gitea.VisualStudio.Services
 
         public string BuildGiteaUrl(GiteaUrlType urlType, Tuple<int, int> selectionLineRange)
         {
-            // https://Gitea.com/user/repo.git
+            // https://try.gitea.io/user/repo.git
             string urlRoot = GetRepoUrlRoot();
 
             // foo/bar.cs
@@ -114,7 +114,7 @@ namespace Gitea.VisualStudio.Services
            var originUrl = repository.Config.Get<string>("remote.origin.url");
             if (originUrl!=null )
             {
-                // https://Gitea.com/user/repo
+                // https://try.gitea.io/user/repo
                   urlRoot = (originUrl.Value.EndsWith(".git", StringComparison.InvariantCultureIgnoreCase))
                     ? originUrl.Value.Substring(0, originUrl.Value.Length - 4) // remove .git
                     : originUrl.Value;
@@ -122,7 +122,7 @@ namespace Gitea.VisualStudio.Services
                 // git@Gitea.com:user/repo -> http://Gitea.com/user/repo
                 urlRoot = Regex.Replace(urlRoot, "^git@(.+):(.+)/(.+)$", match => "http://" + string.Join("/", match.Groups.OfType<Group>().Skip(1).Select(group => group.Value)), RegexOptions.IgnoreCase);
 
-                // https://user@Gitea.com/user/repo -> https://Gitea.com/user/repo
+                // https://user@Gitea.com/user/repo -> https://try.gitea.io/user/repo
                 urlRoot = Regex.Replace(urlRoot, "(?<=^https?://)([^@/]+)@", "");
             }
             return urlRoot;

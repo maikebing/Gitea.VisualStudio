@@ -21,7 +21,7 @@ Build
 
 Clone the repository and its submodules in a git GUI client or via the command line:
 
-git clone https://Gitea.com/maikebing/Gitea.VisualStudio
+git clone https://try.gitea.io/maikebing/Gitea.VisualStudio
 cd VisualStudio
 
 Open the GiteaVS.sln solution with Visual Studio 2015.  

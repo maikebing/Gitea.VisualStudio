@@ -178,17 +178,11 @@
     <Compile Include="..\GitLab.TeamFoundation.14\Connect\GitLabInvitationSection.cs">
       <Link>Connect\GitLabInvitationSection.cs</Link>
     </Compile>
-    <Compile Include="..\GitLab.TeamFoundation.14\Home\BuildsNavigationItem.cs">
-      <Link>Home\BuildsNavigationItem.cs</Link>
-    </Compile>
     <Compile Include="..\GitLab.TeamFoundation.14\Home\GitLabHomeSection.cs">
       <Link>Home\GitLabHomeSection.cs</Link>
     </Compile>
     <Compile Include="..\GitLab.TeamFoundation.14\Home\GitLabNavigationItem.cs">
       <Link>Home\GitLabNavigationItem.cs</Link>
-    </Compile>
-    <Compile Include="..\GitLab.TeamFoundation.14\Home\GraphNavigationItem.cs">
-      <Link>Home\GraphNavigationItem.cs</Link>
     </Compile>
     <Compile Include="..\GitLab.TeamFoundation.14\Home\IssuesNavigationItem.cs">
       <Link>Home\IssuesNavigationItem.cs</Link>
@@ -196,11 +190,8 @@
     <Compile Include="..\GitLab.TeamFoundation.14\Home\MergeRequestsNavigationItem.cs">
       <Link>Home\MergeRequestsNavigationItem.cs</Link>
     </Compile>
-    <Compile Include="..\GitLab.TeamFoundation.14\Home\PipelinesNavigationItem.cs">
-      <Link>Home\PipelinesNavigationItem.cs</Link>
-    </Compile>
-    <Compile Include="..\GitLab.TeamFoundation.14\Home\SnippetsNavigationItem.cs">
-      <Link>Home\SnippetsNavigationItem.cs</Link>
+    <Compile Include="..\GitLab.TeamFoundation.14\Home\ReleasesNavigationItem.cs">
+      <Link>Home\ReleasesNavigationItem.cs</Link>
     </Compile>
     <Compile Include="..\GitLab.TeamFoundation.14\Home\WikiNavigationItem.cs">
       <Link>Home\WikiNavigationItem.cs</Link>

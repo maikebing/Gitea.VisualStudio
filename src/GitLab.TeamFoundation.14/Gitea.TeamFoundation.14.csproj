@@ -172,14 +172,11 @@
     <Compile Include="Colors.cs" />
     <Compile Include="Connect\GitLabConnectSection.cs" />
     <Compile Include="Connect\GitLabInvitationSection.cs" />
-    <Compile Include="Home\PipelinesNavigationItem.cs" />
     <Compile Include="Home\GitLabHomeSection.cs" />
     <Compile Include="Home\GitLabNavigationItem.cs" />
     <Compile Include="Home\IssuesNavigationItem.cs" />
     <Compile Include="Home\MergeRequestsNavigationItem.cs" />
-    <Compile Include="Home\GraphNavigationItem.cs" />
-    <Compile Include="Home\BuildsNavigationItem.cs" />
-    <Compile Include="Home\SnippetsNavigationItem.cs" />
+    <Compile Include="Home\ReleasesNavigationItem.cs" />
     <Compile Include="Services\Registry.cs" />
     <Compile Include="Services\Registry.key.cs">
       <DependentUpon>Registry.cs</DependentUpon>

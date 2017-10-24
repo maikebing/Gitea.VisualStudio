@@ -193,19 +193,13 @@
     <value>This is a cool project (optional)</value>
   </data>
   <data name="Description" xml:space="preserve">
-    <value>Gitea  unlimited free repositories and collaborators. Sign Up. Free public &amp; private repositories and unlimited collaborators.</value>
+    <value>Git with a cup of tea!</value>
   </data>
   <data name="Invitation_Connect" xml:space="preserve">
     <value>Connect</value>
   </data>
   <data name="Invitation_SignUp" xml:space="preserve">
     <value>Sign up</value>
-  </data>
-  <data name="Items_builds" xml:space="preserve">
-    <value>Builds</value>
-  </data>
-  <data name="Items_Graph" xml:space="preserve">
-    <value>Graphs</value>
   </data>
   <data name="Items_Issues" xml:space="preserve">
     <value>Issues</value>
@@ -214,10 +208,7 @@
     <value>Pipelines</value>
   </data>
   <data name="Items_MergeRequests" xml:space="preserve">
-    <value>Merge Requests</value>
-  </data>
-  <data name="Items_Snippets" xml:space="preserve">
-    <value>Snippets</value>
+    <value>Pulls Requests</value>
   </data>
   <data name="Items_Wiki" xml:space="preserve">
     <value>Wiki</value>
@@ -242,7 +233,7 @@
     <value>Forget password?</value>
   </data>
   <data name="Login_Host" xml:space="preserve">
-    <value>Gitea(https://Gitea.com)</value>
+    <value>Gitea(https://try.gitea.io)</value>
   </data>
   <data name="Login_Login" xml:space="preserve">
     <value>Login</value>
@@ -306,7 +297,7 @@
     <value>Two Factor Authentication</value>
   </data>
   <data name="DefaultHost" xml:space="preserve">
-    <value>https://Gitea.com</value>
+    <value>https://try.gitea.io</value>
   </data>
   <data name="WebService_CreateProject_NotLoginYet" xml:space="preserve">
     <value>Not login yet</value>

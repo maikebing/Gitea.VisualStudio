@@ -29,7 +29,7 @@ namespace Gitea.TeamFoundation.Home
 
         public override void Execute()
         {
-            OpenInBrowser("wikis");
+            OpenInBrowser("wiki");
         }
     }
 }

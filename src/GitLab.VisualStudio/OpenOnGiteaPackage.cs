@@ -65,8 +65,8 @@ namespace Gitea.VisualStudio
                     PackageCommanddIDs.OpenRevision,
                     PackageCommanddIDs.OpenRevisionFull,
                      PackageCommanddIDs.OpenBlame,
-                     PackageCommanddIDs.OpenCommits,
-                     PackageCommanddIDs.CreateSnippet
+                     PackageCommanddIDs.OpenCommits 
+                
                 })
                 {
                     var menuCommandID = new CommandID(PackageGuids.guidOpenOnGiteaCmdSet, (int)item);

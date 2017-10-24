@@ -6,30 +6,30 @@ using System.Windows.Media;
 
 namespace Gitea.TeamFoundation.Home
 {
-    [TeamExplorerNavigationItem(Settings.BuildsNavigationItemId, Settings.Builds)]
+    [TeamExplorerNavigationItem(Settings.ReleasesNavigationItemId, Settings.Releases)]
     [PartCreationPolicy(CreationPolicy.NonShared)]
-    public class BuildsNavigationItem : GiteaNavigationItem
+    public class ReleasesNavigationItem : GiteaNavigationItem
     {
         private readonly ITeamExplorerServices _tes;
 
         [ImportingConstructor]
-        public BuildsNavigationItem(IGitService git, IShellService shell, IStorage storage, ITeamExplorerServices tes, IWebService ws)
-           : base(Octicon.fold, git, shell, storage, tes, ws)
+        public ReleasesNavigationItem(IGitService git, IShellService shell, IStorage storage, ITeamExplorerServices tes, IWebService ws)
+           : base(Octicon.book, git, shell, storage, tes, ws)
         {
             _tes = tes;
-            Text = Strings.Items_builds;
+
+            Text = "Releases";
         }
 
         public override void Invalidate()
         {
             base.Invalidate();
-            IsVisible = IsVisible && _tes.Project != null && _tes.Project.BuildsEnabled;
+            IsVisible = IsVisible && _tes.Project != null  ;
         }
-
 
         public override void Execute()
         {
-            OpenInBrowser("builds");
+            OpenInBrowser("releases");
         }
     }
 }

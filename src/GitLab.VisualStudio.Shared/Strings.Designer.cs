@@ -394,7 +394,7 @@ namespace Gitea.VisualStudio.Shared {
         }
         
         /// <summary>
-        ///   查找类似 https://Gitea.com 的本地化字符串。
+        ///   查找类似 https://try.gitea.io 的本地化字符串。
         /// </summary>
         public static string DefaultHost {
             get {
@@ -403,7 +403,7 @@ namespace Gitea.VisualStudio.Shared {
         }
         
         /// <summary>
-        ///   查找类似 Gitea  unlimited free repositories and collaborators. Sign Up. Free public &amp; private repositories and unlimited collaborators. 的本地化字符串。
+        ///   查找类似 Git with a cup of tea! 的本地化字符串。
         /// </summary>
         public static string Description {
             get {
@@ -493,24 +493,6 @@ namespace Gitea.VisualStudio.Shared {
         }
         
         /// <summary>
-        ///   查找类似 Builds 的本地化字符串。
-        /// </summary>
-        public static string Items_builds {
-            get {
-                return ResourceManager.GetString("Items_builds", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Graphs 的本地化字符串。
-        /// </summary>
-        public static string Items_Graph {
-            get {
-                return ResourceManager.GetString("Items_Graph", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   查找类似 Issues 的本地化字符串。
         /// </summary>
         public static string Items_Issues {
@@ -520,7 +502,7 @@ namespace Gitea.VisualStudio.Shared {
         }
         
         /// <summary>
-        ///   查找类似 Merge Requests 的本地化字符串。
+        ///   查找类似 Pulls Requests 的本地化字符串。
         /// </summary>
         public static string Items_MergeRequests {
             get {
@@ -534,15 +516,6 @@ namespace Gitea.VisualStudio.Shared {
         public static string Items_Pipeline {
             get {
                 return ResourceManager.GetString("Items_Pipeline", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Snippets 的本地化字符串。
-        /// </summary>
-        public static string Items_Snippets {
-            get {
-                return ResourceManager.GetString("Items_Snippets", resourceCulture);
             }
         }
         
@@ -610,7 +583,7 @@ namespace Gitea.VisualStudio.Shared {
         }
         
         /// <summary>
-        ///   查找类似 Gitea(https://Gitea.com) 的本地化字符串。
+        ///   查找类似 Gitea(https://try.gitea.io) 的本地化字符串。
         /// </summary>
         public static string Login_Host {
             get {

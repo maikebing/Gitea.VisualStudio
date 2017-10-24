@@ -229,20 +229,17 @@ namespace Gitea.TeamFoundation.ViewModels
 
             IsBusy = true;
 
-            Task.Run(() =>
+            Task.Run(async () =>
             {
                 try
                 {
-                    result = _web.CreateProject(RepositoryName, RepositoryDescription, IsPrivate);
+                    var user = _storage.GetUser();
+                    result = await _web.CreateProjectAsync(RepositoryName, RepositoryDescription, IsPrivate, user.Username);
                     if (result.Project != null)
                     {
                         var activeRepository = _tes.GetActiveRepository();
-
                         var path = activeRepository == null ? _tes.GetSolutionPath() : activeRepository.Path;
-
-                        var user = _storage.GetUser();
                         var password = _storage.GetPassword(user.Host);
-
                         _git.PushWithLicense(user.Name, user.Email,user.Username, password, result.Project.Url, path, SelectedLicense);
                     }
                 }
