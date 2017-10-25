@@ -96,7 +96,7 @@ namespace Gitea.VisualStudio.Services
                 var pjt = await u.Repositories.Create()
                     .Name(name)
                     .Description(description)
-                         .MakeAutoInit(false)
+                    .MakeAutoInit(false)
                          .Start();
                 result.Project = (Project)pjt;
             }
