@@ -1,26 +1,25 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\..\packages\LibGit2Sharp.NativeBinaries.1.0.185\build\LibGit2Sharp.NativeBinaries.props" Condition="Exists('..\..\packages\LibGit2Sharp.NativeBinaries.1.0.185\build\LibGit2Sharp.NativeBinaries.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
+    <MinimumVisualStudioVersion>$(MSBuildToolsVersion)</MinimumVisualStudioVersion>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">$(MSBuildToolsVersion)</VisualStudioVersion>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{EC0FA794-798E-4949-A9A1-608E0B5E5EEA}</ProjectGuid>
+    <ProjectGuid>{C7EF7CBE-77AD-41B7-8DDE-C685D63D2EB3}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Gitea.VisualStudio.UI</RootNamespace>
-    <AssemblyName>Gitea.VisualStudio.UI</AssemblyName>
+    <RootNamespace>Gitea.TeamFoundation</RootNamespace>
+    <AssemblyName>Gitea.TeamFoundation.15</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <OutputPath>..\..\build\$(Configuration)\</OutputPath>
-    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <WarningLevel>4</WarningLevel>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <TargetFrameworkProfile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -29,15 +28,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup>
-    <StartupObject />
+  <PropertyGroup Condition="$(Buildtype) == 'Internal'">
+    <AssemblyOriginatorKeyFile>..\..\script\Key.snk</AssemblyOriginatorKeyFile>
+    <SignAssembly>true</SignAssembly>
+    <DelaySign>false</DelaySign>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DebugVS2015|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
@@ -49,9 +49,28 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.Expression.Interactions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\Microsoft.Expression.Interactions.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="LibGit2Sharp, Version=0.24.0.0, Culture=neutral, PublicKeyToken=7cbde695407f0333, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\LibGit2Sharp.0.24.0\lib\net40\LibGit2Sharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.TeamFoundation.Common">
+      <HintPath>..\..\lib\15.0\Microsoft.TeamFoundation.Common.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.TeamFoundation.Client">
+      <HintPath>..\..\lib\15.0\Microsoft.TeamFoundation.Client.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.TeamFoundation.Controls">
+      <HintPath>..\..\lib\15.0\Microsoft.TeamFoundation.Controls.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.TeamFoundation.Git.Controls">
+      <HintPath>..\..\lib\15.0\Microsoft.TeamFoundation.Git.Controls.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.TeamFoundation.Git.Provider">
+      <HintPath>..\..\lib\15.0\Microsoft.TeamFoundation.Git.Provider.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Microsoft.VisualStudio.Imaging, Version=15.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.VisualStudio.Imaging.15.0.26606\lib\net45\Microsoft.VisualStudio.Imaging.dll</HintPath>
@@ -133,106 +152,127 @@
       <HintPath>..\..\packages\Microsoft.VisualStudio.Validation.15.3.32\lib\net45\Microsoft.VisualStudio.Validation.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.ComponentModel.Composition" />
-    <Reference Include="System.ComponentModel.DataAnnotations" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\System.Windows.Interactivity.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Xml" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xaml">
-      <RequiredTargetFramework>4.0</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ViewModels\CloneViewModel.cs" />
-    <Compile Include="ViewModels\CreateViewModel.cs" />
-    <Compile Include="ViewModels\ProjectViewModel.cs" />
-    <Compile Include="Views\CloneView.xaml.cs">
-      <DependentUpon>CloneView.xaml</DependentUpon>
+    <Compile Include="..\Gitea.TeamFoundation.14\Colors.cs">
+      <Link>Colors.cs</Link>
     </Compile>
-    <Compile Include="Views\CreateView.xaml.cs">
-      <DependentUpon>CreateView.xaml</DependentUpon>
+    <Compile Include="..\Gitea.TeamFoundation.14\Connect\GiteaConnectSection.cs">
+      <Link>Connect\GitLabConnectSection.cs</Link>
     </Compile>
-    <Compile Include="Views\LoginView.xaml.cs">
-      <DependentUpon>LoginView.xaml</DependentUpon>
+    <Compile Include="..\Gitea.TeamFoundation.14\Connect\GiteaInvitationSection.cs">
+      <Link>Connect\GitLabInvitationSection.cs</Link>
     </Compile>
+    <Compile Include="..\Gitea.TeamFoundation.14\Home\GiteaHomeSection.cs">
+      <Link>Home\GitLabHomeSection.cs</Link>
+    </Compile>
+    <Compile Include="..\Gitea.TeamFoundation.14\Home\GiteaNavigationItem.cs">
+      <Link>Home\GitLabNavigationItem.cs</Link>
+    </Compile>
+    <Compile Include="..\Gitea.TeamFoundation.14\Home\IssuesNavigationItem.cs">
+      <Link>Home\IssuesNavigationItem.cs</Link>
+    </Compile>
+    <Compile Include="..\Gitea.TeamFoundation.14\Home\MergeRequestsNavigationItem.cs">
+      <Link>Home\MergeRequestsNavigationItem.cs</Link>
+    </Compile>
+    <Compile Include="..\Gitea.TeamFoundation.14\Home\ReleasesNavigationItem.cs">
+      <Link>Home\ReleasesNavigationItem.cs</Link>
+    </Compile>
+    <Compile Include="..\Gitea.TeamFoundation.14\Home\WikiNavigationItem.cs">
+      <Link>Home\WikiNavigationItem.cs</Link>
+    </Compile>
+    <Compile Include="..\Gitea.TeamFoundation.14\Services\Registry.cs">
+      <Link>Services\Registry.cs</Link>
+    </Compile>
+    <Compile Include="..\Gitea.TeamFoundation.14\Services\TeamExplorerServices.cs">
+      <Link>Services\TeamExplorerServices.cs</Link>
+    </Compile>
+    <Compile Include="..\Gitea.TeamFoundation.14\Settings.cs">
+      <Link>Settings.cs</Link>
+    </Compile>
+    <Compile Include="..\Gitea.TeamFoundation.14\Sync\GiteaPublishSection.cs">
+      <Link>Sync\GitLabPublishSection.cs</Link>
+    </Compile>
+    <Compile Include="..\Gitea.TeamFoundation.14\ViewModels\ConnectSectionViewModel.cs">
+      <Link>ViewModels\ConnectSectionViewModel.cs</Link>
+    </Compile>
+    <Compile Include="..\Gitea.TeamFoundation.14\ViewModels\PublishSectionViewModel.cs">
+      <Link>ViewModels\PublishSectionViewModel.cs</Link>
+    </Compile>
+    <Compile Include="..\Gitea.TeamFoundation.14\Views\ConnectSectionView.xaml.cs">
+      <Link>Views\ConnectSectionView.xaml.cs</Link>
+      <DependentUpon>ConnectSectionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="..\Gitea.TeamFoundation.14\Views\PublishSectionView.xaml.cs">
+      <Link>Views\PublishSectionView.xaml.cs</Link>
+      <DependentUpon>PublishSectionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Services\Registry.key.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="..\Gitea.TeamFoundation.14\Views\ConnectSectionView.xaml">
+      <Link>Views\ConnectSectionView.xaml</Link>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="..\Gitea.TeamFoundation.14\Views\PublishSectionView.xaml">
+      <Link>Views\PublishSectionView.xaml</Link>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\script\Key.snk" Condition="$(Buildtype) == 'Internal'">
+      <Link>Key.snk</Link>
+    </None>
     <Compile Include="..\common\SolutionInfo.cs">
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
-    <Compile Include="Properties\AssemblyInfo.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="ViewModels\LoginViewModel.cs" />
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <AppDesigner Include="Properties\" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Views\CloneView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\CreateView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\LoginView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\images\logo.png" />
-    <Resource Include="Resources\images\password.png" />
-    <Resource Include="Resources\images\user.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\GitLab.VisualStudio.Shared\Gitea.VisualStudio.Shared.csproj">
-      <Project>{C3150B82-8E79-4FF6-A9FF-E361C108384F}</Project>
+    <ProjectReference Include="..\Gitea.VisualStudio.Shared\Gitea.VisualStudio.Shared.csproj">
+      <Project>{c3150b82-8e79-4ff6-a9ff-e361c108384f}</Project>
       <Name>Gitea.VisualStudio.Shared</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
-    <None Include="packages.config">
-      <SubType>Designer</SubType>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\images\host.png" />
+    <Resource Include="..\Gitea.TeamFoundation.14\Resources\logo.png">
+      <Link>Resources\logo.png</Link>
+    </Resource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="..\..\packages\GitVersionTask.3.6.5\build\dotnet\GitVersionTask.targets" Condition="Exists('..\..\packages\GitVersionTask.3.6.5\build\dotnet\GitVersionTask.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
-      <ErrorText>这台计算机上缺少此项目引用的 NuGet 程序包。使用“NuGet 程序包还原”可下载这些程序包。有关更多信息，请参见 http://go.microsoft.com/fwlink/?LinkID=322105。缺少的文件是 {0}。</ErrorText>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\..\packages\GitVersionTask.3.6.5\build\dotnet\GitVersionTask.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\GitVersionTask.3.6.5\build\dotnet\GitVersionTask.targets'))" />
+    <Error Condition="!Exists('..\..\packages\LibGit2Sharp.NativeBinaries.1.0.185\build\LibGit2Sharp.NativeBinaries.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\LibGit2Sharp.NativeBinaries.1.0.185\build\LibGit2Sharp.NativeBinaries.props'))" />
   </Target>
+  <Import Project="..\..\packages\GitVersionTask.3.6.5\build\dotnet\GitVersionTask.targets" Condition="Exists('..\..\packages\GitVersionTask.3.6.5\build\dotnet\GitVersionTask.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>
   <Target Name="AfterBuild">
-  </Target>
-  -->
+  </Target> -->
 </Project>

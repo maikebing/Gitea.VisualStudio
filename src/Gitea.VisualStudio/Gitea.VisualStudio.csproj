@@ -458,25 +458,25 @@
       <Project>{c092a1fa-c2e2-4e18-a3cb-f4381a15280d}</Project>
       <Name>Gitea.API</Name>
     </ProjectReference>
-    <ProjectReference Include="..\GitLab.TeamFoundation.14\Gitea.TeamFoundation.14.csproj">
+    <ProjectReference Include="..\Gitea.TeamFoundation.14\Gitea.TeamFoundation.14.csproj">
       <Project>{161DBF01-1DBF-4B00-8551-C5C00F26720D}</Project>
       <Name>Gitea.TeamFoundation.14</Name>
       <IncludeOutputGroupsInVSIX>BuiltProjectOutputGroup%3bBuiltProjectOutputGroupDependencies%3bGetCopyToOutputDirectoryItems%3bSatelliteDllsProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
       <IncludeOutputGroupsInVSIXLocalOnly>DebugSymbolsProjectOutputGroup%3b</IncludeOutputGroupsInVSIXLocalOnly>
     </ProjectReference>
-    <ProjectReference Include="..\GitLab.TeamFoundation.15\Gitea.TeamFoundation.15.csproj">
+    <ProjectReference Include="..\Gitea.TeamFoundation.15\Gitea.TeamFoundation.15.csproj">
       <Project>{C7EF7CBE-77AD-41B7-8DDE-C685D63D2EB3}</Project>
       <Name>Gitea.TeamFoundation.15</Name>
       <IncludeOutputGroupsInVSIX>BuiltProjectOutputGroup%3bBuiltProjectOutputGroupDependencies%3bGetCopyToOutputDirectoryItems%3bSatelliteDllsProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
       <IncludeOutputGroupsInVSIXLocalOnly>DebugSymbolsProjectOutputGroup%3b</IncludeOutputGroupsInVSIXLocalOnly>
     </ProjectReference>
-    <ProjectReference Include="..\GitLab.VisualStudio.Shared\Gitea.VisualStudio.Shared.csproj">
+    <ProjectReference Include="..\Gitea.VisualStudio.Shared\Gitea.VisualStudio.Shared.csproj">
       <Project>{c3150b82-8e79-4ff6-a9ff-e361c108384f}</Project>
       <Name>Gitea.VisualStudio.Shared</Name>
       <IncludeOutputGroupsInVSIX>BuiltProjectOutputGroup%3bBuiltProjectOutputGroupDependencies%3bGetCopyToOutputDirectoryItems%3bSatelliteDllsProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
       <IncludeOutputGroupsInVSIXLocalOnly>DebugSymbolsProjectOutputGroup%3b</IncludeOutputGroupsInVSIXLocalOnly>
     </ProjectReference>
-    <ProjectReference Include="..\GitLab.VisualStudio.UI\Gitea.VisualStudio.UI.csproj">
+    <ProjectReference Include="..\Gitea.VisualStudio.UI\Gitea.VisualStudio.UI.csproj">
       <Project>{EC0FA794-798E-4949-A9A1-608E0B5E5EEA}</Project>
       <Name>Gitea.VisualStudio.UI</Name>
     </ProjectReference>
