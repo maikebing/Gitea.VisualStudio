@@ -1,6 +1,7 @@
 ﻿using Gitea.VisualStudio.Shared;
 using LibGit2Sharp;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -36,6 +37,15 @@ namespace Gitea.VisualStudio.Services
             }
             
             
+        }
+        static Dictionary<string, GitAnalysis> dicgit = new Dictionary<string, GitAnalysis>();
+        public static GitAnalysis GetBy(string fullpath)
+        {
+            if (!dicgit.ContainsKey(fullpath))
+            {
+                dicgit.Add(fullpath, new GitAnalysis(fullpath));
+            }
+            return dicgit[fullpath];
         }
         public string RepositoryPath { get; private set; }
         public LibGit2Sharp.Repository Repository { get { return repository; } }

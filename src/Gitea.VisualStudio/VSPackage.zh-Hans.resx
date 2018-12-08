@@ -117,12 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="8110" xml:space="preserve">
-    <value>OpenOnGitea扩展</value>
-  </data>
-  <data name="8112" xml:space="preserve">
-    <value>在你的Gitea网站中打开</value>
-  </data>
   <data name="OpenOnGitea_OpenOnGitea_OpenMaster" xml:space="preserve">
     <value>浏览主分支</value>
   </data>
