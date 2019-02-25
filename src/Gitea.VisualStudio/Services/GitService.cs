@@ -44,7 +44,7 @@ namespace Gitea.VisualStudio.Services
             return tempDirectory;
         }
 
-        public void FillAccessories(string fullname, string email,  string path, string gitignore, string license)
+        public void FillAccessories(string fullname, string email, string path, string gitignore, string license)
         {
             var assembly = Assembly.GetExecutingAssembly();
 
@@ -86,7 +86,7 @@ namespace Gitea.VisualStudio.Services
             }
         }
 
-        public void PushInitialCommit(string fullname, string email,string username, string password, string url, string gitignore, string license)
+        public void PushInitialCommit(string fullname, string email, string username, string password, string url, string gitignore, string license)
         {
             var path = GetTemporaryDirectory();
             Directory.CreateDirectory(path);
@@ -100,7 +100,7 @@ namespace Gitea.VisualStudio.Services
             {
                 if (File.Exists(Path.Combine(path, ".gitignore")))
                 {
-                    LibGit2Sharp.Commands.Stage(repo,".gitignore");
+                    LibGit2Sharp.Commands.Stage(repo, ".gitignore");
                 }
 
                 if (File.Exists(Path.Combine(path, "LICENSE")))
@@ -129,14 +129,14 @@ namespace Gitea.VisualStudio.Services
                 var remote = repo.Network.Remotes["origin"];
                 var options = new PushOptions();
                 options.CredentialsProvider = (_url, _user, _cred) =>
-                    new UsernamePasswordCredentials { Username = (string.IsNullOrEmpty(username)?email: username), Password = password };
+                    new UsernamePasswordCredentials { Username = (string.IsNullOrEmpty(username) ? email : username), Password = password };
                 repo.Network.Push(remote, @"refs/heads/master", options);
             }
 
             DeleteDirectory(path);
         }
 
-        public void PushWithLicense(string fullname, string email,string username, string password, string url, string path, string license)
+        public void PushWithLicense(string fullname, string email, string username, string password, string url, string path, string license)
         {
 
             if (!LibGit2Sharp.Repository.IsValid(path))
@@ -146,7 +146,7 @@ namespace Gitea.VisualStudio.Services
 
             using (var repo = new LibGit2Sharp.Repository(path))
             {
-                if (!string.IsNullOrEmpty(license)  )
+                if (!string.IsNullOrEmpty(license))
                 {
                     try
                     {
@@ -162,10 +162,10 @@ namespace Gitea.VisualStudio.Services
                     }
                     catch (Exception ex)
                     {
-                        Debug.WriteLine(ex.Message);  
+                        Debug.WriteLine(ex.Message);
                     }
                 }
-                if (repo.Network.Remotes.Any(r=>r.Name=="origin"))
+                if (repo.Network.Remotes.Any(r => r.Name == "origin"))
                 {
                     repo.Network.Remotes.Remove("origin");
                 }
@@ -174,7 +174,17 @@ namespace Gitea.VisualStudio.Services
                 var options = new PushOptions();
                 options.CredentialsProvider = (_url, _user, _cred) =>
                     new UsernamePasswordCredentials { Username = (string.IsNullOrEmpty(username) ? email : username), Password = password };
-                repo.Network.Push(remote, @"refs/heads/master", options);
+
+                Branch current = repo.Branches.Where(b => b.IsCurrentRepositoryHead).FirstOrDefault();
+
+                repo.Network.Push(remote, current.CanonicalName, options); //@"refs/heads/master", options);
+                Branch remoteBranch = repo.Branches.Where(b => b.FriendlyName.EndsWith(current.FriendlyName) && b.IsRemote).FirstOrDefault();
+                repo.Branches.Update(current, bu => {
+                    bu.Remote = remoteBranch.RemoteName;
+                    bu.TrackedBranch = remoteBranch.CanonicalName;
+                    bu.UpstreamBranch = remoteBranch.UpstreamBranchCanonicalName;
+                });
+
             }
         }
 
@@ -235,7 +245,7 @@ namespace Gitea.VisualStudio.Services
 
             return result;
         }
-   
+
 
 
         public string GetRemote(string path)

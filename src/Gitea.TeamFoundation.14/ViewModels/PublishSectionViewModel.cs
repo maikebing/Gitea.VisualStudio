@@ -4,9 +4,12 @@ using Gitea.VisualStudio.Shared.Helpers.Commands;
 using Microsoft.VisualStudio.TeamFoundation.Git.Extensibility;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using System.Windows.Threading;
 
 namespace Gitea.TeamFoundation.ViewModels
 {
@@ -29,8 +32,8 @@ namespace Gitea.TeamFoundation.ViewModels
 
         public PublishSectionViewModel(IMessenger messenger, IGitService git, IShellService shell, IStorage storage, ITeamExplorerServices tes, IViewFactory viewFactory, IWebService web)
         {
-            messenger.Register("OnLogined", OnLogined);
-            messenger.Register("OnSignOuted", OnSignOuted);
+            messenger.Register("OnLoggedIn", OnLoggedIn);
+            messenger.Register("OnSignedOut", OnSignedOut);
             _messenger = messenger;
             _git = git;
             _shell = shell;
@@ -41,13 +44,14 @@ namespace Gitea.TeamFoundation.ViewModels
             Name = Strings.Name;
             if (string.IsNullOrEmpty(storage.Host))
             {
-               
+
                 Provider = Strings.Provider;
             }
             else
             {
                 Provider = Strings.Provider + ": " + storage.Host + "";
             }
+
             Description = Strings.Description;
             _loginCommand = new DelegateCommand(OnLogin);
             _signUpCommand = new DelegateCommand(OnSignUp);
@@ -60,17 +64,54 @@ namespace Gitea.TeamFoundation.ViewModels
 
         private void LoadResources()
         {
+            Licenses.Clear();
             Licenses.Add(string.Empty, Strings.Common_ChooseALicense);
             SelectedLicense = string.Empty;
             foreach (var line in _git.GetLicenses())
             {
                 Licenses.Add(line, line);
             }
+            Owners.Clear();
+            var user = _storage.GetUser();
+            Owners.Add(new Ownership(user.Username, user.Username, OwnershipTypes.User));
+
+            Task.Run(async () =>
+            {
+                var owners = await _web.GetUserOrginizationsAsync();
+                await ThreadingHelper.SwitchToMainThreadAsync();
+
+                foreach (var owner in owners)
+                {
+                    Owners.Add(owner);
+                }
+
+
+            });
         }
 
         public string Name { get; set; }
         public string Provider { get; set; }
         public string Description { get; set; }
+
+        public ObservableCollection<Ownership> Owners { get; } = new ObservableCollection<Ownership>();
+
+        private Ownership _selectedOwner = null;
+        public Ownership SelectedOwner
+        {
+            get
+            {
+                return _selectedOwner;
+            }
+            set
+            {
+                SetProperty(ref _selectedOwner, value);
+            }
+        }
+
+        internal void Refresh()
+        {
+            ShowGetStarted = _storage.IsLogined;
+        }
 
         public IDictionary<string, string> Licenses { get; } = new Dictionary<string, string>();
 
@@ -179,15 +220,15 @@ namespace Gitea.TeamFoundation.ViewModels
             _shell.ShowDialog(string.Format(Strings.Login_ConnectTo, Strings.Name), dialog);
         }
 
-        public void OnLogined()
+        public void OnLoggedIn()
         {
             OnPropertyChanged(nameof(ShowLogin));
             OnPropertyChanged(nameof(ShowSignUp));
-
+            LoadResources();
             ShowGetStarted = true;
         }
 
-        public void OnSignOuted()
+        public void OnSignedOut()
         {
             OnPropertyChanged(nameof(ShowLogin));
             OnPropertyChanged(nameof(ShowSignUp));
@@ -219,6 +260,11 @@ namespace Gitea.TeamFoundation.ViewModels
             {
                 ShowGetStarted = false;
                 IsStarted = true;
+                if (Owners.Count > 0)
+                {
+                    SelectedOwner = Owners[0];
+                }
+                RepositoryName = System.IO.Path.GetFileNameWithoutExtension(_tes.GetSolutionFullPath());
             }
         }
 
@@ -234,13 +280,14 @@ namespace Gitea.TeamFoundation.ViewModels
                 try
                 {
                     var user = _storage.GetUser();
-                    result = await _web.CreateProjectAsync(RepositoryName, RepositoryDescription, IsPrivate, user.Username);
+                    var activeRepository = _tes.GetActiveRepository();
+                    result = await _web.CreateProjectAsync(RepositoryName, RepositoryDescription, IsPrivate, user.Username, SelectedOwner);
                     if (result.Project != null)
                     {
-                        var activeRepository = _tes.GetActiveRepository();
+
                         var path = activeRepository == null ? _tes.GetSolutionPath() : activeRepository.Path;
-                        var password = _storage.GetPassword(user.Host);
-                        _git.PushWithLicense(user.Name, user.Email,user.Username, password, result.Project.Url, path, SelectedLicense);
+
+                        _git.PushWithLicense(user.Name, user.Email, user.Username, user.Password, result.Project.Url, path, SelectedLicense);
                     }
                 }
                 catch (Exception ex)
@@ -279,4 +326,5 @@ namespace Gitea.TeamFoundation.ViewModels
             GC.SuppressFinalize(this);
         }
     }
+
 }

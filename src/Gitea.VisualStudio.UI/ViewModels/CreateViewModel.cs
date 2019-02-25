@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Collections;
 using System.IO;
 using System.Threading;
+using System.Collections.ObjectModel;
 
 namespace Gitea.VisualStudio.UI.ViewModels
 {
@@ -45,6 +46,23 @@ namespace Gitea.VisualStudio.UI.ViewModels
 
         private void LoadResources()
         {
+            Owners.Clear();
+            var user = _storage.GetUser();
+            Owners.Add(new Ownership(user.Username, user.Username, OwnershipTypes.User));
+            SelectedOwner = Owners[0];
+            Task.Run(async () =>
+            {
+                var owners = await _web.GetUserOrginizationsAsync();
+                await ThreadingHelper.SwitchToMainThreadAsync();
+                
+                foreach (var owner in owners)
+                {
+                    Owners.Add(owner);
+                }
+
+
+            });
+
             GitIgnores.Add(string.Empty, Strings.Common_ChooseAGitIgnore);
             SelectedGitIgnore = string.Empty;
             foreach (var line in _git.GetGitIgnores())
@@ -161,7 +179,20 @@ namespace Gitea.VisualStudio.UI.ViewModels
             set { SetProperty(ref _selectedNamespaces, value); }
         }
 
-       
+        public ObservableCollection<Ownership> Owners { get; } = new ObservableCollection<Ownership>();
+
+        private Ownership _selectedOwner = null;
+        public Ownership SelectedOwner
+        {
+            get
+            {
+                return _selectedOwner;
+            }
+            set
+            {
+                SetProperty(ref _selectedOwner, value);
+            }
+        }
 
         private void OnBrowse()
         {
@@ -190,7 +221,7 @@ namespace Gitea.VisualStudio.UI.ViewModels
                     }
                     else
                     {
-                        result = await _web.CreateProjectAsync(Name, Description, IsPrivate,SelectedNamespaces);
+                        result = await _web.CreateProjectAsync(Name, Description, IsPrivate,SelectedNamespaces, SelectedOwner);
                         if (result.Project != null)
                         {
                             clonePath = System.IO.Path.Combine(Path, result.Project.Name);
@@ -226,6 +257,8 @@ namespace Gitea.VisualStudio.UI.ViewModels
                     _messenger.Send("OnClone", result.Project.Url, repository);
 
                     _dialog.Close();
+                    _storage.Configuration.LocalRepoPath = Path;
+                    _storage.SaveConfiguration();
                 }
             }, TaskScheduler.FromCurrentSynchronizationContext());
         }
@@ -233,9 +266,8 @@ namespace Gitea.VisualStudio.UI.ViewModels
         private void InitialCommit(string url)
         {
             var user = _storage.GetUser();
-            var password = _storage.GetPassword(user.Host);
-
-            _git.PushInitialCommit(user.Name, user.Email,user.Username, password, url, SelectedGitIgnore, SelectedLicense);
+            
+            _git.PushInitialCommit(user.Name, user.Email,user.Username, user.Password, url, SelectedGitIgnore, SelectedLicense);
           
         }
 

@@ -40,10 +40,11 @@ namespace Gitea.VisualStudio.UI.ViewModels
         }
 
         private string _host;
-        [Required(ErrorMessageResourceType = typeof(Strings),AllowEmptyStrings =false, ErrorMessageResourceName = "Login_HostIsRequired")]
+        [Required(ErrorMessageResourceType = typeof(Strings), AllowEmptyStrings = false, ErrorMessageResourceName = "Login_HostIsRequired")]
         public string Host
         {
-            get {
+            get
+            {
                 if (string.IsNullOrEmpty(_host) || string.IsNullOrWhiteSpace(_host))
                 {
                     _host = Strings.DefaultHost;
@@ -54,7 +55,7 @@ namespace Gitea.VisualStudio.UI.ViewModels
         }
 
         private string _email;
-        [Required(ErrorMessageResourceType =typeof(Strings), ErrorMessageResourceName = "Login_EmailIsRequired")]
+        [Required(ErrorMessageResourceType = typeof(Strings), ErrorMessageResourceName = "Login_EmailIsRequired")]
         public string Email
         {
             get { return _email; }
@@ -134,15 +135,14 @@ namespace Gitea.VisualStudio.UI.ViewModels
             var successed = false;
             Task.Run(async () =>
             {
-                
-                    var user =await _web.LoginAsync(Enable2FA, Host, Email, Password);
-                    if (user != null)
-                    {
-                        successed = true;
-                        user.Host = Host;
-                        _storage.SaveUser(user, Password);
-                    }
-              
+
+                var user = await _web.LoginAsync(Enable2FA, Host, Email, Password);
+                if (user != null)
+                {
+                    successed = true;
+                    _storage.SaveUser(Host, user, Password);
+                }
+
             }).ContinueWith(task =>
             {
                 IsBusy = false;
@@ -151,7 +151,7 @@ namespace Gitea.VisualStudio.UI.ViewModels
                 if (successed)
                 {
                     _dialog.Close();
-                    _messenger.Send("OnLogined");
+                    _messenger.Send("OnLoggedIn");
                 }
                 else
                 {

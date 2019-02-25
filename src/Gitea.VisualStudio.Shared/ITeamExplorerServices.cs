@@ -23,8 +23,10 @@ namespace Gitea.VisualStudio.Shared
         void ClearNotifications();
         RepositoryInfo GetActiveRepository();
         string GetSolutionPath();
+        string GetSolutionFullPath();
+        bool CanPublishGitea();
+        Task<bool> IsGiteaRepoAsync(RepositoryInfo repo);
         Task<bool>  IsGiteaRepoAsync();
-
         Project Project { get; }
     }
 }

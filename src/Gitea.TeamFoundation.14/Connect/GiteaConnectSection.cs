@@ -1,12 +1,14 @@
 ﻿using Gitea.TeamFoundation.ViewModels;
 using Gitea.TeamFoundation.Views;
 using Gitea.VisualStudio.Shared;
+using Gitea.VisualStudio.Shared.Helpers;
 using Microsoft.TeamFoundation.Controls;
 using Microsoft.TeamFoundation.Controls.WPF.TeamExplorer;
 using Microsoft.TeamFoundation.Git.Controls.Extensibility;
 using Microsoft.VisualStudio.Shell.Interop;
 using System;
 using System.ComponentModel.Composition;
+using System.Threading.Tasks;
 using System.Windows;
 
 namespace Gitea.TeamFoundation.Connect
@@ -21,7 +23,7 @@ namespace Gitea.TeamFoundation.Connect
         private readonly ITeamExplorerServices _teamexplorer;
         private readonly IViewFactory _viewFactory;
         private readonly IWebService _web;
-
+        
         [ImportingConstructor]
         public GiteaConnectSection(IMessenger messenger, IShellService shell, IStorage storage, ITeamExplorerServices teamexplorer, IViewFactory viewFactory,  IWebService web)
         {
@@ -31,13 +33,14 @@ namespace Gitea.TeamFoundation.Connect
             _teamexplorer = teamexplorer;
             _viewFactory = viewFactory;
             _web = web;
-
-            messenger.Register("OnLogined", OnLogined);
-            messenger.Register("OnSignOuted", OnSignOuted);
+            
+            messenger.Register("OnLoggedIn", OnLoggedIn);
+            messenger.Register("OnSignedOut", InLoggedOut);
             messenger.Register<string, Repository>("OnClone", OnClone);
             messenger.Register<string>("OnOpenSolution", OnOpenSolution);
+            
         }
-
+        
         protected override ITeamExplorerSection CreateViewModel(SectionInitializeEventArgs e)
         {
             var temp = new TeamExplorerSectionViewModelBase
@@ -51,8 +54,21 @@ namespace Gitea.TeamFoundation.Connect
         public override void Initialize(object sender, SectionInitializeEventArgs e)
         {
             base.Initialize(sender, e);
+            //IsVisible = _storage.IsLogined;
+            var gitExt = ServiceProvider.GetService<Microsoft.VisualStudio.TeamFoundation.Git.Extensibility.IGitExt>();
+            gitExt.PropertyChanged += GitExt_PropertyChanged;
+        }
 
-            IsVisible = _storage.IsLogined;
+        private void GitExt_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "ActiveRepositories")
+            {
+                Task.Run(async () =>
+                {
+                    await ThreadingHelper.SwitchToMainThreadAsync();
+                    Refresh();
+                });
+            }
         }
 
         protected override object CreateView(SectionInitializeEventArgs e)
@@ -68,14 +84,16 @@ namespace Gitea.TeamFoundation.Connect
             }
         }
 
-        public void OnLogined()
+        public void OnLoggedIn()
         {
-            IsVisible = true;
+            // Added Connect and Sign Up buttons in case user closes the invitation.
+            //IsVisible = true;
         }
 
-        public void OnSignOuted()
+        public void InLoggedOut()
         {
-            IsVisible = false;
+            // Added Connect and Sign Up buttons in case user closes the invitation.
+            //IsVisible = false;
         }
 
         public void OnClone(string url, Repository repository)
@@ -92,6 +110,17 @@ namespace Gitea.TeamFoundation.Connect
                 x.OpenSolutionViaDlg(path, 1);
             }
         }
+
+       
+        public override void Refresh()
+        {
+            
+            ((View as ConnectSectionView).DataContext as ConnectSectionViewModel).Refresh();
+            
+            base.Refresh();
+        }
+
+        
 
         public override void Dispose()
         {

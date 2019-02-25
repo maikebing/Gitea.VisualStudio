@@ -21,6 +21,7 @@ namespace Gitea.VisualStudio.Shared
                     Email = session.Email,
                     Id = (int)session.ID,
                     Name = session.Username,
+                    FullName = session.FullName,
                     TwoFactorEnabled = false,
                     Username = session.Username
                 };
@@ -32,13 +33,30 @@ namespace Gitea.VisualStudio.Shared
         }
         public int Id { get; set; }
         public string Username { get; set; }
+        public string FullName { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
         public string AvatarUrl { get; set; }
-        public string PrivateToken { get; set; }
+        [JsonIgnore]
+        public string Password { get; set; }
         public string Host { get; set; }
         public bool TwoFactorEnabled { get; set; }
 
+        public User Clone()
+        {
+            return new User()
+            {
+                Id = this.Id,
+                Username = this.Username,
+                FullName = this.FullName,
+                Name = this.Name,
+                Email = this.Email,
+                AvatarUrl = this.AvatarUrl,
+                Password = this.Password,
+                Host = this.Host,
+                TwoFactorEnabled = this.TwoFactorEnabled
+            };
+        }
     }
 
     public class Project
@@ -144,7 +162,8 @@ namespace Gitea.VisualStudio.Shared
     {
         Task<User> LoginAsync(bool enable2fa, string host, string email, string password);
         Task<IReadOnlyList<Project>> GetProjects();
-        Task<CreateProjectResult> CreateProjectAsync(string name, string description, bool isPrivate, string namespaceid);
+        Task<Ownership[]> GetUserOrginizationsAsync();
+        Task<CreateProjectResult> CreateProjectAsync(string name, string description, bool isPrivate, string namespaceid, Ownership owner);
         IReadOnlyList<NamespacesPath> GetNamespacesPathList();
     }
 }

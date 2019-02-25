@@ -1,10 +1,13 @@
 ﻿using Gitea.TeamFoundation.ViewModels;
 using Gitea.TeamFoundation.Views;
 using Gitea.VisualStudio.Shared;
+using Gitea.VisualStudio.Shared.Helpers;
 using Microsoft.TeamFoundation.Controls;
 using Microsoft.TeamFoundation.Controls.WPF.TeamExplorer;
 using System;
+using System.ComponentModel;
 using System.ComponentModel.Composition;
+using System.Threading.Tasks;
 using System.Windows;
 
 namespace Gitea.TeamFoundation.Sync
@@ -32,6 +35,7 @@ namespace Gitea.TeamFoundation.Sync
             _tes = tes;
             _viewFactory = viewFactory;
             _web = web;
+           
         }
 
         protected override ITeamExplorerSection CreateViewModel(SectionInitializeEventArgs e)
@@ -47,11 +51,22 @@ namespace Gitea.TeamFoundation.Sync
         public override void Initialize(object sender, SectionInitializeEventArgs e)
         {
             base.Initialize(sender, e);
+            IsVisible = _tes.CanPublishGitea();
+            var gitExt = ServiceProvider.GetService<Microsoft.VisualStudio.TeamFoundation.Git.Extensibility.IGitExt>();
+            gitExt.PropertyChanged += GitExt_PropertyChanged;
+        }
 
-              System.Threading.Tasks.Task.Factory.StartNew(   async delegate
+        private void GitExt_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "ActiveRepositories")
             {
-                IsVisible = await _tes.IsGiteaRepoAsync();
-            });
+                Task.Run(async () =>
+                {
+                    await ThreadingHelper.SwitchToMainThreadAsync();
+                    Refresh();
+                });
+                
+            }
         }
 
         protected override object CreateView(SectionInitializeEventArgs e)
@@ -79,6 +94,19 @@ namespace Gitea.TeamFoundation.Sync
         {
             IsVisible = true;
         }
+
+        public override void Refresh()
+        {
+            var view = this.SectionContent as FrameworkElement;
+            if (view != null)
+            {
+                var temp = view.DataContext as PublishSectionViewModel;
+                temp.Refresh();
+            }
+            IsVisible = _tes.CanPublishGitea();
+            base.Refresh();
+        }
+
 
         public override void Dispose()
         {

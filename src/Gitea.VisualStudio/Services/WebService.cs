@@ -1,6 +1,4 @@
 ﻿using Gitea.VisualStudio.Shared;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
@@ -25,6 +23,22 @@ namespace Gitea.VisualStudio.Services
         List<Project> lstProject = new List<Project>();
         DateTime dts = DateTime.MinValue;
 
+        public async Task<Ownership[]> GetUserOrginizationsAsync()
+        {
+            var user = _storage.GetUser();
+            if (user == null)
+            {
+                throw new UnauthorizedAccessException(Strings.WebService_CreateProject_NotLoginYet);
+            }
+            API.v1.Client client = CreateClient(user.Host, user.Username, user.Password);
+            var usex = await client.Users.GetCurrent();
+            List<Ownership> orgs = new List<Ownership>();
+            foreach (var item in await usex.Repositories.GetUserOrginizationsAsync())
+            {
+                orgs.Add(new Ownership(item.Username, item.FullName, OwnershipTypes.Organization));
+            }
+            return orgs.ToArray();
+        }
 
         public async Task<IReadOnlyList<Project>> GetProjects()
         {
@@ -34,8 +48,9 @@ namespace Gitea.VisualStudio.Services
             {
                 throw new UnauthorizedAccessException(Strings.WebService_CreateProject_NotLoginYet);
             }
-            API.v1.Client client = CreateClient(user.Host, user.Username, user.PrivateToken);
+            API.v1.Client client = CreateClient(user.Host, user.Username, user.Password);
             var usex = await client.Users.GetCurrent();
+            
             var projectt = await usex.Repositories.GetAll();
             if (projectt != null)
             {
@@ -54,7 +69,7 @@ namespace Gitea.VisualStudio.Services
             try
             {
                 user = await client.Users.GetCurrent();
-                user.PrivateToken = password;
+                user.Password = password;
             }
             catch (Exception ex)
             {
@@ -77,7 +92,7 @@ namespace Gitea.VisualStudio.Services
 
             return new List<NamespacesPath>();
         }
-        public async Task<CreateProjectResult> CreateProjectAsync(string name, string description, bool isPrivate, string namespaceid)
+        public async Task<CreateProjectResult> CreateProjectAsync(string name, string description, bool isPrivate, string namespaceid, Ownership owner)
         {
             var user = _storage.GetUser();
             if (user == null)
@@ -91,13 +106,14 @@ namespace Gitea.VisualStudio.Services
                 {
                     namespaceid = user.Username;
                 }
-                API.v1.Client client = CreateClient(user.Host, user.Username, user.PrivateToken);
+                API.v1.Client client = CreateClient(user.Host, user.Username, user.Password);
                 var u = await client.Users.GetCurrent();
                 var pjt = await u.Repositories.Create()
                     .Name(name)
                     .Description(description)
                     .MakeAutoInit(false)
-                         .Start();
+                    .Owner(owner.UserName, owner.OwnerType == OwnershipTypes.Organization)
+                     .Start();
                 result.Project = (Project)pjt;
             }
             catch (Exception ex)
