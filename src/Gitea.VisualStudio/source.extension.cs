@@ -11,7 +11,7 @@ namespace Gitea.VisualStudio
         public const string Name = "Gitea Extension for Visual Studio";
         public const string Description = @"A Visual Studio Extension that brings the Gitea Flow into Visual Studio.";
         public const string Language = "en-US";
-        public const string Version = "0.0.0.5";
+        public const string Version = "1.0.0";
         public const string Author = "MysticBoy";
         public const string Tags = "Gitea;git;open source;source control;branch;Pipelines;Registry;Graphs;IssuesMerge Requests;Wiki";
     }

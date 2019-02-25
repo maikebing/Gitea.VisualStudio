@@ -7,13 +7,15 @@ Most of the extension UI lives in the Team Explorer pane, which is available fro
 
 
 ## What's new ?
-#### V0.0.0.1
+
+#### V1.0.6
+
  
 
 
  
 ### HomePage
- http://visualstudio.gitclub.cn/
+ https://github.com/maikebing/Gitea.VisualStudio
 
 ### BUG And Issues
  
@@ -48,5 +50,5 @@ https://github.com/neuecc/Open-on-GitHub
 ### Team Connct Page
 ![image](./docs/images/TeamConnect.PNG)
  
-[![image](http://s07.flagcounter.com/map/7uzT/size_s/txt_000000/border_CCCCCC/pageviews_0/viewers_0/flags_0/)](http://info.flagcounter.com/7uzT)
+[![image](https://s01.flagcounter.com/map/nwAa/size_s/txt_000000/border_CCCCCC/pageviews_0/viewers_0/flags_0/)](https://info.flagcounter.com/nwAa)
 

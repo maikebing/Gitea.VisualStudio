@@ -1,6 +1,0 @@
-assembly-versioning-scheme: MajorMinorPatchTag
-mode: ContinuousDeployment
-next-version: 0.0.0
-branches: {}
-ignore:
-  sha: []
