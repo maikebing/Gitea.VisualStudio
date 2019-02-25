@@ -27,8 +27,8 @@ namespace Gitea.TeamFoundation.Connect
             _storage = storage;
             _viewFactory = viewFactory;
 
-            _messenger.Register("OnLogined", OnLogined);
-            _messenger.Register("OnSignOuted", OnSignOuted);
+            _messenger.Register("OnLoggedIn", OnLoggedIn);
+            _messenger.Register("OnSignedOut", OnSignedOut);
 
             CanConnect = true;
             CanSignUp = true;
@@ -63,12 +63,12 @@ namespace Gitea.TeamFoundation.Connect
             _shell.OpenUrl($"{_storage.Host}/users/sign_in#register-pane");
         }
 
-        public void OnLogined()
+        public void OnLoggedIn()
         {
             IsVisible = false;
         }
 
-        public void OnSignOuted()
+        public void OnSignedOut()
         {
             IsVisible = true;
         }

@@ -362,4 +362,7 @@
   <data name="AfterCreatedOpenInTheBrowser" xml:space="preserve">
     <value>创建之后在浏览器中打开 </value>
   </data>
+  <data name="Common_Owner" xml:space="preserve">
+    <value>Owner</value>
+  </data>
 </root>

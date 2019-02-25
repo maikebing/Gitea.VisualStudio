@@ -232,6 +232,15 @@ namespace Gitea.VisualStudio.Shared {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Owner.
+        /// </summary>
+        public static string Common_Owner {
+            get {
+                return ResourceManager.GetString("Common_Owner", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Path 的本地化字符串。
         /// </summary>
         public static string Common_Path {

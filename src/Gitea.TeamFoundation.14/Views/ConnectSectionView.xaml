@@ -260,25 +260,42 @@
                 </Setter>
             </Style>
         </DockPanel.Resources>
-        <WrapPanel Orientation="Horizontal"
+        <WrapPanel Orientation="Horizontal" 
                    Margin="6,0,0,6"
                    DockPanel.Dock="Top" VerticalAlignment="Center">
             <Button Style="{StaticResource ActionLinkButton}"
+                    Command="{Binding SignInCommand}"
+                    Content="{x:Static shared:Strings.Invitation_Connect}"
+                    Visibility="{Binding NotLoggedInButtonsVisible}"/>
+            <Separator Margin="8,0,8,0"
+                       Style="{StaticResource VerticalSeparator}" 
+                       Visibility="{Binding NotLoggedInButtonsVisible}"/>
+            <Button Style="{StaticResource ActionLinkButton}"
+                    Command="{Binding SignUpCommand}"
+                    Content="{x:Static shared:Strings.Login_SignUp}"
+                    Visibility="{Binding NotLoggedInButtonsVisible}"/>
+            
+            <Button Style="{StaticResource ActionLinkButton}"
                     KeyboardNavigation.TabIndex="0"
                     Command="{Binding CloneCommand}"
-                    Content="{x:Static shared:Strings.Common_Clone}" />
-            <Separator Margin="3,0,3,0"
-                       Style="{StaticResource VerticalSeparator}" />
+                    Content="{x:Static shared:Strings.Common_Clone}"
+                    Visibility="{Binding LoggedInButtonsVisible}"/>
+            <Separator Margin="8,0,8,0"
+                       Style="{StaticResource VerticalSeparator}" 
+                       Visibility="{Binding LoggedInButtonsVisible}"/>
             <Button Style="{StaticResource ActionLinkButton}"
                     KeyboardNavigation.TabIndex="1"
                     Command="{Binding CreateCommand}"
-                    Content="{x:Static shared:Strings.Common_CreateRepository}" />
-            <Separator Margin="3,0,3,0"
-                       Style="{StaticResource VerticalSeparator}" />
+                    Content="{x:Static shared:Strings.Common_CreateRepository}"
+                    Visibility="{Binding LoggedInButtonsVisible}"/>
+            <Separator Margin="8,0,8,0"
+                       Style="{StaticResource VerticalSeparator}" 
+                       Visibility="{Binding LoggedInButtonsVisible}"/>
             <Button Style="{StaticResource ActionLinkButton}"
                     KeyboardNavigation.TabIndex="2"
                     Command="{Binding SignOutCommand}"
-                    Content="{x:Static shared:Strings.Common_Quit}" />
+                    Content="{x:Static shared:Strings.Common_Quit}" 
+                    Visibility="{Binding LoggedInButtonsVisible}"/>
             <!--<Button Content="test" Click="Button_Click" />-->
         </WrapPanel>
 
@@ -295,7 +312,7 @@
                   VirtualizingPanel.IsVirtualizing="True"
                   VirtualizingPanel.ScrollUnit="Pixel"
                   VirtualizingPanel.IsVirtualizingWhenGrouping="True"
-                  Visibility="{Binding IsRepositoriesVisible}">
+                  Visibility="{Binding IsRepositoriesVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="MouseDoubleClick">
                     <i:InvokeCommandAction Command="{Binding OpenRepositoryCommand}"

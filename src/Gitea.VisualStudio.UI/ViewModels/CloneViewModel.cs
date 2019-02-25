@@ -121,6 +121,8 @@ namespace Gitea.VisualStudio.UI.ViewModels
             _messenger.Send("OnClone", SelectedRepository.Url, repository);
 
             _dialog.Close();
+            _storage.Configuration.LocalRepoPath = BaseRepositoryPath;
+            _storage.SaveConfiguration();
         }
 
         private void LoadRepositoriesAsync()

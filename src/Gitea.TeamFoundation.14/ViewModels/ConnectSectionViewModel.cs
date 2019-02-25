@@ -25,7 +25,8 @@ namespace Gitea.TeamFoundation.ViewModels
 
         public ConnectSectionViewModel(IMessenger messenger, IShellService shell, IStorage storage, ITeamExplorerServices teamexplorer, IViewFactory viewFactory, IWebService web)
         {
-            messenger.Register("OnLogined", OnLogined);
+            messenger.Register("OnLoggedIn", OnLoggedIn);
+            messenger.Register("OnSignedOut", OnSignedOut);
             messenger.Register<string, Repository>("OnClone", OnRepositoryCloned);
 
             _messenger = messenger;
@@ -39,16 +40,31 @@ namespace Gitea.TeamFoundation.ViewModels
 
             Repositories.CollectionChanged += OnRepositoriesChanged;
 
+            SignInCommand = new DelegateCommand(OnSignIn);
+            SignUpCommand = new DelegateCommand(OnSignUp);
             _signOutCommand = new DelegateCommand(OnSignOut);
             _cloneCommand = new DelegateCommand(OnClone);
             _createCommand = new DelegateCommand(OnCreate);
             _openRepositoryCommand = new DelegateCommand<Repository>(OnOpenRepository);
 
+            LoggedInButtonsVisible = _storage.IsLogined ? Visibility.Visible : Visibility.Collapsed;
+            NotLoggedInButtonsVisible = LoggedInButtonsVisible == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
+            IsRepositoriesVisible = LoggedInButtonsVisible == Visibility.Visible;
             LoadRepositoriesAsync();
         }
 
-        public void OnLogined()
+        private void OnSignedOut()
         {
+            NotLoggedInButtonsVisible = Visibility.Visible;
+            LoggedInButtonsVisible = Visibility.Collapsed;
+            IsRepositoriesVisible = false;
+        }
+
+        public void OnLoggedIn()
+        {
+            NotLoggedInButtonsVisible = Visibility.Collapsed;
+            LoggedInButtonsVisible = Visibility.Visible;
+            IsRepositoriesVisible = true;
             LoadRepositoriesAsync();
         }
 
@@ -63,6 +79,10 @@ namespace Gitea.TeamFoundation.ViewModels
             get { return _selectedRepository; }
             set { SetProperty(ref _selectedRepository, value); }
         }
+
+        public ICommand SignInCommand { get; }
+
+        public ICommand SignUpCommand { get; }
 
         private DelegateCommand _signOutCommand;
         public ICommand SignOutCommand
@@ -88,9 +108,38 @@ namespace Gitea.TeamFoundation.ViewModels
             get { return _openRepositoryCommand; }
         }
 
+        private bool _isRepositoriesVisible;
         public bool IsRepositoriesVisible
         {
-            get { return Repositories.Count > 0; }
+            get { return _isRepositoriesVisible; }
+            set { SetProperty(ref _isRepositoriesVisible, value); }
+        }
+
+        private Visibility _notLoggedInButtonsVisible;
+
+        public Visibility NotLoggedInButtonsVisible
+        {
+            get { return _notLoggedInButtonsVisible; }
+            set { SetProperty(ref _notLoggedInButtonsVisible,  value); }
+        }
+
+        private Visibility _LoginButtonsVisible;
+
+        public Visibility LoggedInButtonsVisible
+        {
+            get { return _LoginButtonsVisible; }
+            set { SetProperty(ref _LoginButtonsVisible, value); }
+        }
+
+        public void OnSignIn()
+        {
+            var dialog = _viewFactory.GetView<Dialog>(ViewTypes.Login);
+            _shell.ShowDialog(string.Format(Strings.Login_ConnectTo, Strings.Name), dialog);
+        }
+
+        public void OnSignUp()
+        {
+            _shell.OpenUrl($"{_storage.Host}/users/sign_in#register-pane");
         }
 
         private void OnSignOut()
@@ -98,7 +147,7 @@ namespace Gitea.TeamFoundation.ViewModels
             if (MessageBox.Show(Strings.Confirm_Quit, $"{Strings.Common_Quit} {Strings.Name}", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
                 _storage.Erase();
-                _messenger.Send("OnSignOuted");
+                _messenger.Send("OnSignedOut");
             }
         }
 
@@ -197,6 +246,11 @@ namespace Gitea.TeamFoundation.ViewModels
             }
 
             repository.IsActived = true;
+        }
+
+        public void Refresh()
+        {
+            LoadRepositoriesAsync();
         }
 
         public void Dispose()

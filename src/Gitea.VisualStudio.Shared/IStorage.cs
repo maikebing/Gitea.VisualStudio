@@ -8,9 +8,10 @@ namespace Gitea.VisualStudio.Shared
         User GetUser();
         string Host { get;  }
         string Path { get; }
-        string GetPassword(string _host);
-
-        void SaveUser( User user, string password);
+        Configuration Configuration { get; }
+        void SaveUser(string host, User user, string password);
+        void LoadConfiguration();
+        void SaveConfiguration();
         void Erase();
 
         string GetBaseRepositoryDirectory();

@@ -4,7 +4,8 @@ namespace Gitea.TeamFoundation
 {
     static class Settings
     {
-        public const string InvitationSectionId = "27DF4C51-04F4-4ED0-A785-90A1C3B54CF3";
+        public const string InvitationSectionId = "C2443FCC-6D62-4D31-B08A-C4DE70109C7F";
+        
         public const int InvitationSectionPriority = 100;
 
         public const string ConnectSectionId = "5C4EAF08-7C8D-449F-B83E-21B7C3BDC545";

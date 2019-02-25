@@ -13,15 +13,19 @@ namespace Gitea.VisualStudio.Services
     [PartCreationPolicy(CreationPolicy.Shared)]
     public class Storage : IStorage
     {
- 
+        string _giteaPath = null;
+        Configuration _configuration = null;
+
+        public Storage()
+        {
+            LoadConfiguration();
+        }
+
         public bool IsLogined
         {
             get
             {
-                bool islogin = false;
-                var _user = LoadUser();
-                islogin = _user != null && _user.PrivateToken != null;
-                return islogin;
+                return !string.IsNullOrEmpty(Configuration.Host) && GetUser() != null;
             }
         }
 
@@ -38,17 +42,13 @@ namespace Gitea.VisualStudio.Services
                         if (!string.IsNullOrEmpty(hurl))
                         {
                             Uri uri = new Uri(hurl);
-                            url = uri.Host;
+                            url = $"{uri.Scheme}://{uri.Host}";
                         }
                     }
                 }
                 if (string.IsNullOrEmpty(url))
                 {
-                    var _u = LoadUser();
-                    if (_u != null)
-                    {
-                        url = _u.Host;
-                    }
+                    url = Configuration.Host;
                 }
                 return url;
             }
@@ -57,28 +57,30 @@ namespace Gitea.VisualStudio.Services
         {
             get
             {
-                string slnpath = GiteaPackage.GetSolutionDirectory();
-                string _path = string.Empty;
-                if (string.IsNullOrEmpty(slnpath))
+                if (string.IsNullOrEmpty(_giteaPath))
                 {
-                    _path = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".Gitea");
+                    _giteaPath = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".Gitea");
                 }
-                else
-                {
-                      _path = slnpath + "\\.vs\\.Gitea";
-                }
-                return _path;
+                return _giteaPath;
             }
         }
-        public string GetPassword(string _host)
-        {
-            var key = $"git:{_host}";
 
+        public Configuration Configuration { get => _configuration; }
+
+
+        public User GetCredential(string host)
+        {
             using (var credential = new Credential())
             {
-                credential.Target = key;
+                credential.Target = $"git:{host}";
                 return credential.Load()
-                    ? credential.Password
+                    ? new User()
+                    {
+                        Host = host,
+                        Username = credential.Username,
+                        Name = credential.Username,
+                        Password = credential.Password
+                    }
                     : null;
             }
         }
@@ -98,59 +100,72 @@ namespace Gitea.VisualStudio.Services
 
         public User GetUser()
         {
-            return LoadUser();
-        }
-
-        public void SaveUser(User user, string password)
-        {
-            SavePassword(user.Host, user.Username, password);
-            if (user.TwoFactorEnabled)
+            string host = Host;
+            using (var credential = new Credential())
             {
-                user.PrivateToken = password;
-            }
-            SaveToken(user.Host,user.Username, user.PrivateToken);
-            SaveUserToLocal(user);
-          
-        }
-
-        private void SaveUserToLocal(User user)
-        {
-            var serializer = new JsonSerializer();
-            string _path = Path;
-            if (File.Exists(_path))
-            {
-                JObject o = null;
-                using (var reader = new JsonTextReader(new StreamReader(_path)))
+                credential.Target = $"git:{host}";
+                if (credential.Load())
                 {
-                    o = (JObject)serializer.Deserialize(reader);
-
-                    o["User"] = JToken.FromObject(user);
+                    if (host == Configuration?.User.Host)
+                    {
+                        User user = Configuration.User.Clone();
+                        user.Password = credential.Password;
+                        return user;
+                    }
+                    else
+                    {
+                        return new User()
+                        {
+                            Host = host,
+                            Username = credential.Username,
+                            Name = credential.Username,
+                            Password = credential.Password
+                        };
+                    }
                 }
-                using (var writer = new JsonTextWriter(new StreamWriter(_path)))
+            }
+            return null;
+        }
+
+        public void SaveUser(string host, User user, string password)
+        {
+            SavePassword(host, user.Username, password);
+            user.Host = host;
+            Configuration.Host = host;
+            Configuration.User = user;
+            SaveConfiguration();
+        }
+
+        public void LoadConfiguration()
+        {
+
+            if (File.Exists(Path))
+            {
+                var serializer = new JsonSerializer();
+                JObject giteaJson;
+                using (var reader = new JsonTextReader(new StreamReader(Path)))
                 {
-                    writer.Formatting = Formatting.Indented;
-                    o.WriteTo(writer);
+                    _configuration = serializer.Deserialize<Configuration>(reader);
                 }
             }
             else
             {
-                var fi = new System.IO.FileInfo(_path);
-                if (fi.Directory.Exists)
-                {
-                    fi.Directory.Create();
-                  //  fi.Directory.Attributes = FileAttributes.Hidden;
-                }
-                using (var writer = new JsonTextWriter(new StreamWriter(_path)))
-                {
-                    writer.Formatting = Formatting.Indented;
-                    serializer.Serialize(writer, new { User = user });
-                }
-                //System.IO.File.SetAttributes(_path,   FileAttributes.Hidden);
+                _configuration = new Configuration();
             }
-         
         }
 
-        private void SavePassword(string _host,string username, string password)
+        public void SaveConfiguration()
+        {
+            var serializer = new JsonSerializer();
+            using (var writer = new JsonTextWriter(new StreamWriter(Path)))
+            {
+                writer.Formatting = Formatting.Indented;
+                serializer.Serialize(writer, Configuration);
+            }
+        }
+
+
+        private void SavePassword(string _host, string username, string password)
         {
             var key = $"git:{_host}";
             using (var credential = new Credential(username, password, key))
@@ -159,7 +174,7 @@ namespace Gitea.VisualStudio.Services
             }
         }
 
-        private void SaveToken(string _host,string username, string token)
+        private void SaveToken(string _host, string username, string token)
         {
             var key = $"token:{_host}";
             using (var credential = new Credential(username, token, key))
@@ -173,30 +188,13 @@ namespace Gitea.VisualStudio.Services
             User _user = null;
             try
             {
-                string _path = Path;
-                if (!File.Exists(_path))
-                {
-                   var  tmp_path = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".Gitea");
-                    if (System.IO.File.Exists(tmp_path))
-                    {
-                        System.IO.File.Copy(tmp_path, _path);
-                    }
-                }
-                JObject o = null;
-                using (var reader = new JsonTextReader(new StreamReader(_path)))
-                {
-                    var serializer = new JsonSerializer();
-                    o = (JObject)serializer.Deserialize(reader);
-                    var token = o["User"];
-                    _user = token.ToObject<User>();
-                    _user.PrivateToken = GetToken(_user.Host);
-                }
+
 
             }
             catch (Exception ex)
             {
 
-             
+
             }
             return _user;
         }
@@ -205,6 +203,8 @@ namespace Gitea.VisualStudio.Services
         {
             EraseCredential($"git:{Host}");
             EraseCredential($"token:{Host}");
+            _configuration = new Configuration();
+            SaveConfiguration();
         }
 
         private static void EraseCredential(string key)
@@ -218,11 +218,15 @@ namespace Gitea.VisualStudio.Services
 
         public string GetBaseRepositoryDirectory()
         {
+            if (!string.IsNullOrEmpty(Configuration.LocalRepoPath) && Directory.Exists(Configuration.LocalRepoPath))
+            {
+                return Configuration.LocalRepoPath;
+            }
             string _path = this.Path;
             if (!System.IO.Directory.Exists(_path))
             {
                 var user = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
-              _path=   System.IO.Path.Combine(user, "Source", "Repos");
+                _path = System.IO.Path.Combine(user, "Source", "Repos");
             }
 
             return _path;

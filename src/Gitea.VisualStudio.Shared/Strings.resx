@@ -178,7 +178,7 @@
     <value>Property</value>
   </data>
   <data name="Common_Quit" xml:space="preserve">
-    <value>Quit</value>
+    <value>Sign Out</value>
   </data>
   <data name="Confirm_Quit" xml:space="preserve">
     <value>Are you sure you want to quit?</value>
@@ -364,5 +364,8 @@
   </data>
   <data name="AfterCreatedOpenInTheBrowser" xml:space="preserve">
     <value>After created open  in the browser</value>
+  </data>
+  <data name="Common_Owner" xml:space="preserve">
+    <value>Owner</value>
   </data>
 </root>

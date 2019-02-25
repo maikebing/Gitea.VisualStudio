@@ -132,8 +132,41 @@ namespace Gitea.TeamFoundation
             return solutionDir;
         }
 
+        public string GetSolutionFullPath()
+        {
+            if (serviceProvider == null)
+            {
+                return null;
+            }
+            var solution = (IVsSolution)serviceProvider.GetService(typeof(SVsSolution));
+
+            string solutionDir, solutionFile, userFile;
+            if (!ErrorHandler.Succeeded(solution.GetSolutionInfo(out solutionDir, out solutionFile, out userFile)))
+            {
+                return null;
+            }
+
+            if (solutionDir == null || solutionFile == null)
+            {
+                return null;
+            }
+
+            return System.IO.Path.Combine(solutionDir, solutionFile);
+        }
 
         public Project Project { get; private set; }
+
+        public bool CanPublishGitea()
+        {
+            var repo = GetActiveRepository();
+            if (repo == null)
+            {
+                return false;
+            }
+            var path = repo.Path;
+            var url = _git.GetRemote(path);
+            return url == null;
+        }
 
         public async Task<bool> IsGiteaRepoAsync()
         {
@@ -142,10 +175,15 @@ namespace Gitea.TeamFoundation
             {
                 return false;
             }
+            return await IsGiteaRepoAsync(repo);
+        }
 
+        public async Task<bool> IsGiteaRepoAsync(RepositoryInfo repo)
+        {
+            
             var path = repo.Path;
             var url = _git.GetRemote(path);
-
+            
             if (url == null)
             {
                 return false;
