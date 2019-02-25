@@ -5,6 +5,11 @@ You can log any of your favorite Gitea servers and start your great job!
 The Gitea Extension for Visual Studio provides Gitea integration in Visual Studio 2015/2017.
 Most of the extension UI lives in the Team Explorer pane, which is available from the View menu.
 
+Appveyor:[![Build status](https://ci.appveyor.com/api/projects/status/045302i4qkxqkfdc?svg=true)](https://ci.appveyor.com/project/MaiKeBing/gitea-visualstudio)
+
+The Visual Studio Extension is also available at the [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=MysticBoy.GiteaExtensionforVisualStudio), or by searching for GitLab4VS  in the Visual Studio extension manager.
+The latest build of the Visual Studio Extension is available at the [Open VsixGallery](http://vsixgallery.com/extension/54803a44-49e0-4935-bba4-7d7d91682273/)
+
 
 ## What's new ?
 
