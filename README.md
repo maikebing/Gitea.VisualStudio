@@ -11,6 +11,13 @@ Most of the extension UI lives in the Team Explorer pane, which is available fro
 #### V1.0.6
 
  
+* Added option to create or publish to organizations.
+* Added Connect and Sign Up buttons to ConnectSectionView.xaml and now leaving visible.
+* Removed password from .Gitea file and pull it from the Credential Manager.
+* Now storing last path cloned to in the .Gitea file.
+* Some bug fixes.
+   
+    Thanks [!troygeiger](https://github.com/troygeiger)
 
 
  
@@ -39,16 +46,6 @@ https://github.com/neuecc/Open-on-GitHub
  https://github.com/mkloubert/gitea.net
 
 
-
-### Open On Gitea
-
-![image](./docs/images/OpenOnGitea.png)
-###  Team Home Page
-
-![image](./docs/images/TeamHome.PNG)
-
-### Team Connct Page
-![image](./docs/images/TeamConnect.PNG)
  
 [![image](https://s01.flagcounter.com/map/nwAa/size_s/txt_000000/border_CCCCCC/pageviews_0/viewers_0/flags_0/)](https://info.flagcounter.com/nwAa)
 
