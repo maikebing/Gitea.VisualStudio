@@ -184,22 +184,10 @@ namespace Gitea.VisualStudio
             var command = (OleMenuCommand)sender;
             try
             {
+
                 if (command.CommandID.ID == PackageCommanddIDs.CreateSnippet)
                 {
-                    var selection = DTE.ActiveDocument.Selection as TextSelection;
-                    if (selection != null)
-                    {
-                        //var dialog = _viewFactory.GetView<Dialog>(ViewTypes.CreateSnippet);
-                        //var cs = (CreateSnippet)dialog;
-                        //var csm = cs.DataContext as CreateSnippetViewModel;
-                        //csm.Code = selection.Text;
-                        //csm.FileName = new System.IO.FileInfo(DTE.ActiveDocument.FullName).Name; 
-                        //_shell.ShowDialog(Strings.OpenOnGiteaPackage_CreateSnippet, dialog);
-                    }
-                    else
-                    {
-                        Debug.Write("未选择任何内容");
-                    }
+                    
                 }
                 else
                 {
