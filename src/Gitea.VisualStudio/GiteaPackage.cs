@@ -110,6 +110,8 @@ namespace Gitea.VisualStudio
                 var assemblyCatalog = new AssemblyCatalog(typeof(GiteaPackage).Assembly);
                 CompositionContainer container = new CompositionContainer(assemblyCatalog);
                 container.ComposeParts(this);
+                // Added the following line to prevent the error "Due to high risk of deadlock you cannot call GetService from a background thread in an AsyncPackage derived class"
+                await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
                 var mcs = await GetServiceAsync(typeof(IMenuCommandService)) as OleMenuCommandService;
                 if (mcs != null)
                 {
