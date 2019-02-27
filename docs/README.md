@@ -10,21 +10,7 @@ Appveyor:[![Build status](https://ci.appveyor.com/api/projects/status/045302i4qk
 The Visual Studio Extension is also available at the [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=MysticBoy.GiteaExtensionforVisualStudio), or by searching for GitLab4VS  in the Visual Studio extension manager.
 The latest build of the Visual Studio Extension is available at the [Open VsixGallery](http://vsixgallery.com/extension/54803a44-49e0-4935-bba4-7d7d91682273/)
 
-
-## What's new ?
-
-#### V1.0.6
-
  
-* Added option to create or publish to organizations.
-* Added Connect and Sign Up buttons to ConnectSectionView.xaml and now leaving visible.
-* Removed password from .Gitea file and pull it from the Credential Manager.
-* Now storing last path cloned to in the .Gitea file.
-* Some bug fixes.
-   
-    Thanks [!troygeiger](https://github.com/troygeiger)
-
-
  
 ### HomePage
  https://github.com/maikebing/Gitea.VisualStudio
@@ -35,6 +21,11 @@ https://github.com/maikebing/Gitea.VisualStudio/issues
 
 ###    Visual Studio    |   Marketplace
 https://marketplace.visualstudio.com/items?itemName=MysticBoy.GiteaExtensionforVisualStudio
+
+### Screenshots
+[image](gitea1.PNG)
+
+[image](gitea2.PNG)
 
 ### Thanks
  

@@ -19,9 +19,18 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gitea.API", "GiteaApi\Gitea.API\Gitea.API.csproj", "{C092A1FA-C2E2-4E18-A3CB-F4381A15280D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gitea.API", "GiteaApi\Gitea.API\Gitea.API.csproj", "{C092A1FA-C2E2-4E18-A3CB-F4381A15280D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gitea.TeamFoundation.16", "src\Gitea.TeamFoundation.16\Gitea.TeamFoundation.16.csproj", "{D6737559-4D0F-456D-97CE-766201D59EDD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{933FCC6F-E5DF-4751-9D3C-EFDEA5EECA78}"
+	ProjectSection(SolutionItems) = preProject
+		docs\_config.yml = docs\_config.yml
+		docs\CNAME = docs\CNAME
+		docs\gitea1.PNG = docs\gitea1.PNG
+		docs\gitea2.PNG = docs\gitea2.PNG
+		docs\README.md = docs\README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
