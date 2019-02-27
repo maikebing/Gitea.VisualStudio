@@ -73,7 +73,7 @@ namespace Gitea.TeamFoundation.ViewModels
             }
             Owners.Clear();
             var user = _storage.GetUser();
-            Owners.Add(new Ownership(user.Username, user.Username, OwnershipTypes.User));
+            Owners.Add(new Ownership(user.Username, user.FullName, OwnershipTypes.User));
 
             Task.Run(async () =>
             {

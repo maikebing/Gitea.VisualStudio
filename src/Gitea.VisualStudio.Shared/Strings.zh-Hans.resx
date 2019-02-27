@@ -371,4 +371,16 @@
   <data name="Releases" xml:space="preserve">
     <value>版本发布</value>
   </data>
+  <data name="Common_Confirm" xml:space="preserve">
+    <value>确认</value>
+  </data>
+  <data name="Common_Error" xml:space="preserve">
+    <value>错误</value>
+  </data>
+  <data name="Common_Message" xml:space="preserve">
+    <value>消息</value>
+  </data>
+  <data name="Common_Warning" xml:space="preserve">
+    <value>报警</value>
+  </data>
 </root>
