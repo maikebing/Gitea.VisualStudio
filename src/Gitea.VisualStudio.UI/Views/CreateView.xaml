@@ -40,7 +40,7 @@
                    VerticalAlignment="Center" Height="24" Margin="0,8"/>
             <ComboBox x:Name="cbxNamespaces"   
                       ItemsSource="{Binding  Owners}"
-                      DisplayMemberPath="FullName"
+                      DisplayMemberPath="DisplayName"
                       SelectedItem="{Binding SelectedOwner, Mode=TwoWay}"  
                       Grid.Column="1" 
                       Margin="0,3,0,0" 

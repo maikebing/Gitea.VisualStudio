@@ -42,7 +42,7 @@ namespace Gitea.VisualStudio.Services
                         if (!string.IsNullOrEmpty(hurl))
                         {
                             Uri uri = new Uri(hurl);
-                            url = $"{uri.Scheme}://{uri.Host}";
+                            url = $"{uri.Scheme}://{uri.Host}{(uri.Port == 80 || uri.Port == 443 ? "" : $":{uri.Port}")}";
                         }
                     }
                 }

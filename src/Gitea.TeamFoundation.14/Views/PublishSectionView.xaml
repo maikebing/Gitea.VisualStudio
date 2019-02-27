@@ -103,7 +103,7 @@
                           VerticalAlignment="Center"
                           ItemsSource="{Binding Owners}"
                           SelectedItem="{Binding SelectedOwner, Mode=TwoWay}"
-                          DisplayMemberPath="FullName"
+                          DisplayMemberPath="DisplayName"
                          />
                 <Label Style="{StaticResource LabelStyle}"
                     Grid.Row="1"

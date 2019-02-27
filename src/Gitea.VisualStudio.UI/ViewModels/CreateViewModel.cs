@@ -48,7 +48,7 @@ namespace Gitea.VisualStudio.UI.ViewModels
         {
             Owners.Clear();
             var user = _storage.GetUser();
-            Owners.Add(new Ownership(user.Username, user.Username, OwnershipTypes.User));
+            Owners.Add(new Ownership(user.Username, user.FullName, OwnershipTypes.User));
             SelectedOwner = Owners[0];
             Task.Run(async () =>
             {

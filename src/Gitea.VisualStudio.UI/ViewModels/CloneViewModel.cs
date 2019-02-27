@@ -34,6 +34,7 @@ namespace Gitea.VisualStudio.UI.ViewModels
 
             Repositories = CollectionViewSource.GetDefaultView(_repositories);
             Repositories.GroupDescriptions.Add(new PropertyGroupDescription("Owner"));
+            Repositories.Filter = RepoFilter;
 
             _baseRepositoryPath = _storage.GetBaseRepositoryDirectory();
 
@@ -51,6 +52,25 @@ namespace Gitea.VisualStudio.UI.ViewModels
             get { return _baseRepositoryPath; }
             set { SetProperty(ref _baseRepositoryPath, value); }
         }
+
+        private bool RepoFilter(object item)
+        {
+            var repo = item as ProjectViewModel;
+            return string.IsNullOrEmpty(FilterText) ? true : repo.Name.ToLower().Contains(FilterText.ToLower());
+        }
+
+        private string _filterText;
+
+        public string FilterText
+        {
+            get { return _filterText; }
+            set
+            {
+                _filterText = value;
+                Repositories.Refresh();
+            }
+        }
+
 
         private DelegateCommand _browseCommand;
         public ICommand BrowseCommand
@@ -135,7 +155,7 @@ namespace Gitea.VisualStudio.UI.ViewModels
             {
                 try
                 {
-                    loaded =  await _web.GetProjects();
+                    loaded = await _web.GetProjects();
                 }
                 catch (Exception)
                 {
@@ -170,6 +190,6 @@ namespace Gitea.VisualStudio.UI.ViewModels
             }, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
-       
+
     }
 }

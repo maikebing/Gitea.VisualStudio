@@ -160,6 +160,15 @@ namespace Gitea.VisualStudio.Shared {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Confirm.
+        /// </summary>
+        public static string Common_Confirm {
+            get {
+                return ResourceManager.GetString("Common_Confirm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Create 的本地化字符串。
         /// </summary>
         public static string Common_CreateRepository {
@@ -187,6 +196,15 @@ namespace Gitea.VisualStudio.Shared {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Error.
+        /// </summary>
+        public static string Common_Error {
+            get {
+                return ResourceManager.GetString("Common_Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Git ignore 的本地化字符串。
         /// </summary>
         public static string Common_GitIgnore {
@@ -210,6 +228,15 @@ namespace Gitea.VisualStudio.Shared {
         public static string Common_Loading {
             get {
                 return ResourceManager.GetString("Common_Loading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Message.
+        /// </summary>
+        public static string Common_Message {
+            get {
+                return ResourceManager.GetString("Common_Message", resourceCulture);
             }
         }
         
@@ -282,6 +309,15 @@ namespace Gitea.VisualStudio.Shared {
         public static string Common_Quit {
             get {
                 return ResourceManager.GetString("Common_Quit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Warning.
+        /// </summary>
+        public static string Common_Warning {
+            get {
+                return ResourceManager.GetString("Common_Warning", resourceCulture);
             }
         }
         
