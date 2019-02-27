@@ -297,7 +297,7 @@
     <value>Two Factor Authentication</value>
   </data>
   <data name="DefaultHost" xml:space="preserve">
-    <value>https://try.gitea.io</value>
+    <value>https://giteahub.com/</value>
   </data>
   <data name="WebService_CreateProject_NotLoginYet" xml:space="preserve">
     <value>Not login yet</value>

@@ -47,7 +47,7 @@ namespace Gitea.VisualStudio.Shared {
         }
         
         /// <summary>
-        ///   使用此强类型资源类，为所有资源查找
+        ///   重写当前线程的 CurrentUICulture 属性
         ///   重写当前线程的 CurrentUICulture 属性。
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -232,7 +232,7 @@ namespace Gitea.VisualStudio.Shared {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Owner.
+        ///   查找类似 Owner 的本地化字符串。
         /// </summary>
         public static string Common_Owner {
             get {
@@ -268,7 +268,7 @@ namespace Gitea.VisualStudio.Shared {
         }
         
         /// <summary>
-        ///   查找类似 Quit 的本地化字符串。
+        ///   查找类似 Sign Out 的本地化字符串。
         /// </summary>
         public static string Common_Quit {
             get {
@@ -403,7 +403,7 @@ namespace Gitea.VisualStudio.Shared {
         }
         
         /// <summary>
-        ///   查找类似 https://try.gitea.io 的本地化字符串。
+        ///   查找类似 https://giteahub.com/ 的本地化字符串。
         /// </summary>
         public static string DefaultHost {
             get {

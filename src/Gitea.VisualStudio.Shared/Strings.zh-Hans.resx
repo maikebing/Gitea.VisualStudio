@@ -202,10 +202,10 @@
     <value>注册</value>
   </data>
   <data name="Items_Issues" xml:space="preserve">
-    <value>Issues</value>
+    <value>工单</value>
   </data>
   <data name="Items_Wiki" xml:space="preserve">
-    <value>Wiki</value>
+    <value>维基</value>
   </data>
   <data name="Login_ConnectTo" xml:space="preserve">
     <value>连接到{0}</value>
@@ -227,7 +227,7 @@
     <value>忘记密码？</value>
   </data>
   <data name="Login_Host" xml:space="preserve">
-    <value>Gitea(https://try.gitea.io)</value>
+    <value>GiteaHub(https://try.gitea.io)</value>
   </data>
   <data name="Login_Login" xml:space="preserve">
     <value>登录</value>
@@ -294,7 +294,7 @@
     <value>双重认证</value>
   </data>
   <data name="DefaultHost" xml:space="preserve">
-    <value>https://try.gitea.io</value>
+    <value>https://giteahub.com/</value>
   </data>
   <data name="WebService_CreateProject_NotLoginYet" xml:space="preserve">
     <value>还没登录</value>
@@ -363,6 +363,9 @@
     <value>创建之后在浏览器中打开 </value>
   </data>
   <data name="Common_Owner" xml:space="preserve">
-    <value>Owner</value>
+    <value>所有者</value>
+  </data>
+  <data name="Items_Pipeline" xml:space="preserve">
+    <value>流水线</value>
   </data>
 </root>
