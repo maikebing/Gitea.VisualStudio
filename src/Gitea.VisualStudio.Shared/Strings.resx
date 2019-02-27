@@ -371,4 +371,7 @@
   <data name="Releases" xml:space="preserve">
     <value>Releases</value>
   </data>
+  <data name="Activity" xml:space="preserve">
+    <value>Activity</value>
+  </data>
 </root>

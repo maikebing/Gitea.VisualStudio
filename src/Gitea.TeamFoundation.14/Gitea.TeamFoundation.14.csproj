@@ -173,6 +173,7 @@
     <Compile Include="Home\IssuesNavigationItem.cs" />
     <Compile Include="Home\MergeRequestsNavigationItem.cs" />
     <Compile Include="Home\ReleasesNavigationItem.cs" />
+    <Compile Include="Home\ActivityNavigationItem.cs" />
     <Compile Include="Services\Registry.cs" />
     <Compile Include="Services\TeamExplorerServices.cs" />
     <Compile Include="Home\WikiNavigationItem.cs" />

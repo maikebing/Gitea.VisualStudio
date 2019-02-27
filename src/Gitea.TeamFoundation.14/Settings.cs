@@ -29,5 +29,9 @@ namespace Gitea.TeamFoundation
 
         public const string ReleasesNavigationItemId = "E4103C71-9C3A-4C4A-A829-72F29B337A42";
         public const int Releases = TeamExplorerNavigationItemPriority.Settings - 5;
+
+        public const string ActivityiNavigationItemId = "FFCABF9D-A679-4331-8521-9DF3BFE626F3";
+        public const int Activity = TeamExplorerNavigationItemPriority.Settings - 6;
+        
     }
 }

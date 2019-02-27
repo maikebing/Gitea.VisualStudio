@@ -61,6 +61,15 @@ namespace Gitea.VisualStudio.Shared {
         }
         
         /// <summary>
+        ///   查找类似 Activity 的本地化字符串。
+        /// </summary>
+        public static string Activity {
+            get {
+                return ResourceManager.GetString("Activity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 After created open  in the browser 的本地化字符串。
         /// </summary>
         public static string AfterCreatedOpenInTheBrowser {
