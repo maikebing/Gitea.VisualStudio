@@ -49,6 +49,10 @@ https://github.com/neuecc/Open-on-GitHub
 #### gitea.net
  https://github.com/mkloubert/gitea.net
 
+### Screenshots
+[![image](docs/gitea1.PNG)]
+
+[![image](docs/gitea2.PNG)]
 
  
 [![image](https://s01.flagcounter.com/map/nwAa/size_s/txt_000000/border_CCCCCC/pageviews_0/viewers_0/flags_0/)](https://info.flagcounter.com/nwAa)
