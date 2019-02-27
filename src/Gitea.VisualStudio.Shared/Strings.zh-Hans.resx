@@ -368,4 +368,7 @@
   <data name="Items_Pipeline" xml:space="preserve">
     <value>流水线</value>
   </data>
+  <data name="Releases" xml:space="preserve">
+    <value>版本发布</value>
+  </data>
 </root>

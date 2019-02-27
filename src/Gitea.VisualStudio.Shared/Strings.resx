@@ -368,4 +368,7 @@
   <data name="Common_Owner" xml:space="preserve">
     <value>Owner</value>
   </data>
+  <data name="Releases" xml:space="preserve">
+    <value>Releases</value>
+  </data>
 </root>

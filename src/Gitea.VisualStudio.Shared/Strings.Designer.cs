@@ -754,6 +754,15 @@ namespace Gitea.VisualStudio.Shared {
         }
         
         /// <summary>
+        ///   查找类似 Releases 的本地化字符串。
+        /// </summary>
+        public static string Releases {
+            get {
+                return ResourceManager.GetString("Releases", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Name 的本地化字符串。
         /// </summary>
         public static string Repository_Name {

@@ -18,7 +18,7 @@ namespace Gitea.TeamFoundation.Home
         {
             _tes = tes;
 
-            Text = "Releases";
+            Text = Gitea.VisualStudio.Shared.Strings.Releases;
         }
 
         public override void Invalidate()
