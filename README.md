@@ -12,9 +12,6 @@ The latest build of the Visual Studio Extension is available at the [Open VsixGa
 
 
 ## What's new ?
-
-
-## What's new ?
 #### V1.0.47
 
 * Resolved error when package is initializing. #3
