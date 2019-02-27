@@ -219,7 +219,7 @@
                                     <Setter Property="Template">
                                         <Setter.Value>
                                             <ControlTemplate TargetType="{x:Type GroupItem}">
-                                                <Expander IsExpanded="{Binding Name.IsExpanded}"
+                                                <Expander IsExpanded="true"
                                                           Style="{StaticResource cloneGroupExpander}">
                                                     <Expander.Header>
                                                         <Border Style="{StaticResource repositoryBorderStyle}">
@@ -231,8 +231,8 @@
                                                                        Height="16"
                                                                        Margin="0,0,5,0"
                                                                        RenderOptions.BitmapScalingMode="HighQuality"
-                                                                       Source="{Binding Items[0].Owner.Avatar}" />
-                                                                <TextBlock Text="{Binding Path=Name.Name}" />
+                                                                       Source="{Binding Path=Name.AvatarUrl}" />
+                                                                <TextBlock Text="{Binding Path=Name.DisplayName}" />
                                                             </StackPanel>
                                                         </Border>
                                                     </Expander.Header>

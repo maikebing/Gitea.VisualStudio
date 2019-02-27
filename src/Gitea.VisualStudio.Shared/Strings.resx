@@ -374,4 +374,16 @@
   <data name="Activity" xml:space="preserve">
     <value>Activity</value>
   </data>
+  <data name="Common_Confirm" xml:space="preserve">
+    <value>Confirm</value>
+  </data>
+  <data name="Common_Error" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="Common_Message" xml:space="preserve">
+    <value>Message</value>
+  </data>
+  <data name="Common_Warning" xml:space="preserve">
+    <value>Warning</value>
+  </data>
 </root>

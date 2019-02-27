@@ -27,6 +27,19 @@ namespace Gitea.VisualStudio.Shared
 
         public string FullName { get; set; }
 
+        public string DisplayName
+        {
+            get
+            {
+                return string.IsNullOrWhiteSpace(FullName) ? UserName : FullName;
+            }
+        }
+
         public OwnershipTypes OwnerType { get; set; }
+
+        public override string ToString()
+        {
+            return DisplayName;
+        }
     }
 }

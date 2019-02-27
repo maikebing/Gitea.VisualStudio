@@ -7,6 +7,8 @@ namespace Gitea.VisualStudio.UI.ViewModels
     public class Owner : IEquatable<Owner>
     {
         public string Name { get; set; }
+        public string FullName { get; set; }
+        public string DisplayName { get => string.IsNullOrWhiteSpace(FullName) ? Name : FullName; }
         public string AvatarUrl { get; set; }
         public bool IsExpanded { get; set; }
 
@@ -50,6 +52,7 @@ namespace Gitea.VisualStudio.UI.ViewModels
                 Owner = new Owner
                 {
                     Name = repository.Owner.Name,
+                    FullName = repository.Owner.FullName,
                     AvatarUrl = repository.Owner.AvatarUrl
                 };
             }

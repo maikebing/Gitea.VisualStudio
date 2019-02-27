@@ -26,7 +26,7 @@ The latest build of the Visual Studio Extension is available at the [Open VsixGa
 
  
 ### HomePage
- https://github.com/maikebing/Gitea.VisualStudio
+  https://visualstudio.giteahub.com/
 
 ### BUG And Issues
  
