@@ -13,7 +13,17 @@ The latest build of the Visual Studio Extension is available at the [Open VsixGa
 
 ## What's new ?
 
-#### V1.0.24
+
+## What's new ?
+#### V1.0.47
+
+* Resolved error when package is initializing. #3
+* Implemented Search in CloneView 
+* other enhancements and bug fixes. #4
+    Thanks [!troygeiger](https://github.com/troygeiger)
+
+
+#### V1.0.36
 
 * Added option to create or publish to organizations.
 * Added Connect and Sign Up buttons to ConnectSectionView.xaml and now leaving visible.
@@ -22,6 +32,16 @@ The latest build of the Visual Studio Extension is available at the [Open VsixGa
 * Some bug fixes.
    
     Thanks [!troygeiger](https://github.com/troygeiger)
+
+### Q & A：
+
+Q: Update from version 0.0.0.1 not possible？
+
+A: Because canceling the installation to all users makes it easy to update automatically, you need to uninstall the old version and reinstall it once.
+
+ 
+### HomePage
+ https://visualstudio.giteahub.com/
 
 
  
