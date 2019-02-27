@@ -7,15 +7,14 @@ Most of the extension UI lives in the Team Explorer pane, which is available fro
 
 Appveyor:[![Build status](https://ci.appveyor.com/api/projects/status/045302i4qkxqkfdc?svg=true)](https://ci.appveyor.com/project/MaiKeBing/gitea-visualstudio)
 
-The Visual Studio Extension is also available at the [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=MysticBoy.GiteaExtensionforVisualStudio), or by searching for GitLab4VS  in the Visual Studio extension manager.
-The latest build of the Visual Studio Extension is available at the [Open VsixGallery](http://vsixgallery.com/extension/54803a44-49e0-4935-bba4-7d7d91682273/)
+The Visual Studio Extension is also available at the [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=MysticBoy.GiteaExtensionforVisualStudio), or by searching for Gitea4VS  in the Visual Studio extension manager.
+The latest build of the Visual Studio Extension is available at the [Open VsixGallery](http://vsixgallery.com/extension/62991164-1F3E-4AAA-BF2F-537C83AF987C/)
 
 
 ## What's new ?
 
-#### V1.0.6
+#### V1.0.24
 
- 
 * Added option to create or publish to organizations.
 * Added Connect and Sign Up buttons to ConnectSectionView.xaml and now leaving visible.
 * Removed password from .Gitea file and pull it from the Credential Manager.
