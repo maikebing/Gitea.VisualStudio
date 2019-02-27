@@ -23,9 +23,9 @@ https://github.com/maikebing/Gitea.VisualStudio/issues
 https://marketplace.visualstudio.com/items?itemName=MysticBoy.GiteaExtensionforVisualStudio
 
 ### Screenshots
-[![image](gitea1.PNG)]
+![image](gitea1.PNG)
 
-[![image](gitea2.PNG)]
+![image](gitea2.PNG)
 
 
 ### Thanks
