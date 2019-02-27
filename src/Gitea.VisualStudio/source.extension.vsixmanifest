@@ -4,7 +4,7 @@
         <Identity Id="62991164-1F3E-4AAA-BF2F-537C83AF987C" Version="1.0.0" Language="en-US" Publisher="MysticBoy" />
         <DisplayName>Gitea Extension for Visual Studio</DisplayName>
         <Description xml:space="preserve">A Visual Studio Extension that brings the Gitea Flow into Visual Studio.</Description>
-        <MoreInfo>https://github.com/maikebing/Gitea.VisualStudio/</MoreInfo>
+        <MoreInfo>https://visualstudio.giteahub.com/</MoreInfo>
         <License>LICENSE.txt</License>
         <ReleaseNotes>readme.txt</ReleaseNotes>
         <Icon>Resources\logo_32x32@2x.png</Icon>
