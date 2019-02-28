@@ -79,7 +79,8 @@ namespace Gitea.VisualStudio.Shared
                     SshUrl = p.SSHUrl,
                     WikiEnabled = true,
                     Id = (int)p.ID,
-                    WebUrl = p.HtmlUrl
+                    WebUrl = p.HtmlUrl,
+                    CanPush = p.Permissions.CanPush
                 };
 
             }
@@ -97,6 +98,7 @@ namespace Gitea.VisualStudio.Shared
         public string Path { get; set; }
 
         public bool Public { get; set; }
+        public bool CanPush { get; set; }
         public string SshUrl { get; set; }
         public string HttpUrl { get; set; }
         public string WebUrl { get; set; }
@@ -125,7 +127,7 @@ namespace Gitea.VisualStudio.Shared
         {
             get
             {
-                return Public ? Octicon.@lock
+                return Public && !CanPush ? Octicon.@lock
                     : Fork
                     ? Octicon.repo_forked
                     : Octicon.repo;
