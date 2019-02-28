@@ -160,7 +160,7 @@ namespace Gitea.VisualStudio.Shared {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Confirm.
+        ///   查找类似 Confirm 的本地化字符串。
         /// </summary>
         public static string Common_Confirm {
             get {
@@ -196,7 +196,7 @@ namespace Gitea.VisualStudio.Shared {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Error.
+        ///   查找类似 Error 的本地化字符串。
         /// </summary>
         public static string Common_Error {
             get {
@@ -232,7 +232,7 @@ namespace Gitea.VisualStudio.Shared {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Message.
+        ///   查找类似 Message 的本地化字符串。
         /// </summary>
         public static string Common_Message {
             get {
@@ -313,7 +313,7 @@ namespace Gitea.VisualStudio.Shared {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Warning.
+        ///   查找类似 Warning 的本地化字符串。
         /// </summary>
         public static string Common_Warning {
             get {
@@ -435,15 +435,6 @@ namespace Gitea.VisualStudio.Shared {
         public static string CreateViewModel_OnSave_TheProject0AlreadyExists {
             get {
                 return ResourceManager.GetString("CreateViewModel_OnSave_TheProject0AlreadyExists", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Creating a Snippet, please wait... 的本地化字符串。
-        /// </summary>
-        public static string CreatingASnippetPleaseWait {
-            get {
-                return ResourceManager.GetString("CreatingASnippetPleaseWait", resourceCulture);
             }
         }
         
@@ -637,7 +628,7 @@ namespace Gitea.VisualStudio.Shared {
         }
         
         /// <summary>
-        ///   查找类似 Gitea(https://try.gitea.io) 的本地化字符串。
+        ///   查找类似 GiteaHub(https://giteahub.com/) 的本地化字符串。
         /// </summary>
         public static string Login_Host {
             get {
@@ -813,15 +804,6 @@ namespace Gitea.VisualStudio.Shared {
         public static string Repository_Name {
             get {
                 return ResourceManager.GetString("Repository_Name", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 The snippets  is not enabled 的本地化字符串。
-        /// </summary>
-        public static string TheSnippetsIsNotEnabled {
-            get {
-                return ResourceManager.GetString("TheSnippetsIsNotEnabled", resourceCulture);
             }
         }
         

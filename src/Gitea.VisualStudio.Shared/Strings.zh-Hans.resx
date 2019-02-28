@@ -205,7 +205,7 @@
     <value>工单</value>
   </data>
   <data name="Items_Wiki" xml:space="preserve">
-    <value>维基</value>
+    <value>百科</value>
   </data>
   <data name="Login_ConnectTo" xml:space="preserve">
     <value>连接到{0}</value>
@@ -227,7 +227,7 @@
     <value>忘记密码？</value>
   </data>
   <data name="Login_Host" xml:space="preserve">
-    <value>GiteaHub(https://try.gitea.io)</value>
+    <value>GiteaHub(https://giteahub.com/)</value>
   </data>
   <data name="Login_Login" xml:space="preserve">
     <value>登录</value>
@@ -317,12 +317,6 @@
   <data name="CreateSnippetViewModel_CodeIsRequired" xml:space="preserve">
     <value>代码为必填项</value>
   </data>
-  <data name="CreatingASnippetPleaseWait" xml:space="preserve">
-    <value>正在创建代码片段，请稍候...</value>
-  </data>
-  <data name="TheSnippetsIsNotEnabled" xml:space="preserve">
-    <value>未启用代码片段</value>
-  </data>
   <data name="GitAnalysis_GetGiteaTargetDescription_FullID" xml:space="preserve">
     <value>...(完整ID) </value>
   </data>
@@ -381,6 +375,9 @@
     <value>消息</value>
   </data>
   <data name="Common_Warning" xml:space="preserve">
-    <value>报警</value>
+    <value>警告</value>
+  </data>
+  <data name="Activity" xml:space="preserve">
+    <value>动态</value>
   </data>
 </root>

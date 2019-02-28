@@ -73,8 +73,10 @@ namespace Gitea.TeamFoundation.ViewModels
             }
             Owners.Clear();
             var user = _storage.GetUser();
-            Owners.Add(new Ownership(user.Username, user.FullName, OwnershipTypes.User));
-
+            if (user != null)
+            {
+                Owners.Add(new Ownership(user.Username, user.FullName, OwnershipTypes.User));
+            }
             Task.Run(async () =>
             {
                 var owners = await _web.GetUserOrginizationsAsync();
@@ -84,8 +86,6 @@ namespace Gitea.TeamFoundation.ViewModels
                 {
                     Owners.Add(owner);
                 }
-
-
             });
         }
 
@@ -240,7 +240,7 @@ namespace Gitea.TeamFoundation.ViewModels
         {
             if (string.IsNullOrEmpty(_storage.Host))
             {
-                _shell.OpenUrl("http://visualstudio.gitclub.cn");
+                _shell.OpenUrl("https://visualstudio.giteahub.com/");
             }
             else
             {

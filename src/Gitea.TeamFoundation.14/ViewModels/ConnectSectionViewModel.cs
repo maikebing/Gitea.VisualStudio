@@ -139,7 +139,14 @@ namespace Gitea.TeamFoundation.ViewModels
 
         public void OnSignUp()
         {
-            _shell.OpenUrl($"{_storage.Host}/users/sign_in#register-pane");
+            if (string.IsNullOrEmpty(_storage.Host))
+            {
+                _shell.OpenUrl("https://giteahub.com/user/sign_up");
+            }
+            else
+            {
+                _shell.OpenUrl($"{_storage.Host}/user/sign_up");
+            }
         }
 
         private void OnSignOut()

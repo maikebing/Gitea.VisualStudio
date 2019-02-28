@@ -233,7 +233,7 @@
     <value>Forget password?</value>
   </data>
   <data name="Login_Host" xml:space="preserve">
-    <value>Gitea(https://try.gitea.io)</value>
+    <value>GiteaHub(https://giteahub.com/)</value>
   </data>
   <data name="Login_Login" xml:space="preserve">
     <value>Login</value>
@@ -319,12 +319,6 @@
   </data>
   <data name="CreateSnippetViewModel_CodeIsRequired" xml:space="preserve">
     <value>Code IsRequired</value>
-  </data>
-  <data name="CreatingASnippetPleaseWait" xml:space="preserve">
-    <value>Creating a Snippet, please wait...</value>
-  </data>
-  <data name="TheSnippetsIsNotEnabled" xml:space="preserve">
-    <value>The snippets  is not enabled</value>
   </data>
   <data name="GitAnalysis_GetGiteaTargetDescription_FullID" xml:space="preserve">
     <value>... (Full ID)</value>
