@@ -60,6 +60,10 @@
     <controls:BusyIndicator IsBusy="{Binding IsBusy}"
                             BusyContent="{Binding BusyContent}" Margin="0,0,0,10">
         <Grid Margin="12,25,18,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="34*"/>
+                <ColumnDefinition Width="287*"/>
+            </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="55" />
                 <RowDefinition Height="55" />
@@ -75,13 +79,13 @@
                                     VerticalAlignment="Top"
                                     Icon="/Gitea.VisualStudio.UI;component/Resources/images/host.png"
                                     Wartermark="{x:Static shared:Strings.Login_Host}"
-                                    Text="{Binding Host}" />
+                                    Text="{Binding Host}" Grid.ColumnSpan="2" Margin="0,0,0.4,0" />
             <controls:IconedTextBox x:Name="UsernameTextBox"
                                     Height="40"
                                     VerticalAlignment="Top"
                                     Icon="/Gitea.VisualStudio.UI;component/Resources/images/user.png"
                                     Wartermark="{x:Static shared:Strings.Login_Email}"
-                                    Text="{Binding Email}" Grid.Row="1" Margin="0,6,0,0" />
+                                    Text="{Binding Email}" Grid.Row="1" Margin="0,6,0.4,0" Grid.ColumnSpan="2" />
             <controls:IconedTextBox x:Name="PasswordTextBox"
                                     Height="40"
                                     Grid.Row="2"
@@ -90,16 +94,16 @@
                                     Icon="/Gitea.VisualStudio.UI;component/Resources/Images/password.png"
                                     Wartermark="{x:Static shared:Strings.Login_Password}"
                                     KeyDown="PasswordTextBox_KeyDown"
-                                    Text="{Binding Password, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnNotifyDataErrors=True, ValidatesOnDataErrors=True, ValidatesOnExceptions=True}" Margin="0,8,0,0" />
+                                    Text="{Binding Password, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnNotifyDataErrors=True, ValidatesOnDataErrors=True, ValidatesOnExceptions=True}" Margin="0,7.8,0.4,0" Grid.ColumnSpan="2" />
             <Button Style="{StaticResource LinkButton}"
                     Grid.Row="3"
                     Content="{x:Static shared:Strings.Login_ForgetPassword}"
                     VerticalAlignment="Center"
                     HorizontalAlignment="Right"
-                    Margin="0,8,0,56" 
-                    Command="{Binding ForgetPasswordCommand}" Grid.RowSpan="2"/>
+                    Margin="0,7.8,0.4,56.4" 
+                    Command="{Binding ForgetPasswordCommand}" Grid.RowSpan="2" Grid.Column="1"/>
             <Button x:Name="SignInButton"
-                    Height="35"
+                    Height="46"
                     Background="#3b83c0"
                     Foreground="#ffffff"
                     FontWeight="Bold"
@@ -107,7 +111,7 @@
                     Content="{x:Static shared:Strings.Login_Login}"
                     VerticalAlignment="Top"
                     Grid.Row="4"
-                    Command="{Binding LoginCommand}" Margin="0,34,0,0">
+                    Command="{Binding LoginCommand}" Margin="0,33.8,0.4,0" Grid.RowSpan="2" Grid.ColumnSpan="2">
                 <Button.Style>
                     <Style TargetType="{x:Type Button}">
                         <Setter Property="Background"
@@ -152,11 +156,11 @@
                        Foreground="#888"
                        FontSize="15"
                        Visibility="Hidden"
-                       Text="Login in using any of the following services:" />
+                       Text="Login in using any of the following services:" Grid.ColumnSpan="2" Margin="0,0,0.4,129" Grid.RowSpan="2" />
 
             <StackPanel Orientation="Horizontal"
                         Grid.Row="5"
-                        Visibility="Hidden">
+                        Visibility="Hidden" Grid.ColumnSpan="2" Margin="0,0.6,0.4,0">
                 <StackPanel.Resources>
                     <Style TargetType="Button">
                         <Setter Property="Background"
@@ -177,14 +181,14 @@
                     VerticalAlignment="Center"
                     HorizontalAlignment="Left"
                     Command="{Binding ActiveAccountCommand}"
-                    Content="{x:Static shared:Strings.Login_ReSendEmail}" Margin="0,8,0,106" />
+                    Content="{x:Static shared:Strings.Login_ReSendEmail}" Margin="10,18.6,0,96" Grid.ColumnSpan="2" />
             <Button Style="{StaticResource LinkButton}"
                     Grid.Row="5"
                     VerticalAlignment="Center"
                     HorizontalAlignment="Right"
                     Command="{Binding SignupCommand}"
-                    Content="{x:Static shared:Strings.Login_SignUp}" Margin="0,15,17,99" />
-            <CheckBox IsChecked="{Binding Enable2FA}" x:Name="chk2FA" Content="{x:Static shared:Strings.TwoFactorAuthentication}" HorizontalAlignment="Left" Margin="18,12,0,0" Grid.Row="4" VerticalAlignment="Top" Visibility="Hidden"/>
+                    Content="{x:Static shared:Strings.Login_SignUp}" Margin="0,15.6,17.4,99" Grid.Column="1" />
+            <CheckBox IsChecked="{Binding Enable2FA}" x:Name="chk2FA" Content="{x:Static shared:Strings.TwoFactorAuthentication}" HorizontalAlignment="Left" Margin="18,11.8,0,0" Grid.Row="4" VerticalAlignment="Top" Visibility="Hidden" Grid.ColumnSpan="2"/>
         </Grid>
     </controls:BusyIndicator>
 </shared:Dialog>

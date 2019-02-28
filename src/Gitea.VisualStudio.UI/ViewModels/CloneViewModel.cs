@@ -90,6 +90,13 @@ namespace Gitea.VisualStudio.UI.ViewModels
             get { return _isBusy; }
             set { SetProperty(ref _isBusy, value); }
         }
+        private bool _filterTextIsEnabled;
+        public bool FilterTextIsEnabled
+        {
+            get { return _filterTextIsEnabled; }
+            set { SetProperty(ref _filterTextIsEnabled, value); }
+        }
+
 
         private string _message;
         public string Message
@@ -127,7 +134,7 @@ namespace Gitea.VisualStudio.UI.ViewModels
                 BaseRepositoryPath = browsed;
             }
         }
-
+   
         private void OnClone()
         {
             var path = System.IO.Path.Combine(BaseRepositoryPath, SelectedRepository.Name);
@@ -181,6 +188,7 @@ namespace Gitea.VisualStudio.UI.ViewModels
                         {
                             first.IsExpanded = true;
                         }
+                        FilterTextIsEnabled = true;
                     }
                 }
                 else

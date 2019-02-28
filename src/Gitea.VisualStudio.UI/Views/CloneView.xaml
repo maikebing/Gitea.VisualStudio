@@ -160,7 +160,7 @@
                                         IsEnabled="{Binding FilterTextIsEnabled, Mode=OneWay}" Height="28" FontSize="13" />
 
                 <Button x:Name="cloneButton"
-                        Margin="10,12"
+                        Margin="10,12,10.4,12"
                           Background="#3b83c0"
                     Foreground="#ffffff"
                     FontWeight="Bold"

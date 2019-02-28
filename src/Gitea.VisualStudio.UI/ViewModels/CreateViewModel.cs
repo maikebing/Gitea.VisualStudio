@@ -119,7 +119,13 @@ namespace Gitea.VisualStudio.UI.ViewModels
             get { return _isBusy; }
             set { SetProperty(ref _isBusy, value); }
         }
-
+        private bool _busyContent;
+        public bool BusyContent
+        {
+            get { return _busyContent; }
+            set { SetProperty(ref _busyContent, value); }
+        }
+ 
         private bool _isPrivate;
         public bool IsPrivate
         {

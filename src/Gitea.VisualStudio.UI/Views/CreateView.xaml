@@ -108,13 +108,13 @@
             <DockPanel Grid.Row="7"
                        Grid.Column="1">
                 <Button Content="{x:Static shared:Strings.Common_Browse}"
-                        Width="82"
+                        Width="84"
                           Background="#3b83c0"
                     Foreground="#ffffff"
                     FontWeight="Bold"
                     FontSize="14"
                         DockPanel.Dock="Right"
-                        Command="{Binding BrowseCommand}" />
+                        Command="{Binding BrowseCommand}" Margin="0,0,0,0.4" />
                 <controls:IconedTextBox IsReadOnly="True"
                                         Text="{Binding Path}"
                                         VerticalContentAlignment="Center" Width="241" />
@@ -124,25 +124,25 @@
                         Grid.Column="1"
                         Orientation="Horizontal"
                         VerticalAlignment="Center"
-                        Margin="0,17,0,10" Height="28">
-                <Button Width="117"
+                        Margin="0,9.8,0.2,10.4" Height="35">
+                <Button Width="156"
                           Background="#3b83c0"
                     Foreground="#ffffff"
                     FontWeight="Bold"
                     FontSize="14"
                         Content="{x:Static shared:Strings.Common_New}"
-                        Command="{Binding NewCommand}" Margin="0,-8,0,1" />
-                <Frame x:Name="frame" Content="" Width="13"/>
-                <Button Width="117"
+                        Command="{Binding NewCommand}" Margin="0,0,0,1.2" />
+                <Button Width="161"
                           Background="#3b83c0"
                     Foreground="#ffffff"
                     FontWeight="Bold"
                     FontSize="14"
                         Content="{x:Static shared:Strings.Common_Cancel}"
-                        Margin="10,-8,0,1"
+                        Margin="10,0,0,1.2"
                         Click="OnCancel" />
+                <Frame x:Name="frame" Content="" Width="13"/>
             </StackPanel>
-            
+
         </Grid>
     </controls:BusyIndicator>
 </shared:Dialog>
