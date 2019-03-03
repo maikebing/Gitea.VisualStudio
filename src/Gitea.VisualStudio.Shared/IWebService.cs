@@ -73,6 +73,7 @@ namespace Gitea.VisualStudio.Shared
                     HttpUrl = p.CloneUrl,
                     IssuesEnabled = true,
                     Name = p.Name,
+                    Description = p.Description,
                     Owner = p.Owner,
                     Public = !p.IsPrivate,
                     SnippetsEnabled = false,
@@ -94,7 +95,7 @@ namespace Gitea.VisualStudio.Shared
 
 
         public string Name { get; set; }
-
+        public string Description { get; set; }
         public string Path { get; set; }
 
         public bool Public { get; set; }
