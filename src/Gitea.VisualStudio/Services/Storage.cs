@@ -33,24 +33,25 @@ namespace Gitea.VisualStudio.Services
         {
             get
             {
-                string url = string.Empty;
-                using (var git = new GitAnalysis(GiteaPackage.GetSolutionDirectory()))
-                {
-                    if (git != null && git.IsDiscoveredGitRepository)
-                    {
-                        string hurl = git.GetRepoUrlRoot();
-                        if (!string.IsNullOrEmpty(hurl))
-                        {
-                            Uri uri = new Uri(hurl);
-                            url = $"{uri.Scheme}://{uri.Host}{(uri.Port == 80 || uri.Port == 443 ? "" : $":{uri.Port}")}";
-                        }
-                    }
-                }
-                if (string.IsNullOrEmpty(url))
-                {
-                    url = Configuration.Host;
-                }
-                return url;
+                return Configuration.Host;
+                //string url = string.Empty;
+                //using (var git = new GitAnalysis(GiteaPackage.GetSolutionDirectory()))
+                //{
+                //    if (git != null && git.IsDiscoveredGitRepository)
+                //    {
+                //        string hurl = git.GetRepoUrlRoot();
+                //        if (!string.IsNullOrEmpty(hurl))
+                //        {
+                //            Uri uri = new Uri(hurl);
+                //            url = $"{uri.Scheme}://{uri.Host}{(uri.Port == 80 || uri.Port == 443 ? "" : $":{uri.Port}")}";
+                //        }
+                //    }
+                //}
+                //if (string.IsNullOrEmpty(url))
+                //{
+                //    url = Configuration.Host;
+                //}
+                //return url;
             }
         }
         public string Path
