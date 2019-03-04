@@ -178,6 +178,7 @@
     <Compile Include="IViewFactory.cs" />
     <Compile Include="IShellService.cs" />
     <Compile Include="IWebService.cs" />
+    <Compile Include="NativeMethods.cs" />
     <Compile Include="NotificationAwareObject.cs" />
     <Compile Include="..\common\SolutionInfo.cs">
       <Link>Properties\SolutionInfo.cs</Link>
