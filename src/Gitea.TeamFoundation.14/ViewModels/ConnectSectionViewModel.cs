@@ -5,6 +5,7 @@ using Gitea.VisualStudio.Shared.Helpers.Commands;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -46,6 +47,7 @@ namespace Gitea.TeamFoundation.ViewModels
             _cloneCommand = new DelegateCommand(OnClone);
             _createCommand = new DelegateCommand(OnCreate);
             _openRepositoryCommand = new DelegateCommand<Repository>(OnOpenRepository);
+            _deleteLocalRepoCommand = new DelegateCommand<Repository>(OnDeleteLocalRepo);
 
             LoggedInButtonsVisible = _storage.IsLogined ? Visibility.Visible : Visibility.Collapsed;
             NotLoggedInButtonsVisible = LoggedInButtonsVisible == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
@@ -108,6 +110,12 @@ namespace Gitea.TeamFoundation.ViewModels
             get { return _openRepositoryCommand; }
         }
 
+        private DelegateCommand _deleteLocalRepoCommand;
+        public ICommand DeleteLocalRepoCommand
+        {
+            get { return _deleteLocalRepoCommand; }
+        }
+
         private bool _isRepositoriesVisible;
         public bool IsRepositoriesVisible
         {
@@ -120,7 +128,7 @@ namespace Gitea.TeamFoundation.ViewModels
         public Visibility NotLoggedInButtonsVisible
         {
             get { return _notLoggedInButtonsVisible; }
-            set { SetProperty(ref _notLoggedInButtonsVisible,  value); }
+            set { SetProperty(ref _notLoggedInButtonsVisible, value); }
         }
 
         private Visibility _LoginButtonsVisible;
@@ -184,6 +192,36 @@ namespace Gitea.TeamFoundation.ViewModels
             }
         }
 
+        private void OnDeleteLocalRepo(Repository repo)
+        {
+            if (repo == null) return;
+            string path = repo.Path;
+            if (path.EndsWith(new string(Path.DirectorySeparatorChar, 1)))
+            {
+                path = path.Substring(path.Length - 1, 1);
+            }
+            path += '\0';
+            var fsStruc = new NativeMethods.SHFILEOPSTRUCT()
+            {
+                wFunc = NativeMethods.FO_DELETE,
+                fFlags = NativeMethods.FOF_ALLOWUNDO,
+                pFrom = path
+            };
+            try
+            {
+                int result = NativeMethods.SHFileOperation(ref fsStruc);
+                if (result == 0)
+                {
+                    Repositories.Remove(repo);
+                }
+            }
+            catch (Exception ex)
+            {
+                _teamexplorer.ShowMessage(ex.Message);
+            }
+        }
+
+
         private void LoadRepositoriesAsync()
         {
             IReadOnlyList<Repository> known = null;
@@ -194,7 +232,7 @@ namespace Gitea.TeamFoundation.ViewModels
             {
                 try
                 {
-                    remotes =await _web.GetProjects();
+                    remotes = await _web.GetProjects();
                     known = Registry.GetKnownRepositories();
                 }
                 catch (Exception e)

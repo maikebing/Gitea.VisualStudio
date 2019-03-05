@@ -256,13 +256,25 @@
                                                            Height="16"
                                                            Margin="32,0,6,0"
                                                            VerticalAlignment="Center"
-                                                           Foreground="#D0D0D0"
+                                                           Foreground="#919191"
                                                            Icon="{Binding Icon}" />
-                                    <TextBlock x:Name="label"
-                                               VerticalAlignment="Center"
-                                               Foreground="#666"
-                                               Text="{Binding Name}"
-                                               TextTrimming="CharacterEllipsis" />
+                                    <StackPanel>
+                                        <TextBlock x:Name="label"
+                                                   VerticalAlignment="Center"
+                                                   Foreground="Black"
+                                                   Text="{Binding Name}"
+                                                   TextTrimming="CharacterEllipsis"
+                                                   MaxWidth="275" />
+                                        <TextBlock VerticalAlignment="Center"
+                                                   Foreground="#666"
+                                                   Text="{Binding Description}"
+                                                   Visibility="{Binding DescriptionVisibility}"
+                                                   TextTrimming="CharacterEllipsis"
+                                                   FontSize="9"
+                                                   MaxWidth="275"
+                                                   
+                                               />
+                                    </StackPanel>
                                 </StackPanel>
                             </Border>
                         </DataTemplate>

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Data;
@@ -56,7 +57,18 @@ namespace Gitea.VisualStudio.UI.ViewModels
         private bool RepoFilter(object item)
         {
             var repo = item as ProjectViewModel;
-            return string.IsNullOrEmpty(FilterText) ? true : repo.Name.ToLower().Contains(FilterText.ToLower());
+            
+            if (string.IsNullOrEmpty(FilterText))
+            {
+                return true;
+            }
+            else
+            {
+                var compare = CultureInfo.CurrentCulture.CompareInfo;
+                return compare.IndexOf(repo.Name, FilterText, CompareOptions.IgnoreCase) != -1
+                    || compare.IndexOf(repo.Description, FilterText, CompareOptions.IgnoreCase) != -1;
+            }
+            
         }
 
         private string _filterText;
