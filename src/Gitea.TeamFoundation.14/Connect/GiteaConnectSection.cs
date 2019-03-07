@@ -107,6 +107,17 @@ namespace Gitea.TeamFoundation.Connect
             var x = ServiceProvider.GetService(typeof(SVsSolution)) as IVsSolution;
             if (x != null)
             {
+                if (System.IO.Directory.Exists(path))
+                {
+                    //If there is only one solution, let's go ahead and open that.
+                    string[] sln = System.IO.Directory.GetFiles(path, "*.sln");
+                    if (sln.Length == 1)
+                    {
+                        x.OpenSolutionFile((uint)__VSSLNOPENOPTIONS.SLNOPENOPT_Silent, sln[0]);
+                        return;
+                    }
+                }
+                
                 x.OpenSolutionViaDlg(path, 1);
             }
         }
