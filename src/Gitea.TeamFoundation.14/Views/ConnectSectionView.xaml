@@ -143,6 +143,7 @@
                     </MultiDataTrigger>
                     <DataTrigger Value="True"
                                  Binding="{Binding IsActived}">
+                        <Setter Property="FontWeight" Value="Bold"/>
                         <!--<Setter Property="Foreground"
                                 Value="{DynamicResource GiteaVsToolWindowText}" />-->
                         <!--<Setter Property="Foreground"
@@ -315,7 +316,7 @@
                   Visibility="{Binding IsRepositoriesVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
             <ListView.ContextMenu>
                 <ContextMenu>
-                    <MenuItem Header="Open"
+                    <MenuItem Header="{x:Static shared:Strings.Common_Open}"
                               Command="{Binding OpenRepositoryCommand}"
                               CommandParameter="{Binding SelectedRepository}">
                         <MenuItem.Icon>
@@ -325,7 +326,7 @@
                         </MenuItem.Icon>
                     </MenuItem>
                     <Separator/>
-                    <MenuItem Header="Delete Local"
+                    <MenuItem Header="{x:Static shared:Strings.Common_DeleteLocal}"
                               Command="{Binding DeleteLocalRepoCommand}"
                               CommandParameter="{Binding SelectedRepository}">
                         <MenuItem.Icon>

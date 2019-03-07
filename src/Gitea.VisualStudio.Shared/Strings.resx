@@ -380,4 +380,10 @@
   <data name="Common_Warning" xml:space="preserve">
     <value>Warning</value>
   </data>
+  <data name="Common_DeleteLocal" xml:space="preserve">
+    <value>Delete Local</value>
+  </data>
+  <data name="Common_Open" xml:space="preserve">
+    <value>Open</value>
+  </data>
 </root>

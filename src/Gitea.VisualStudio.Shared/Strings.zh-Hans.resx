@@ -380,4 +380,10 @@
   <data name="Activity" xml:space="preserve">
     <value>动态</value>
   </data>
+  <data name="Common_DeleteLocal" xml:space="preserve">
+    <value>删除本地</value>
+  </data>
+  <data name="Common_Open" xml:space="preserve">
+    <value>打开</value>
+  </data>
 </root>
