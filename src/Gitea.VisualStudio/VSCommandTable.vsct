@@ -3,10 +3,10 @@
   <Extern href="stdidcmd.h" />
   <Extern href="vsshlids.h" />
 
-  <Commands package="guidOpenOnGiteaPkg">
+  <Commands package="guidGitea4VSPkg">
     <Menus>
-      <Menu guid="guidOpenOnGiteaCmdSet" id="SubMenu" priority="0x1000" type="Menu">
-        <Parent guid="guidOpenOnGiteaCmdSet" id="ContextMenuGroup" />
+      <Menu guid="guidGitea4VSCmdSet" id="SubMenu" priority="0x1000" type="Menu">
+        <Parent guid="guidGitea4VSCmdSet" id="ContextMenuGroup" />
         <Strings>
           <ButtonText>Gitea</ButtonText>
         </Strings>
@@ -14,23 +14,23 @@
     </Menus>
 
     <Groups>
-      <Group guid="guidOpenOnGiteaCmdSet" id="ContextMenuGroup" priority="0x0600" />
-      <Group guid="guidOpenOnGiteaCmdSet" id="SubMenuGroup" priority="0x0600">
-        <Parent guid="guidOpenOnGiteaCmdSet" id="SubMenu" />
+      <Group guid="guidGitea4VSCmdSet" id="ContextMenuGroup" priority="0x0600" />
+      <Group guid="guidGitea4VSCmdSet" id="SubMenuGroup" priority="0x0600">
+        <Parent guid="guidGitea4VSCmdSet" id="SubMenu" />
       </Group>
     
     </Groups>
 
     <Buttons>
-      <Button guid="guidOpenOnGiteaCmdSet" id="OpenMaster" priority="0x0100" type="Button">
-        <Parent guid="guidOpenOnGiteaCmdSet" id="SubMenuGroup" />
+      <Button guid="guidGitea4VSCmdSet" id="OpenMaster" priority="0x0100" type="Button">
+        <Parent guid="guidGitea4VSCmdSet" id="SubMenuGroup" />
         <Strings>
           <ButtonText>master</ButtonText>
           <CommandName>master</CommandName>
         </Strings>
       </Button>
-      <Button guid="guidOpenOnGiteaCmdSet" id="OpenBranch" priority="0x0200" type="Button">
-        <Parent guid="guidOpenOnGiteaCmdSet" id="SubMenuGroup" />
+      <Button guid="guidGitea4VSCmdSet" id="OpenBranch" priority="0x0200" type="Button">
+        <Parent guid="guidGitea4VSCmdSet" id="SubMenuGroup" />
         <CommandFlag>TextChanges</CommandFlag>
         <CommandFlag>DynamicVisibility</CommandFlag>
         <Strings>
@@ -38,102 +38,101 @@
           <CommandName>branch</CommandName>
         </Strings>
       </Button>
-      <Button guid="guidOpenOnGiteaCmdSet" id="OpenRevision" priority="0x0300" type="Button">
-        <Parent guid="guidOpenOnGiteaCmdSet" id="SubMenuGroup" />
+      <Button guid="guidGitea4VSCmdSet" id="OpenRevision" priority="0x0300" type="Button">
+        <Parent guid="guidGitea4VSCmdSet" id="SubMenuGroup" />
         <CommandFlag>TextChanges</CommandFlag>
         <Strings>
           <ButtonText>revision</ButtonText>
           <CommandName>revision</CommandName>
         </Strings>
       </Button>
-      <Button guid="guidOpenOnGiteaCmdSet" id="OpenRevisionFull" priority="0x0400" type="Button">
-        <Parent guid="guidOpenOnGiteaCmdSet" id="SubMenuGroup" />
+      <Button guid="guidGitea4VSCmdSet" id="OpenRevisionFull" priority="0x0400" type="Button">
+        <Parent guid="guidGitea4VSCmdSet" id="SubMenuGroup" />
         <CommandFlag>TextChanges</CommandFlag>
         <Strings>
           <ButtonText>revisionFull</ButtonText>
           <CommandName>revisionFull</CommandName>
         </Strings>
       </Button>
-      <Button guid="guidOpenOnGiteaCmdSet" id="OpenBlame" priority="0x0500" type="Button">
-        <Parent guid="guidOpenOnGiteaCmdSet" id="SubMenuGroup" />
+      <Button guid="guidGitea4VSCmdSet" id="OpenBlame" priority="0x0500" type="Button">
+        <Parent guid="guidGitea4VSCmdSet" id="SubMenuGroup" />
         <CommandFlag>TextChanges</CommandFlag>
         <Strings>
           <ButtonText>Blame</ButtonText>
           <CommandName>Blame</CommandName>
         </Strings>
       </Button>
-      <Button guid="guidOpenOnGiteaCmdSet" id="OpenCommits" priority="0x0600" type="Button">
-        <Parent guid="guidOpenOnGiteaCmdSet" id="SubMenuGroup" />
+      <Button guid="guidGitea4VSCmdSet" id="OpenCommits" priority="0x0600" type="Button">
+        <Parent guid="guidGitea4VSCmdSet" id="SubMenuGroup" />
         <CommandFlag>TextChanges</CommandFlag>
         <Strings>
           <ButtonText>Commits</ButtonText>
           <CommandName>Commits</CommandName>
         </Strings>
       </Button>
-       <!--<Button guid="guidOpenOnGiteaCmdSet" id="OpenCreateSnippet" priority="0x0700" type="Button">
-        <Parent guid="guidOpenOnGiteaCmdSet" id="SubMenuGroup" />
+      <Button guid="guidGitea4VSCmdSet" id="OpenFromUrl" priority="0x0700" type="Button">
+        <Parent guid="guidGitea4VSCmdSet" id="SubMenuGroup" />
         <CommandFlag>TextChanges</CommandFlag>
         <Strings>
-          <ButtonText>Create Snippet</ButtonText>
-          <CommandName>CreateSnippet</CommandName>
+          <ButtonText>Open From Url</ButtonText>
+          <CommandName>OpenFromUrl</CommandName>
         </Strings>
-      </Button>-->
+      </Button>
     </Buttons>
- 
   </Commands>
   <CommandPlacements>
-    <CommandPlacement guid="guidOpenOnGiteaCmdSet" id="ContextMenuGroup" priority="0x0600">
+    <CommandPlacement guid="guidGitea4VSCmdSet" id="ContextMenuGroup" priority="0x0600">
       <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_CODEWIN" />
     </CommandPlacement>
-    <CommandPlacement guid="guidOpenOnGiteaCmdSet" id="ContextMenuGroup" priority="0x0600">
+    <CommandPlacement guid="guidGitea4VSCmdSet" id="ContextMenuGroup" priority="0x0600">
       <Parent guid="HtmlEditorWindowLibra" id="IDMX_HTML_SOURCE" />
     </CommandPlacement>
-    <CommandPlacement guid="guidOpenOnGiteaCmdSet" id="ContextMenuGroup" priority="0x0600">
+    <CommandPlacement guid="guidGitea4VSCmdSet" id="ContextMenuGroup" priority="0x0600">
       <Parent guid="CssEditorWindows2" id="IDMX_CSS_SOURCE" />
     </CommandPlacement>
-    <CommandPlacement guid="guidOpenOnGiteaCmdSet" id="ContextMenuGroup" priority="0x0600">
+    <CommandPlacement guid="guidGitea4VSCmdSet" id="ContextMenuGroup" priority="0x0600">
       <Parent guid="JsonEditorWindows" id="IDMX_JSON_SOURCE" />
     </CommandPlacement>
-    <CommandPlacement guid="guidOpenOnGiteaCmdSet" id="ContextMenuGroup" priority="0x0600">
+    <CommandPlacement guid="guidGitea4VSCmdSet" id="ContextMenuGroup" priority="0x0600">
       <Parent guid="HtmlEditorWindows" id="IDMX_HTM_SOURCE_BASIC" />
     </CommandPlacement>
-    <CommandPlacement guid="guidOpenOnGiteaCmdSet" id="ContextMenuGroup" priority="0x0600">
+    <CommandPlacement guid="guidGitea4VSCmdSet" id="ContextMenuGroup" priority="0x0600">
       <Parent guid="HtmlEditorWindows" id="IDMX_HTM_SOURCE_HTML" />
     </CommandPlacement>
-    <CommandPlacement guid="guidOpenOnGiteaCmdSet" id="ContextMenuGroup" priority="0x0600">
+    <CommandPlacement guid="guidGitea4VSCmdSet" id="ContextMenuGroup" priority="0x0600">
       <Parent guid="HtmlEditorWindows" id="IDMX_HTM_SOURCE_SCRIPT" />
     </CommandPlacement>
-    <CommandPlacement guid="guidOpenOnGiteaCmdSet" id="ContextMenuGroup" priority="0x0600">
+    <CommandPlacement guid="guidGitea4VSCmdSet" id="ContextMenuGroup" priority="0x0600">
       <Parent guid="HtmlEditorWindows" id="IDMX_HTM_SOURCE_ASPX" />
     </CommandPlacement>
-    <CommandPlacement guid="guidOpenOnGiteaCmdSet" id="ContextMenuGroup" priority="0x0600">
+    <CommandPlacement guid="guidGitea4VSCmdSet" id="ContextMenuGroup" priority="0x0600">
       <Parent guid="HtmlEditorWindows" id="IDMX_HTM_SOURCE_ASPX_CODE" />
     </CommandPlacement>
-    <CommandPlacement guid="guidOpenOnGiteaCmdSet" id="ContextMenuGroup" priority="0x0600">
+    <CommandPlacement guid="guidGitea4VSCmdSet" id="ContextMenuGroup" priority="0x0600">
       <Parent guid="HtmlEditorWindows" id="IDMX_HTM_SOURCE_ASAX_CODE" />
     </CommandPlacement>
-    <CommandPlacement guid="guidOpenOnGiteaCmdSet" id="ContextMenuGroup" priority="0x0600">
+    <CommandPlacement guid="guidGitea4VSCmdSet" id="ContextMenuGroup" priority="0x0600">
       <Parent guid="HtmlEditorWindows" id="IDMX_HTM_SOURCE_ASPX_CODE_VB" />
     </CommandPlacement>
-    <CommandPlacement guid="guidOpenOnGiteaCmdSet" id="ContextMenuGroup" priority="0x0600">
+    <CommandPlacement guid="guidGitea4VSCmdSet" id="ContextMenuGroup" priority="0x0600">
       <Parent guid="HtmlEditorWindows" id="IDMX_HTM_SOURCE_ASAX_CODE_VB" />
     </CommandPlacement>
-    <CommandPlacement guid="guidOpenOnGiteaCmdSet" id="ContextMenuGroup" priority="0x0600">
+    <CommandPlacement guid="guidGitea4VSCmdSet" id="ContextMenuGroup" priority="0x0600">
       <Parent guid="HtmlEditorWindows" id="IDMX_HTM_SOURCE_ASMX_CODE" />
     </CommandPlacement>
-    <CommandPlacement guid="guidOpenOnGiteaCmdSet" id="ContextMenuGroup" priority="0x0600">
+    <CommandPlacement guid="guidGitea4VSCmdSet" id="ContextMenuGroup" priority="0x0600">
       <Parent guid="HtmlEditorWindows" id="IDMX_HTM_SOURCE_ASMX_CODE_VB" />
     </CommandPlacement>
-    <CommandPlacement guid="guidOpenOnGiteaCmdSet" id="ContextMenuGroup" priority="0x0600">
+    <CommandPlacement guid="guidGitea4VSCmdSet" id="ContextMenuGroup" priority="0x0600">
       <Parent guid="CssEditorWindows" id="IDMX_HTM_SOURCE_CSS" />
     </CommandPlacement>
-    <CommandPlacement guid="guidOpenOnGiteaCmdSet" id="ContextMenuGroup" priority="0x0600">
+    <CommandPlacement guid="guidGitea4VSCmdSet" id="ContextMenuGroup" priority="0x0600">
       <Parent guid="XamlEditorWindows" id="IDMX_XAML_SOURCE_BASIC" />
     </CommandPlacement>
   </CommandPlacements>
   <Symbols>
-    <GuidSymbol name="guidOpenOnGiteaPkg" value="{45C0689E-851C-4558-BF56-0FA1BC29363F}" />
-    <GuidSymbol name="guidOpenOnGiteaCmdSet" value="{29117BB3-5A68-49C0-82E7-B7FE8B9F11C6}">
+    <GuidSymbol name="guidGitea4VSPkg" value="{45C0689E-851C-4558-BF56-0FA1BC29363F}" />
+    <GuidSymbol name="guidGitea4VSCmdSet" value="{29117BB3-5A68-49C0-82E7-B7FE8B9F11C6}">
       <IDSymbol name="ContextMenuGroup" value="0x1020" />
       <IDSymbol name="SubMenuGroup" value="0x1030" />
       <IDSymbol name="SubMenu" value="0x1040" />
@@ -144,8 +143,8 @@
       <IDSymbol name="OpenRevisionFull" value="0x0400" />
       <IDSymbol name="OpenBlame" value="0x0500" />
       <IDSymbol name="OpenCommits" value="0x0600" />
-      <IDSymbol name="OpenCreateSnippet" value="0x0700" />
-
+      <IDSymbol name="OpenFromUrl" value="0x0700" />
+      
     </GuidSymbol>
 
     <!-- List for various editor types -->

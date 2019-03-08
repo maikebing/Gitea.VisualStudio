@@ -1,5 +1,7 @@
 ﻿using EnvDTE;
+using EnvDTE100;
 using EnvDTE80;
+using Gitea.VisualStudio.Helpers;
 using Gitea.VisualStudio.Services;
 using Gitea.VisualStudio.Shared;
 using Microsoft.VisualStudio;
@@ -15,6 +17,7 @@ using System.ComponentModel.Composition.Hosting;
 using System.ComponentModel.Design;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -24,13 +27,33 @@ using Task = System.Threading.Tasks.Task;
 namespace Gitea.VisualStudio
 {
     [PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true)]
+    [ProvideBindingPath]
     [InstalledProductRegistration("#110", "#112", PackageVersion.Version, IconResourceID = 400)]
-    [Guid(PackageGuids.guidGiteaPkgString)]
+    [Guid(PackageGuids.guidGitea4VSPkgString)]
     [ProvideMenuResource("Menus.ctmenu", 1)]
     // this is the Git service GUID, so we load whenever it loads
     [ProvideAutoLoad(VSConstants.UICONTEXT.ShellInitialized_string, PackageAutoLoadFlags.BackgroundLoad)]
     public class GiteaPackage : AsyncPackage,IVsInstalledProduct
     {
+        [Import]
+        private IShellService _shell;
+
+        [Import]
+        private IViewFactory _viewFactory;
+
+        [Import]
+        private IWebService _webService;
+
+        [Import]
+        private IStorage _storage;
+
+        public GiteaPackage()
+        {
+            if (Application.Current != null)
+            {
+                Application.Current.DispatcherUnhandledException += Current_DispatcherUnhandledException;
+            }
+        }
 
         #region IVsInstalledProduct Members
 
@@ -48,7 +71,7 @@ namespace Gitea.VisualStudio
 
         public int OfficialName(out string pbstrName)
         {
-            pbstrName = GetResourceString("@101");
+            pbstrName =  GetResourceString("@101");
             return VSConstants.S_OK;
         }
 
@@ -64,12 +87,11 @@ namespace Gitea.VisualStudio
             return VSConstants.S_OK;
         }
 
-        public string GetResourceString(string resourceName)
+        public  string   GetResourceString(string resourceName)
         {
-            ThreadHelper.ThrowIfNotOnUIThread();
             string resourceValue;
-
-            var resourceManager = (IVsResourceManager)GetService(typeof(SVsResourceManager));
+           
+            var resourceManager =  (IVsResourceManager)GetService(typeof(SVsResourceManager));
             if (resourceManager == null)
             {
                 throw new InvalidOperationException(
@@ -86,90 +108,158 @@ namespace Gitea.VisualStudio
 
         #endregion IVsInstalledProduct Members
 
-        private DTE2 _dte;
-
-        internal DTE2 DTE
+        private void Current_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
         {
-            get
-            {
-                if (_dte == null)
-                {
-                    ThreadHelper.JoinableTaskFactory.Run(async delegate
-                    {
-                        _dte = (DTE2)await GetServiceAsync(typeof(DTE));
-                    });
-                }
-                return _dte;
-            }
+           
+            OutputWindowHelper.ExceptionWriteLine("Diagnostics mode caught and marked as handled the following DispatcherUnhandledException raised in Visual Studio", e.Exception);
+            e.Handled = true;
         }
+
+       
         protected override async Task InitializeAsync(CancellationToken cancellationToken, IProgress<ServiceProgressData> progress)
         {
             await base.InitializeAsync(cancellationToken, progress);
             await JoinableTaskFactory.RunAsync(VsTaskRunContext.UIThreadNormalPriority, async delegate
             {
+                // Added the following line to prevent the error "Due to high risk of deadlock you cannot call GetService from a background thread in an AsyncPackage derived class"
+                await JoinableTaskFactory.SwitchToMainThreadAsync();
                 var assemblyCatalog = new AssemblyCatalog(typeof(GiteaPackage).Assembly);
                 CompositionContainer container = new CompositionContainer(assemblyCatalog);
                 container.ComposeParts(this);
-                // Added the following line to prevent the error "Due to high risk of deadlock you cannot call GetService from a background thread in an AsyncPackage derived class"
-                await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
                 var mcs = await GetServiceAsync(typeof(IMenuCommandService)) as OleMenuCommandService;
                 if (mcs != null)
                 {
-                    foreach (var item in new[]
+                    await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
+                    try
                     {
-                    PackageCommanddIDs.OpenMaster,
-                    PackageCommanddIDs.OpenBranch,
-                    PackageCommanddIDs.OpenRevision,
-                    PackageCommanddIDs.OpenRevisionFull,
-                     PackageCommanddIDs.OpenBlame,
-                     PackageCommanddIDs.OpenCommits
 
-                })
+                        new []{
+                            PackageIds.OpenMaster,
+                            PackageIds.OpenBranch,
+                            PackageIds.OpenRevision,
+                            PackageIds.OpenRevisionFull,
+                            PackageIds.OpenBlame,
+                            PackageIds.OpenCommits,
+                            PackageIds.OpenFromUrl
+                        }.ToList().ForEach(item =>
+                        {
+                            var menuCommandID = new CommandID(PackageGuids.guidGitea4VSCmdSet, (int)item);
+                            var menuItem = new OleMenuCommand(ExecuteCommand, menuCommandID);
+                            menuItem.BeforeQueryStatus += MenuItem_BeforeQueryStatus;
+                            mcs.AddCommand(menuItem);
+                        });
+
+                    }
+                    catch (Exception ex)
                     {
-                        var menuCommandID = new CommandID(PackageGuids.guidOpenOnGiteaCmdSet, (int)item);
-                        var menuItem = new OleMenuCommand(ExecuteCommand, menuCommandID);
-                        menuItem.BeforeQueryStatus += MenuItem_BeforeQueryStatus;
-                        mcs.AddCommand(menuItem);
+                        OutputWindowHelper.DiagnosticWriteLine(ex.Message);
                     }
                 }
+                else
+                {
+                    OutputWindowHelper.DiagnosticWriteLine("mcs 为空");
+                }
             });
+       
         }
 
+        private DTE2 _ide;
+        public DTE2 DTE
+        {
+            get
+            {
+                if (_ide == null)
+                {
+                    ThreadHelper.JoinableTaskFactory.Run(async delegate
+                    {
+                        _ide = (DTE2)await GetServiceAsync(typeof(DTE));
+                    });
+                }
+                return _ide;
+            }
+        }
 
+        private IComponentModel _componentModel;
+
+        public IComponentModel ComponentModel =>
+           _componentModel ?? (_componentModel = GetGlobalService(typeof(SComponentModel)) as IComponentModel);
+
+        public string GetActiveFilePath()
+        {
+            string path = "";
+            if (DTE != null)
+            {
+                // sometimes, DTE.ActiveDocument.Path is ToLower but GitLab can't open lower path.
+                // fix proper-casing | http://stackoverflow.com/questions/325931/getting-actual-file-name-with-proper-casing-on-windows-with-net
+                path = GetExactPathName(DTE.ActiveDocument.Path + DTE.ActiveDocument.Name);
+            }
+            return path;
+        }
         private void MenuItem_BeforeQueryStatus(object sender, EventArgs e)
         {
             var command = (OleMenuCommand)sender;
             try
             {
-                if (command.CommandID.ID == PackageCommanddIDs.CreateSnippet)
+                switch ((uint)command.CommandID.ID)
                 {
-                    command.Text = Strings.OpenOnGiteaPackage_CreateSnippet;
-                    var selectionLineRange = GetSelectionLineRange();
-                    command.Enabled = selectionLineRange.Item1 < selectionLineRange.Item2;
-                }
-                else
-                {
-                    // TODO:is should avoid create GitAnalysis every call?
-                    using (var git =   GitAnalysis.GetBy(GetActiveFilePath()))
-                    {
-                        if (!git.IsDiscoveredGitRepository)
+                    case PackageIds.OpenFromUrl:
+                        try
                         {
-                            command.Enabled = false;
-                            return;
+                            var match = Regex.Match(Clipboard.GetText(TextDataFormat.Text), "[a-zA-z]+://[^\\s]*");
+                            command.Enabled = match.Success;
+                            if (command.Enabled)
+                            {
+                                Uri uri = new Uri(match.Value);
+                                command.Text = $"Open From {uri.Host}";
+                            }
+                            else
+                            {
+                                command.Text = $"Open From URL";
+                            }
                         }
+                        catch (Exception ex)
+                        {
+                            OutputWindowHelper.WarningWriteLine($"QueryStatus:{command.CommandID.ID},{ex.Message}");
+                        }
+                        break;
+                        case PackageIds.OpenBlame:
+                    case PackageIds.OpenBranch:
+                    case PackageIds.OpenCommits:
+                    case PackageIds.OpenMaster:
+                    case PackageIds.OpenRevision:
+                    case PackageIds.OpenRevisionFull:
+                        {
+                            try
+                            {
+                                using (var git = GitAnalysis.GetBy(GetActiveFilePath()))
+                                {
+                                    if (!git.IsDiscoveredGitRepository)
+                                    {
+                                        command.Enabled = false;
+                                        return;
+                                    }
 
-                        var type = ToGiteaUrlType(command.CommandID.ID);
-                        var targetPath = git.GetGiteaTargetPath(type);
-                        if (type == GiteaUrlType.CurrentBranch && targetPath == "master")
-                        {
-                            command.Visible = false;
+                                    var type = ToGiteaUrlType(command.CommandID.ID);
+                                    var targetPath = git.GetGiteaTargetPath(type);
+                                    if (type == GiteaUrlType.CurrentBranch && targetPath == "master")
+                                    {
+                                        command.Visible = false;
+                                    }
+                                    else
+                                    {
+                                        command.Text = git.GetGiteaTargetDescription(type);
+                                        command.Enabled = true;
+                                    }
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                OutputWindowHelper.WarningWriteLine($"QueryStatus:{command.CommandID.ID},{ex.Message}");
+                            }
                         }
-                        else
-                        {
-                            command.Text = git.GetGiteaTargetDescription(type);
-                            command.Enabled = true;
-                        }
-                    }
+                        break;
+                     default:
+                        break;
                 }
             }
             catch (Exception ex)
@@ -178,6 +268,7 @@ namespace Gitea.VisualStudio
                 Debug.Write(exstr);
                 command.Text = "error:" + ex.GetType().Name;
                 command.Enabled = false;
+                OutputWindowHelper.WarningWriteLine(ex.Message);
             }
         }
 
@@ -186,24 +277,54 @@ namespace Gitea.VisualStudio
             var command = (OleMenuCommand)sender;
             try
             {
-
-                if (command.CommandID.ID == PackageCommanddIDs.CreateSnippet)
+                switch ((uint)command.CommandID.ID)
                 {
-                    
-                }
-                else
-                {
-                    using (var git = new GitAnalysis(GetActiveFilePath()))
-                    {
-                        if (!git.IsDiscoveredGitRepository)
+                    case PackageIds.OpenFromUrl:
+                        if (Clipboard.ContainsText(TextDataFormat.Text))
                         {
-                            return;
+                            var match = Regex.Match(Clipboard.GetText(TextDataFormat.Text), "[a-zA-z]+://[^\\s]*");
+                            if (match.Success)
+                            {
+                                try
+                                {
+                                    TryOpenFile( match.Value);
+                                }
+                                catch (Exception ex)
+                                {
+                                    OutputWindowHelper.ExceptionWriteLine(string.Format("Can't Open {0},Exception:{1}", match.Value, ex.Message), ex);
+                                }
+                            }
                         }
-                        var selectionLineRange = GetSelectionLineRange();
-                        var type = ToGiteaUrlType(command.CommandID.ID);
-                        var GiteaUrl = git.BuildGiteaUrl(type, selectionLineRange);
-                        System.Diagnostics.Process.Start(GiteaUrl); // open browser
-                    }
+                        break;
+                    case PackageIds.OpenBlame:
+                    case PackageIds.OpenBranch:
+                    case PackageIds.OpenCommits:
+                    case PackageIds.OpenMaster:
+                    case PackageIds.OpenRevision:
+                    case PackageIds.OpenRevisionFull:
+                        {
+                            try
+                            {
+                                using (var git = new GitAnalysis(GetActiveFilePath()))
+                                {
+                                    if (!git.IsDiscoveredGitRepository)
+                                    {
+                                        return;
+                                    }
+                                    var selectionLineRange = GetSelectionLineRange();
+                                    var type = ToGiteaUrlType(command.CommandID.ID);
+                                    var GiteaUrl = git.BuildGiteaUrl(type, selectionLineRange);
+                                    System.Diagnostics.Process.Start(GiteaUrl); // open browser
+                                }
+                            }
+                            catch (Exception ex) 
+                            {
+                                OutputWindowHelper.ExceptionWriteLine(string.Format("ExecuteCommand {0}", command.CommandID.ID, ex.Message),ex);
+                            }
+                        }
+                        break;
+                    default:
+                        break;
                 }
             }
             catch (Exception ex)
@@ -211,22 +332,39 @@ namespace Gitea.VisualStudio
                 Debug.Write(ex.ToString());
             }
         }
-
-     
-
-      
-     
-        public   string GetActiveFilePath()
+        public void TryOpenFile(string url)
         {
-            string path = "";
-            if (DTE != null)
+            Uri uri = new Uri(url);
+            using (var git = new GitAnalysis(GetActiveFilePath()))
             {
-                // sometimes, DTE.ActiveDocument.Path is ToLower but Gitea can't open lower path.
-                // fix proper-casing | http://stackoverflow.com/questions/325931/getting-actual-file-name-with-proper-casing-on-windows-with-net
-                path = GetExactPathName(DTE.ActiveDocument.Path + DTE.ActiveDocument.Name);
+                if (git.IsDiscoveredGitRepository)
+                {
+                    var blob = Regex.Match(url, "/blob/(?<treeish>[^/]*)/");
+                    if (blob.Success)
+                    {
+                        string p1 = uri.GetComponents(UriComponents.Path, UriFormat.UriEscaped).ToString();
+                        string p2 = p1.Substring(p1.IndexOf(blob.Value) + blob.Value.Length);
+                        var path = System.IO.Path.Combine(System.IO.Path.GetFullPath(System.IO.Path.Combine(git.RepositoryPath, "../")), p2);
+                        var textView = OpenDocument(path);
+                    }
+                }
             }
-            return path;
         }
+        IVsTextView OpenDocument(string fullPath)
+        {
+            var logicalView = VSConstants.LOGVIEWID.TextView_guid;
+            IVsUIHierarchy hierarchy;
+            uint itemID;
+            IVsWindowFrame windowFrame;
+            IVsTextView view;
+            VsShellUtilities.OpenDocument(ServiceProvider.GlobalProvider, fullPath, logicalView, out hierarchy, out itemID, out windowFrame, out view);
+            return view;
+        }
+
+
+
+
+
         public static string GetSolutionDirectory()
         {
             var det2 = (DTE2)GetGlobalService(typeof(DTE));
@@ -284,12 +422,12 @@ namespace Gitea.VisualStudio
         }
         static GiteaUrlType ToGiteaUrlType(int commandId)
         {
-            if (commandId == PackageCommanddIDs.OpenMaster) return GiteaUrlType.Master;
-            if (commandId == PackageCommanddIDs.OpenBranch) return GiteaUrlType.CurrentBranch;
-            if (commandId == PackageCommanddIDs.OpenRevision) return GiteaUrlType.CurrentRevision;
-            if (commandId == PackageCommanddIDs.OpenRevisionFull) return GiteaUrlType.CurrentRevisionFull;
-            if (commandId == PackageCommanddIDs.OpenBlame) return GiteaUrlType.Blame;
-            if (commandId == PackageCommanddIDs.OpenCommits) return GiteaUrlType.Commits;
+            if (commandId == PackageIds.OpenMaster) return GiteaUrlType.Master;
+            if (commandId == PackageIds.OpenBranch) return GiteaUrlType.CurrentBranch;
+            if (commandId == PackageIds.OpenRevision) return GiteaUrlType.CurrentRevision;
+            if (commandId == PackageIds.OpenRevisionFull) return GiteaUrlType.CurrentRevisionFull;
+            if (commandId == PackageIds.OpenBlame) return GiteaUrlType.Blame;
+            if (commandId == PackageIds.OpenCommits) return GiteaUrlType.Commits;
             else return GiteaUrlType.Master;
         }
     }
