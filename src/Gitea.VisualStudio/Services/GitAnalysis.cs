@@ -29,7 +29,6 @@ namespace Gitea.VisualStudio.Services
         public GitAnalysis(string targetFullPath)
         {
             this.targetFullPath = targetFullPath;
-            if (string.IsNullOrEmpty(targetFullPath)) return;
             var repositoryPath = LibGit2Sharp.Repository.Discover(targetFullPath);
             if (repositoryPath != null)
             {

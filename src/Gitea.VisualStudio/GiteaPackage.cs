@@ -122,7 +122,6 @@ namespace Gitea.VisualStudio
             await JoinableTaskFactory.RunAsync(VsTaskRunContext.UIThreadNormalPriority, async delegate
             {
                 // Added the following line to prevent the error "Due to high risk of deadlock you cannot call GetService from a background thread in an AsyncPackage derived class"
-                await JoinableTaskFactory.SwitchToMainThreadAsync();
                 var assemblyCatalog = new AssemblyCatalog(typeof(GiteaPackage).Assembly);
                 CompositionContainer container = new CompositionContainer(assemblyCatalog);
                 container.ComposeParts(this);
@@ -214,7 +213,7 @@ namespace Gitea.VisualStudio
                             }
                             else
                             {
-                                command.Text = $"Open From URL";
+                                command.Text = "Open From URL";
                             }
                         }
                         catch (Exception ex)
@@ -231,26 +230,24 @@ namespace Gitea.VisualStudio
                         {
                             try
                             {
-                                using (var git = GitAnalysis.GetBy(GetActiveFilePath()))
+                                var git = GitAnalysis.GetBy(GetActiveFilePath());
+                                if (!git.IsDiscoveredGitRepository)
                                 {
-                                    if (!git.IsDiscoveredGitRepository)
-                                    {
-                                        command.Enabled = false;
-                                        return;
-                                    }
-
-                                    var type = ToGiteaUrlType(command.CommandID.ID);
-                                    var targetPath = git.GetGiteaTargetPath(type);
-                                    if (type == GiteaUrlType.CurrentBranch && targetPath == "master")
-                                    {
-                                        command.Visible = false;
-                                    }
-                                    else
-                                    {
-                                        command.Text = git.GetGiteaTargetDescription(type);
-                                        command.Enabled = true;
-                                    }
+                                    command.Enabled = false;
+                                    return;
                                 }
+                                var type = ToGiteaUrlType(command.CommandID.ID);
+                                var targetPath = git.GetGiteaTargetPath(type);
+                                if (type == GiteaUrlType.CurrentBranch && targetPath == "master")
+                                {
+                                    command.Visible = false;
+                                }
+                                else
+                                {
+                                    command.Text = git.GetGiteaTargetDescription(type);
+                                    command.Enabled = true;
+                                }
+
                             }
                             catch (Exception ex)
                             {
