@@ -209,11 +209,11 @@ namespace Gitea.VisualStudio
                             if (command.Enabled)
                             {
                                 Uri uri = new Uri(match.Value);
-                                command.Text = $"Open From {uri.Host}";
+                                command.Text =string.Format( Strings.OpenFrom0,uri.Host);
                             }
                             else
                             {
-                                command.Text = "Open From URL";
+                                command.Text =Strings.OpenFromURL;
                             }
                         }
                         catch (Exception ex)

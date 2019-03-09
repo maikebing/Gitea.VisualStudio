@@ -386,4 +386,10 @@
   <data name="Common_Open" xml:space="preserve">
     <value>打开</value>
   </data>
+  <data name="OpenFromURL" xml:space="preserve">
+    <value>从URL打开</value>
+  </data>
+  <data name="OpenFrom0" xml:space="preserve">
+    <value>从{0}打开</value>
+  </data>
 </root>

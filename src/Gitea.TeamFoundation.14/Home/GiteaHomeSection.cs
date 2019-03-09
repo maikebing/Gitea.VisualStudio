@@ -29,6 +29,11 @@ namespace Gitea.TeamFoundation.Home
         public override async void Refresh()
         {
             IsVisible =  await _tes.IsGiteaRepoAsync() ;
+            var view = (this.View as TextBlock);
+            if (view != null)
+            {
+                view.Text =( _tes.Project != null && !string.IsNullOrEmpty(_tes.Project.Description) )? _tes.Project.Description : Strings.Description;
+            }
             base.Refresh();
         }
 
@@ -44,9 +49,10 @@ namespace Gitea.TeamFoundation.Home
         {
             return new TextBlock
             {
-                Text = Strings.Description, 
+                Text = (_tes.Project != null && !string.IsNullOrEmpty(_tes.Project.Description)) ? _tes.Project.Description : Strings.Description, 
                 TextWrapping = System.Windows.TextWrapping.Wrap
             };
         }
+   
     }
 }
