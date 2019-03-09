@@ -12,8 +12,8 @@ The latest build of the Visual Studio Extension is available at the [Open VsixGa
 
 
 ## What's new ?
-##
 
+#### V1.0.62
 * Added context menu to the ListView in ConnectionSectionView with option to open or delete the local repo. Deleting send the repo directory to the Recycling Bin.
 * AddOpen URL from clipboard ,Right click on editor, if repository is hosted on Gitea Server , you can jump to master/current branch/current revision's blob page and blame/commits page. If selecting line(single, range) in editor, jump with line number fragment.
 * Added repo descriptions to CloneView.
