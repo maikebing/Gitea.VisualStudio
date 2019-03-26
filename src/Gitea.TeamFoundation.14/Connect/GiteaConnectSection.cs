@@ -23,9 +23,9 @@ namespace Gitea.TeamFoundation.Connect
         private readonly ITeamExplorerServices _teamexplorer;
         private readonly IViewFactory _viewFactory;
         private readonly IWebService _web;
-        
+
         [ImportingConstructor]
-        public GiteaConnectSection(IMessenger messenger, IShellService shell, IStorage storage, ITeamExplorerServices teamexplorer, IViewFactory viewFactory,  IWebService web)
+        public GiteaConnectSection(IMessenger messenger, IShellService shell, IStorage storage, ITeamExplorerServices teamexplorer, IViewFactory viewFactory, IWebService web)
         {
             _messenger = messenger;
             _shell = shell;
@@ -33,14 +33,13 @@ namespace Gitea.TeamFoundation.Connect
             _teamexplorer = teamexplorer;
             _viewFactory = viewFactory;
             _web = web;
-            
+
             messenger.Register("OnLoggedIn", OnLoggedIn);
             messenger.Register("OnSignedOut", InLoggedOut);
             messenger.Register<string, Repository>("OnClone", OnClone);
             messenger.Register<string>("OnOpenSolution", OnOpenSolution);
-            
         }
-        
+
         protected override ITeamExplorerSection CreateViewModel(SectionInitializeEventArgs e)
         {
             var temp = new TeamExplorerSectionViewModelBase
@@ -75,6 +74,7 @@ namespace Gitea.TeamFoundation.Connect
         {
             return new ConnectSectionView();
         }
+
         protected override void InitializeView(SectionInitializeEventArgs e)
         {
             var view = this.SectionContent as FrameworkElement;
@@ -117,21 +117,17 @@ namespace Gitea.TeamFoundation.Connect
                         return;
                     }
                 }
-                
+
                 x.OpenSolutionViaDlg(path, 1);
             }
         }
 
-       
         public override void Refresh()
         {
-            
             ((View as ConnectSectionView).DataContext as ConnectSectionViewModel).Refresh();
-            
+
             base.Refresh();
         }
-
-        
 
         public override void Dispose()
         {

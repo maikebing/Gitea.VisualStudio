@@ -1,9 +1,11 @@
 ﻿using Gitea.VisualStudio.Shared;
+using Gitea.VisualStudio.Shared.Helpers;
 using Microsoft.TeamFoundation.Controls;
 using Microsoft.TeamFoundation.Controls.WPF.TeamExplorer;
 using System;
 using System.ComponentModel.Composition;
 using System.Reflection;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -35,10 +37,10 @@ namespace Gitea.TeamFoundation.Connect
             ConnectLabel = Strings.Invitation_Connect;
             SignUpLabel = Strings.Invitation_SignUp;
             Name = Strings.Name;
-            Provider = Strings.Provider+ (storage.IsLogined?"(" +storage.Host+")": Strings.GiteaInvitationSection_GiteaInvitationSection_NoLogin);
+            Provider = Strings.Provider + (storage.IsLogined ? "(" + storage.Host + ")" : Strings.GiteaInvitationSection_GiteaInvitationSection_NoLogin);
             Description = Strings.Description;
             var assembly = Assembly.GetExecutingAssembly().GetName().Name;
-            var image = new BitmapImage(new Uri($"pack://application:,,,/{assembly};component/Resources/logo.png", UriKind.Absolute));;
+            var image = new BitmapImage(new Uri($"pack://application:,,,/{assembly};component/Resources/logo.png", UriKind.Absolute)); ;
 
             var drawing = new DrawingGroup();
             drawing.Children.Add(new GeometryDrawing
@@ -49,7 +51,20 @@ namespace Gitea.TeamFoundation.Connect
 
             Icon = new DrawingBrush(drawing);
 
-            IsVisible = !storage.IsLogined;
+            var gitExt = Microsoft.VisualStudio.Shell.ServiceProvider.GlobalProvider.GetService<Microsoft.VisualStudio.TeamFoundation.Git.Extensibility.IGitExt>();
+            gitExt.PropertyChanged += GitExt_PropertyChanged;
+        }
+
+        private void GitExt_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "ActiveRepositories")
+            {
+                Task.Run(async () =>
+                {
+                    await ThreadingHelper.SwitchToMainThreadAsync();
+                    IsVisible = !_storage.IsLogined;
+                });
+            }
         }
 
         public override void Connect()

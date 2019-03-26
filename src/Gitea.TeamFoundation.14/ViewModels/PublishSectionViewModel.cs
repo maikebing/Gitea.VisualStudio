@@ -1,7 +1,6 @@
 ﻿using Gitea.VisualStudio.Shared;
 using Gitea.VisualStudio.Shared.Helpers;
 using Gitea.VisualStudio.Shared.Helpers.Commands;
-using Microsoft.VisualStudio.TeamFoundation.Git.Extensibility;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -44,7 +43,6 @@ namespace Gitea.TeamFoundation.ViewModels
             Name = Strings.Name;
             if (string.IsNullOrEmpty(storage.Host))
             {
-
                 Provider = Strings.Provider;
             }
             else
@@ -96,6 +94,7 @@ namespace Gitea.TeamFoundation.ViewModels
         public ObservableCollection<Ownership> Owners { get; } = new ObservableCollection<Ownership>();
 
         private Ownership _selectedOwner = null;
+
         public Ownership SelectedOwner
         {
             get
@@ -116,6 +115,7 @@ namespace Gitea.TeamFoundation.ViewModels
         public IDictionary<string, string> Licenses { get; } = new Dictionary<string, string>();
 
         private string _selectedLicense;
+
         public string SelectedLicense
         {
             get { return _selectedLicense; }
@@ -123,23 +123,19 @@ namespace Gitea.TeamFoundation.ViewModels
         }
 
         private bool _isStarted;
+
         public bool IsStarted
         {
             get { return _isStarted; }
             set { SetProperty(ref _isStarted, value); }
         }
 
-        public bool ShowLogin
-        {
-            get { return !_storage.IsLogined; }
-        }
+        public bool ShowLogin => !_storage.IsLogined;
 
-        public bool ShowSignUp
-        {
-            get { return !_storage.IsLogined; }
-        }
+        public bool ShowSignUp => !_storage.IsLogined;
 
         private bool _showGetStarted;
+
         public bool ShowGetStarted
         {
             get { return _showGetStarted; }
@@ -147,6 +143,7 @@ namespace Gitea.TeamFoundation.ViewModels
         }
 
         private bool _isBusy;
+
         public bool IsBusy
         {
             get { return _isBusy; }
@@ -154,6 +151,7 @@ namespace Gitea.TeamFoundation.ViewModels
         }
 
         private bool _isPrivate;
+
         public bool IsPrivate
         {
             get { return _isPrivate; }
@@ -161,6 +159,7 @@ namespace Gitea.TeamFoundation.ViewModels
         }
 
         private DelegateCommand _loginCommand;
+
         public ICommand LoginCommand
         {
             get
@@ -170,6 +169,7 @@ namespace Gitea.TeamFoundation.ViewModels
         }
 
         private DelegateCommand _signUpCommand;
+
         public ICommand SignUpCommand
         {
             get
@@ -179,6 +179,7 @@ namespace Gitea.TeamFoundation.ViewModels
         }
 
         private DelegateCommand _getStartedCommand;
+
         public ICommand GetStartedCommand
         {
             get
@@ -188,12 +189,14 @@ namespace Gitea.TeamFoundation.ViewModels
         }
 
         private DelegateCommand _publishCommand;
+
         public ICommand PublishCommand
         {
             get { return _publishCommand; }
         }
 
         private string _repositoryName;
+
         public string RepositoryName
         {
             get { return _repositoryName; }
@@ -207,12 +210,12 @@ namespace Gitea.TeamFoundation.ViewModels
         }
 
         private string _repositoryDescription;
+
         public string RepositoryDescription
         {
             get { return _repositoryDescription; }
             set { SetProperty(ref _repositoryDescription, value); }
         }
-
 
         private void OnLogin()
         {
@@ -284,7 +287,6 @@ namespace Gitea.TeamFoundation.ViewModels
                     result = await _web.CreateProjectAsync(RepositoryName, RepositoryDescription, IsPrivate, user.Username, SelectedOwner);
                     if (result.Project != null)
                     {
-
                         var path = activeRepository == null ? _tes.GetSolutionPath() : activeRepository.Path;
 
                         _git.PushWithLicense(user.Name, user.Email, user.Username, user.Password, result.Project.Url, path, SelectedLicense);
@@ -326,5 +328,4 @@ namespace Gitea.TeamFoundation.ViewModels
             GC.SuppressFinalize(this);
         }
     }
-
 }

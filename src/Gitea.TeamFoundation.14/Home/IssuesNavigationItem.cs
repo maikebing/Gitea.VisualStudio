@@ -18,8 +18,8 @@ namespace Gitea.TeamFoundation.Home
         {
             _tes = tes;
             Text = Strings.Items_Issues;
-           
         }
+
         public override void Invalidate()
         {
             base.Invalidate();

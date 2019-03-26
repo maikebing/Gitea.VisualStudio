@@ -2,10 +2,10 @@
 
 namespace Gitea.TeamFoundation
 {
-    static class Settings
+    internal static class Settings
     {
         public const string InvitationSectionId = "C2443FCC-6D62-4D31-B08A-C4DE70109C7F";
-        
+
         public const int InvitationSectionPriority = 100;
 
         public const string ConnectSectionId = "5C4EAF08-7C8D-449F-B83E-21B7C3BDC545";
@@ -23,7 +23,6 @@ namespace Gitea.TeamFoundation
         public const string MergeRequestsNavigationItemId = "2DD834C8-FDEB-4D17-919D-37F2380C599B";
         public const int MergeRequests = TeamExplorerNavigationItemPriority.GitCommits - 2;
 
-       
         public const string WikiNavigationItemId = "B9D15991-1B18-4FDF-B94E-90CFEEF2C702";
         public const int Wiki = TeamExplorerNavigationItemPriority.Settings - 4;
 
@@ -32,6 +31,5 @@ namespace Gitea.TeamFoundation
 
         public const string ActivityiNavigationItemId = "FFCABF9D-A679-4331-8521-9DF3BFE626F3";
         public const int Activity = TeamExplorerNavigationItemPriority.Settings - 6;
-        
     }
 }

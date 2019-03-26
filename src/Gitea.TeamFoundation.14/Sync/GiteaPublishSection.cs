@@ -16,7 +16,6 @@ namespace Gitea.TeamFoundation.Sync
     [PartCreationPolicy(CreationPolicy.NonShared)]
     public class GiteaPublishSection : TeamExplorerSectionBase
     {
-
         private readonly IMessenger _messenger;
         private readonly IGitService _git;
         private readonly IShellService _shell;
@@ -26,7 +25,7 @@ namespace Gitea.TeamFoundation.Sync
         private readonly IWebService _web;
 
         [ImportingConstructor]
-        public GiteaPublishSection(IMessenger messenger, IGitService git, IShellService shell, IStorage storage, ITeamExplorerServices tes, IViewFactory viewFactory,  IWebService web)
+        public GiteaPublishSection(IMessenger messenger, IGitService git, IShellService shell, IStorage storage, ITeamExplorerServices tes, IViewFactory viewFactory, IWebService web)
         {
             _messenger = messenger;
             _git = git;
@@ -35,7 +34,6 @@ namespace Gitea.TeamFoundation.Sync
             _tes = tes;
             _viewFactory = viewFactory;
             _web = web;
-           
         }
 
         protected override ITeamExplorerSection CreateViewModel(SectionInitializeEventArgs e)
@@ -65,7 +63,6 @@ namespace Gitea.TeamFoundation.Sync
                     await ThreadingHelper.SwitchToMainThreadAsync();
                     Refresh();
                 });
-                
             }
         }
 
@@ -106,7 +103,6 @@ namespace Gitea.TeamFoundation.Sync
             IsVisible = _tes.CanPublishGitea();
             base.Refresh();
         }
-
 
         public override void Dispose()
         {

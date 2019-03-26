@@ -20,7 +20,7 @@ namespace Gitea.TeamFoundation
     [PartCreationPolicy(CreationPolicy.Shared)]
     public class TeamExplorerServices : ITeamExplorerServices
     {
-        readonly IServiceProvider serviceProvider;
+        private readonly IServiceProvider serviceProvider;
 
         [Import]
         private IGitService _git;
@@ -34,7 +34,7 @@ namespace Gitea.TeamFoundation
         /// (otherwise we'll have multiple instances of ITeamExplorerServices exports, and that would be Bad(tm))
         /// </summary>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
-        ITeamExplorerNotificationManager manager;
+        private ITeamExplorerNotificationManager manager;
 
         [ImportingConstructor]
         public TeamExplorerServices([Import(typeof(SVsServiceProvider))] IServiceProvider serviceProvider)
@@ -79,6 +79,7 @@ namespace Gitea.TeamFoundation
             manager = serviceProvider.TryGetService<ITeamExplorer>() as ITeamExplorerNotificationManager;
             manager?.ClearNotifications();
         }
+
         public RepositoryInfo GetActiveRepository()
         {
             if (serviceProvider == null)
@@ -99,7 +100,7 @@ namespace Gitea.TeamFoundation
 
             var repo = git.ActiveRepositories.FirstOrDefault();
 
-            if (repo != null && repo.CurrentBranch!=null && !string.IsNullOrEmpty(repo.CurrentBranch.Name))
+            if (repo != null && repo.CurrentBranch != null && !string.IsNullOrEmpty(repo.CurrentBranch.Name))
             {
                 return new RepositoryInfo
                 {
@@ -117,9 +118,7 @@ namespace Gitea.TeamFoundation
                 return null;
             }
             var solution = (IVsSolution)serviceProvider.GetService(typeof(SVsSolution));
-
-            string solutionDir, solutionFile, userFile;
-            if (!ErrorHandler.Succeeded(solution.GetSolutionInfo(out solutionDir, out solutionFile, out userFile)))
+            if (!ErrorHandler.Succeeded(solution.GetSolutionInfo(out string solutionDir, out string solutionFile, out string userFile)))
             {
                 return null;
             }
@@ -139,9 +138,7 @@ namespace Gitea.TeamFoundation
                 return null;
             }
             var solution = (IVsSolution)serviceProvider.GetService(typeof(SVsSolution));
-
-            string solutionDir, solutionFile, userFile;
-            if (!ErrorHandler.Succeeded(solution.GetSolutionInfo(out solutionDir, out solutionFile, out userFile)))
+            if (!ErrorHandler.Succeeded(solution.GetSolutionInfo(out string solutionDir, out string solutionFile, out string userFile)))
             {
                 return null;
             }
@@ -180,10 +177,9 @@ namespace Gitea.TeamFoundation
 
         public async Task<bool> IsGiteaRepoAsync(RepositoryInfo repo)
         {
-            
             var path = repo.Path;
             var url = _git.GetRemote(path);
-            
+
             if (url == null)
             {
                 return false;
@@ -191,29 +187,11 @@ namespace Gitea.TeamFoundation
 
             if (Project == null || !string.Equals(Project.Url, url, StringComparison.OrdinalIgnoreCase))
             {
-
-                try
-                {
-                    var projects = await _web.GetProjects();
-                    foreach (var project in projects)
-                    {
-                        if (string.Equals(project.Url, url, StringComparison.OrdinalIgnoreCase))
-                        {
-                            Project = project;
-                            break;
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Debug.WriteLine(ex.Message);
-                    // Ignore
-                }
-
+                await LoadGiteaProject(url);
             }
             bool isGitea = false;
-            if (Project!=null &&  !string.IsNullOrEmpty(Project.HttpUrl) && Uri.IsWellFormedUriString(Project.HttpUrl, UriKind.Absolute )
-                &&  !string.IsNullOrEmpty(url) && Uri.IsWellFormedUriString(url , UriKind.Absolute ))
+            if (Project != null && !string.IsNullOrEmpty(Project.HttpUrl) && Uri.IsWellFormedUriString(Project.HttpUrl, UriKind.Absolute)
+                && !string.IsNullOrEmpty(url) && Uri.IsWellFormedUriString(url, UriKind.Absolute))
             {
                 try
                 {
@@ -227,6 +205,27 @@ namespace Gitea.TeamFoundation
                 }
             }
             return isGitea;
+        }
+
+        private async System.Threading.Tasks.Task LoadGiteaProject(string url)
+        {
+            try
+            {
+                var projects = await _web.GetProjects();
+                foreach (var project in projects)
+                {
+                    if (string.Equals(project.Url, url, StringComparison.OrdinalIgnoreCase))
+                    {
+                        Project = project;
+                        break;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+                // Ignore
+            }
         }
     }
 }

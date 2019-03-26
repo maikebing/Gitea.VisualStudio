@@ -4,6 +4,7 @@ using Gitea.VisualStudio.Shared.Helpers;
 using Microsoft.TeamFoundation.Controls;
 using Microsoft.TeamFoundation.Controls.WPF.TeamExplorer;
 using System.ComponentModel.Composition;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -25,14 +26,29 @@ namespace Gitea.TeamFoundation.Home
         {
             IsVisible = false;
             base.Initialize(sender, e);
+            var gitExt = Microsoft.VisualStudio.Shell.ServiceProvider.GlobalProvider.GetService<Microsoft.VisualStudio.TeamFoundation.Git.Extensibility.IGitExt>();
+            gitExt.PropertyChanged += GitExt_PropertyChanged;
         }
+
+        private void GitExt_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "ActiveRepositories")
+            {
+                Task.Run(async () =>
+                {
+                    await ThreadingHelper.SwitchToMainThreadAsync();
+                    Refresh();
+                });
+            }
+        }
+
         public override async void Refresh()
         {
-            IsVisible =  await _tes.IsGiteaRepoAsync() ;
+            IsVisible = await _tes.IsGiteaRepoAsync();
             var view = (this.View as TextBlock);
             if (view != null)
             {
-                view.Text =( _tes.Project != null && !string.IsNullOrEmpty(_tes.Project.Description) )? _tes.Project.Description : Strings.Description;
+                view.Text = (_tes.Project != null && !string.IsNullOrEmpty(_tes.Project.Description)) ? _tes.Project.Description : Strings.Description;
             }
             base.Refresh();
         }
@@ -41,7 +57,6 @@ namespace Gitea.TeamFoundation.Home
         {
             var temp = new TeamExplorerSectionViewModelBase();
             temp.Title = Strings.Name;
-
             return temp;
         }
 
@@ -49,10 +64,9 @@ namespace Gitea.TeamFoundation.Home
         {
             return new TextBlock
             {
-                Text = (_tes.Project != null && !string.IsNullOrEmpty(_tes.Project.Description)) ? _tes.Project.Description : Strings.Description, 
+                Text = (_tes.Project != null && !string.IsNullOrEmpty(_tes.Project.Description)) ? _tes.Project.Description : Strings.Description,
                 TextWrapping = System.Windows.TextWrapping.Wrap
             };
         }
-   
     }
 }

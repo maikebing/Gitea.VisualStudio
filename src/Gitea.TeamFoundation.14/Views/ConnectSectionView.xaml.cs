@@ -44,9 +44,10 @@ namespace Gitea.TeamFoundation.Views
                 Resources["SelectedItemBackground"] = new SolidColorBrush(Color.FromRgb(0x33, 0x99, 0xFF));
             }
         }
-        static Color AccentMediumDarkTheme = Color.FromRgb(0x2D, 0x2D, 0x30);
-        static Color AccentMediumLightTheme = Color.FromRgb(0xEE, 0xEE, 0xF2);
-        static Color AccentMediumBlueTheme = Color.FromRgb(0xFF, 0xEC, 0xB5);
+
+        private static Color AccentMediumDarkTheme = Color.FromRgb(0x2D, 0x2D, 0x30);
+        private static Color AccentMediumLightTheme = Color.FromRgb(0xEE, 0xEE, 0xF2);
+        private static Color AccentMediumBlueTheme = Color.FromRgb(0xFF, 0xEC, 0xB5);
 
         public static string DetectTheme()
         {
@@ -68,29 +69,6 @@ namespace Gitea.TeamFoundation.Views
             catch (ArgumentNullException)
             {
                 return "Dark";
-            }
-        }
-
-        private void Button_Click(object sender, System.Windows.RoutedEventArgs e)
-        {
-            var type = typeof(VsBrushes);
-            var properties = type.GetProperties(System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public);
-
-
-            using (var fs = new FileStream(@"d:\vsbrushes.txt", FileMode.Create))
-            using (var writer = new StreamWriter(fs))
-            {
-                foreach (var p in properties)
-                {
-                    var key = p.GetValue(null) as string;
-
-                    var color = FindResource(key) as SolidColorBrush;
-
-                    if (color != null)
-                    {
-                        writer.WriteLine($"{key}: {color}");
-                    }
-                }
             }
         }
     }

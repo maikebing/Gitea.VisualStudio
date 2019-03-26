@@ -24,7 +24,7 @@ namespace Gitea.TeamFoundation.Home
         public override void Invalidate()
         {
             base.Invalidate();
-            IsVisible = IsVisible && _tes.Project != null  ;
+            IsVisible = IsVisible && _tes.Project != null;
         }
 
         public override void Execute()
@@ -33,4 +33,3 @@ namespace Gitea.TeamFoundation.Home
         }
     }
 }
-      

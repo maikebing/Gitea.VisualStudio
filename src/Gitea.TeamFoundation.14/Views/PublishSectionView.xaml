@@ -36,8 +36,7 @@
                    Height="32"
                    Width="32"
                    VerticalAlignment="Center"
-                   Margin="0,2,8,2" Source="/Gitea.TeamFoundation.15;component/Resources/logo.png"
-                  />
+                   Margin="0,2,8,2" Source="/Gitea.TeamFoundation.15;component/Resources/logo.png" />
 
                 <StackPanel Orientation="Vertical"
                         VerticalAlignment="Center"
@@ -79,10 +78,9 @@
                     Visibility="{Binding ShowGetStarted, Converter={StaticResource BooleanToVisibilityConverter}}" />
             </Grid>
 
-            <Grid 
+            <Grid
                 Visibility="{Binding IsStarted, Converter={StaticResource BooleanToVisibilityConverter}}"
-                Margin="8,0,8,0"
-                  >
+                Margin="8,0,8,0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition />
@@ -97,14 +95,13 @@
                 <Label Style="{StaticResource LabelStyle}"
                        Grid.Row="0"
                        Grid.Column="0"
-                       Content="Owner"/>
+                       Content="Owner" />
                 <ComboBox Grid.Row="0"
                           Grid.Column="1"
                           VerticalAlignment="Center"
                           ItemsSource="{Binding Owners}"
                           SelectedItem="{Binding SelectedOwner, Mode=TwoWay}"
-                          DisplayMemberPath="DisplayName"
-                         />
+                          DisplayMemberPath="DisplayName" />
                 <Label Style="{StaticResource LabelStyle}"
                     Grid.Row="1"
                    Grid.Column="0"
@@ -125,7 +122,7 @@
                      VerticalScrollBarVisibility="Auto"
                      Text="{Binding RepositoryDescription}" />
 
-                <Label 
+                <Label
                     Style="{StaticResource LabelStyle}"
                     Grid.Row="3"
                     Grid.Column="0"

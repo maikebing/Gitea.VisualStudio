@@ -107,7 +107,7 @@ namespace Gitea.VisualStudio.Services
                 credential.Target = $"git:{host}";
                 if (credential.Load())
                 {
-                    if (host == Configuration?.User.Host)
+                    if (!string.IsNullOrEmpty(host)  &&  !string.IsNullOrEmpty( Configuration?.User?.Host)  && host == Configuration.User.Host)
                     {
                         User user = Configuration.User.Clone();
                         user.Password = credential.Password;

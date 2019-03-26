@@ -7,9 +7,10 @@ using System.Linq;
 
 namespace Gitea.TeamFoundation.Services
 {
-    public partial  class Registry
+    public partial class Registry
     {
-        static string tfver = null;
+        private static string tfver = null;
+
         private static RegistryKey OpenGitKey(string path)
         {
             if (tfver == null)

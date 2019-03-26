@@ -27,6 +27,7 @@ namespace Gitea.TeamFoundation.Home
 
             IsVisible = IsVisible && _tes.Project != null && _tes.Project.MergeRequestsEnabled;
         }
+
         public override void Execute()
         {
             OpenInBrowser("pulls");

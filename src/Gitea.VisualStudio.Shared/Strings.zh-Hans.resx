@@ -193,7 +193,7 @@
     <value>这是一个很酷的项目(可选)</value>
   </data>
   <data name="Description" xml:space="preserve">
-    <value>Git with a cup of tea!</value>
+    <value>Gitea 是一个开源社区驱动的轻量级的代码托管解决方案</value>
   </data>
   <data name="Invitation_Connect" xml:space="preserve">
     <value>连接</value>
@@ -227,7 +227,7 @@
     <value>忘记密码？</value>
   </data>
   <data name="Login_Host" xml:space="preserve">
-    <value>GiteaHub(https://giteahub.com/)</value>
+    <value>Gitea官网 (https://gitea.com/)</value>
   </data>
   <data name="Login_Login" xml:space="preserve">
     <value>登录</value>
@@ -294,7 +294,7 @@
     <value>双重认证</value>
   </data>
   <data name="DefaultHost" xml:space="preserve">
-    <value>https://giteahub.com/</value>
+    <value>https://gitea.com/</value>
   </data>
   <data name="WebService_CreateProject_NotLoginYet" xml:space="preserve">
     <value>还没登录</value>

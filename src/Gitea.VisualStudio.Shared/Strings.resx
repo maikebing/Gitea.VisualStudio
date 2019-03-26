@@ -193,7 +193,8 @@
     <value>This is a cool project (optional)</value>
   </data>
   <data name="Description" xml:space="preserve">
-    <value>Git with a cup of tea!</value>
+    <value>Gitea - Git with a cup of tea
+A painless self-hosted Git service.</value>
   </data>
   <data name="Invitation_Connect" xml:space="preserve">
     <value>Connect</value>
@@ -233,7 +234,7 @@
     <value>Forget password?</value>
   </data>
   <data name="Login_Host" xml:space="preserve">
-    <value>GiteaHub(https://giteahub.com/)</value>
+    <value>Gitea.com (https://gitea.com/)</value>
   </data>
   <data name="Login_Login" xml:space="preserve">
     <value>Login</value>
@@ -297,7 +298,7 @@
     <value>Two Factor Authentication</value>
   </data>
   <data name="DefaultHost" xml:space="preserve">
-    <value>https://giteahub.com/</value>
+    <value>https://gitea.com/</value>
   </data>
   <data name="WebService_CreateProject_NotLoginYet" xml:space="preserve">
     <value>Not login yet</value>

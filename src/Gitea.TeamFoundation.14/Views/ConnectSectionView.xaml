@@ -28,7 +28,6 @@
                         <RotateTransform Angle="90" />
                     </Setter.Value>
                 </Setter>
-
             </Style>
 
             <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
@@ -68,26 +67,26 @@
                             <ControlTemplate.Triggers>
                                 <MultiTrigger>
                                     <MultiTrigger.Conditions>
-                                        <Condition Property="IsMouseOver" Value="True"/>
+                                        <Condition Property="IsMouseOver" Value="True" />
                                     </MultiTrigger.Conditions>
                                     <Setter Property="Background" Value="{DynamicResource {x:Static shell:VsBrushes.CommandBarHoverKey}}" />
                                 </MultiTrigger>
                                 <MultiTrigger>
                                     <MultiTrigger.Conditions>
-                                        <Condition Property="Selector.IsSelectionActive" Value="True"/>
-                                        <Condition Property="IsSelected" Value="True"/>
+                                        <Condition Property="Selector.IsSelectionActive" Value="True" />
+                                        <Condition Property="IsSelected" Value="True" />
                                     </MultiTrigger.Conditions>
                                     <Setter Property="Background" Value="{DynamicResource SelectedItemBackground}" />
                                 </MultiTrigger>
                                 <MultiTrigger>
                                     <MultiTrigger.Conditions>
-                                        <Condition Property="Selector.IsSelectionActive" Value="False"/>
-                                        <Condition Property="IsSelected" Value="True"/>
+                                        <Condition Property="Selector.IsSelectionActive" Value="False" />
+                                        <Condition Property="IsSelected" Value="True" />
                                     </MultiTrigger.Conditions>
                                     <Setter Property="Background" Value="{DynamicResource {x:Static shell:VsBrushes.InactiveBorderKey}}" />
                                 </MultiTrigger>
                                 <Trigger Property="IsEnabled" Value="False">
-                                    <Setter Property="Opacity" Value="0.3"/>
+                                    <Setter Property="Opacity" Value="0.3" />
                                 </Trigger>
                             </ControlTemplate.Triggers>
                         </ControlTemplate>
@@ -143,7 +142,7 @@
                     </MultiDataTrigger>
                     <DataTrigger Value="True"
                                  Binding="{Binding IsActived}">
-                        <Setter Property="FontWeight" Value="Bold"/>
+                        <Setter Property="FontWeight" Value="Bold" />
                         <!--<Setter Property="Foreground"
                                 Value="{DynamicResource GiteaVsToolWindowText}" />-->
                         <!--<Setter Property="Foreground"
@@ -167,7 +166,7 @@
                 <Style.Triggers>
                     <MultiDataTrigger>
                         <MultiDataTrigger.Conditions>
-                            <Condition Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}, Path=IsSelected}" Value="True"/>
+                            <Condition Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}, Path=IsSelected}" Value="True" />
                         </MultiDataTrigger.Conditions>
                         <Setter Property="Foreground" Value="{DynamicResource {x:Static shell:VsBrushes.ToolWindowTextKey}}" />
                     </MultiDataTrigger>
@@ -180,7 +179,7 @@
                     <!--<DataTrigger Value="True">
                         <DataTrigger.Binding>
                             <MultiBinding Converter="{StaticResource IsCurrentRepositoryConverter}" ConverterParameter="IsCurrentRepository">
-                                <Binding/>
+                                <Binding />
                                 <Binding Path="ViewModel" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type local:GiteaConnectContent}}" />
                             </MultiBinding>
                         </DataTrigger.Binding>
@@ -189,7 +188,6 @@
                 </Style.Triggers>
             </Style>
         </ResourceDictionary>
-
     </UserControl.Resources>
 
     <DockPanel>
@@ -261,42 +259,42 @@
                 </Setter>
             </Style>
         </DockPanel.Resources>
-        <WrapPanel Orientation="Horizontal" 
+        <WrapPanel Orientation="Horizontal"
                    Margin="6,0,0,6"
                    DockPanel.Dock="Top" VerticalAlignment="Center">
             <Button Style="{StaticResource ActionLinkButton}"
                     Command="{Binding SignInCommand}"
                     Content="{x:Static shared:Strings.Invitation_Connect}"
-                    Visibility="{Binding NotLoggedInButtonsVisible}"/>
+                    Visibility="{Binding NotLoggedInButtonsVisible}" />
             <Separator Margin="8,0,8,0"
-                       Style="{StaticResource VerticalSeparator}" 
-                       Visibility="{Binding NotLoggedInButtonsVisible}"/>
+                       Style="{StaticResource VerticalSeparator}"
+                       Visibility="{Binding NotLoggedInButtonsVisible}" />
             <Button Style="{StaticResource ActionLinkButton}"
                     Command="{Binding SignUpCommand}"
                     Content="{x:Static shared:Strings.Login_SignUp}"
-                    Visibility="{Binding NotLoggedInButtonsVisible}"/>
-            
+                    Visibility="{Binding NotLoggedInButtonsVisible}" />
+
             <Button Style="{StaticResource ActionLinkButton}"
                     KeyboardNavigation.TabIndex="0"
                     Command="{Binding CloneCommand}"
                     Content="{x:Static shared:Strings.Common_Clone}"
-                    Visibility="{Binding LoggedInButtonsVisible}"/>
+                    Visibility="{Binding LoggedInButtonsVisible}" />
             <Separator Margin="8,0,8,0"
-                       Style="{StaticResource VerticalSeparator}" 
-                       Visibility="{Binding LoggedInButtonsVisible}"/>
+                       Style="{StaticResource VerticalSeparator}"
+                       Visibility="{Binding LoggedInButtonsVisible}" />
             <Button Style="{StaticResource ActionLinkButton}"
                     KeyboardNavigation.TabIndex="1"
                     Command="{Binding CreateCommand}"
                     Content="{x:Static shared:Strings.Common_CreateRepository}"
-                    Visibility="{Binding LoggedInButtonsVisible}"/>
+                    Visibility="{Binding LoggedInButtonsVisible}" />
             <Separator Margin="8,0,8,0"
-                       Style="{StaticResource VerticalSeparator}" 
-                       Visibility="{Binding LoggedInButtonsVisible}"/>
+                       Style="{StaticResource VerticalSeparator}"
+                       Visibility="{Binding LoggedInButtonsVisible}" />
             <Button Style="{StaticResource ActionLinkButton}"
                     KeyboardNavigation.TabIndex="2"
                     Command="{Binding SignOutCommand}"
-                    Content="{x:Static shared:Strings.Common_Quit}" 
-                    Visibility="{Binding LoggedInButtonsVisible}"/>
+                    Content="{x:Static shared:Strings.Common_Quit}"
+                    Visibility="{Binding LoggedInButtonsVisible}" />
             <!--<Button Content="test" Click="Button_Click" />-->
         </WrapPanel>
 
@@ -322,16 +320,16 @@
                         <MenuItem.Icon>
                             <controls:OcticonImage
                                 Foreground="#FFF4C9"
-                                Icon="file_directory"/>
+                                Icon="file_directory" />
                         </MenuItem.Icon>
                     </MenuItem>
-                    <Separator/>
+                    <Separator />
                     <MenuItem Header="{x:Static shared:Strings.Common_DeleteLocal}"
                               Command="{Binding DeleteLocalRepoCommand}"
                               CommandParameter="{Binding SelectedRepository}">
                         <MenuItem.Icon>
                             <controls:OcticonImage Icon="trashcan"
-                                                   Foreground="#F05033"/>
+                                                   Foreground="#F05033" />
                         </MenuItem.Icon>
                     </MenuItem>
                 </ContextMenu>

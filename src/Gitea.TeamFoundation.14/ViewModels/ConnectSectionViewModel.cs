@@ -76,6 +76,7 @@ namespace Gitea.TeamFoundation.ViewModels
         }
 
         private Repository _selectedRepository;
+
         public Repository SelectedRepository
         {
             get { return _selectedRepository; }
@@ -87,36 +88,30 @@ namespace Gitea.TeamFoundation.ViewModels
         public ICommand SignUpCommand { get; }
 
         private DelegateCommand _signOutCommand;
-        public ICommand SignOutCommand
-        {
-            get { return _signOutCommand; }
-        }
+
+        public ICommand SignOutCommand => _signOutCommand;
 
         private DelegateCommand _cloneCommand;
-        public ICommand CloneCommand
-        {
-            get { return _cloneCommand; }
-        }
+
+        public ICommand CloneCommand => _cloneCommand;
 
         private DelegateCommand _createCommand;
-        public ICommand CreateCommand
-        {
-            get { return _createCommand; }
-        }
+
+        public ICommand CreateCommand => _createCommand;
 
         private DelegateCommand<Repository> _openRepositoryCommand;
-        public ICommand OpenRepositoryCommand
-        {
-            get { return _openRepositoryCommand; }
-        }
+
+        public ICommand OpenRepositoryCommand => _openRepositoryCommand;
 
         private DelegateCommand _deleteLocalRepoCommand;
+
         public ICommand DeleteLocalRepoCommand
         {
             get { return _deleteLocalRepoCommand; }
         }
 
         private bool _isRepositoriesVisible;
+
         public bool IsRepositoriesVisible
         {
             get { return _isRepositoriesVisible; }
@@ -221,7 +216,6 @@ namespace Gitea.TeamFoundation.ViewModels
             }
         }
 
-
         private void LoadRepositoriesAsync()
         {
             IReadOnlyList<Repository> known = null;
@@ -278,7 +272,6 @@ namespace Gitea.TeamFoundation.ViewModels
                 {
                     _teamexplorer.ShowMessage(ex.Message);
                 }
-
             }, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
