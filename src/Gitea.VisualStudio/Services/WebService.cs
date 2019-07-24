@@ -81,7 +81,7 @@ namespace Gitea.VisualStudio.Services
         private static API.v1.Client CreateClient(string host, string email, string password)
         {
             var uri = new Uri(host);
-            API.v1.Client client = new API.v1.Client(email, password, uri.Host, uri.Port, uri.Scheme.EndsWith("s", true, null));
+            API.v1.Client client = new API.v1.Client(email, password, uri);
             return client;
         }
 
