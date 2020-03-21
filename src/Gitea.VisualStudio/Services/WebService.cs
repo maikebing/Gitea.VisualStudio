@@ -112,6 +112,7 @@ namespace Gitea.VisualStudio.Services
                     .Name(name)
                     .Description(description)
                     .MakeAutoInit(false)
+                    .MakePrivate(isPrivate)
                     .Owner(owner.UserName, owner.OwnerType == OwnershipTypes.Organization)
                      .Start();
                 result.Project = (Project)pjt;
